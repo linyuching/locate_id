@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>外業自動化拍照系統</title>
+    <title>外業調查拍照系統 (協同版)</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
@@ -13,9 +13,9 @@
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
         import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-        import { getFirestore, doc, setDoc, collection, onSnapshot } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+        import { getFirestore, doc, setDoc, collection, onSnapshot, query } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
-        window.firebaseCore = { initializeApp, getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged, getFirestore, doc, setDoc, collection, onSnapshot };
+        window.firebaseCore = { initializeApp, getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged, getFirestore, doc, setDoc, collection, onSnapshot, query };
     </script>
 
     <style>
@@ -53,8 +53,6 @@
             cursor: pointer; border-radius: 4px;
             box-shadow: 0 1px 5px rgba(0,0,0,0.4);
         }
-        .leaflet-bottom { bottom: 10px; transition: bottom 0.4s; }
-        #actionPanel.show ~ #map .leaflet-bottom { bottom: 420px; }
     </style>
 </head>
 <body class="bg-slate-900 min-h-screen overflow-hidden">
@@ -62,7 +60,7 @@
     <!-- 初始化遮罩 -->
     <div id="loading" class="loading-overlay">
         <div class="animate-spin rounded-full h-16 w-16 border-t-4 border-blue-500 mb-6"></div>
-        <h2 class="text-xl font-bold mb-2 tracking-tight text-center px-4">外業系統資料同步中</h2>
+        <h2 class="text-xl font-bold mb-2 tracking-tight text-center px-4">系統資料同步中</h2>
         <div id="loadingMsg" class="text-slate-400 text-sm text-center px-8 space-y-2">
             <p>正在連接雲端並載入資源...</p>
         </div>
@@ -75,9 +73,9 @@
         <div class="bg-white/95 backdrop-blur-md p-3 rounded-2xl shadow-2xl flex justify-between items-center pointer-events-auto border border-white/20">
             <div class="flex items-center gap-2">
                 <div id="statusIndicator" class="w-2.5 h-2.5 rounded-full bg-yellow-500 animate-pulse"></div>
-                <h1 class="text-lg font-black text-slate-800 tracking-tighter">外業調查拍照系統</h1>
+                <h1 class="text-lg font-black text-slate-800 tracking-tighter">外業調查拍照系統 <span class="text-blue-500 text-xs">(團隊版)</span></h1>
             </div>
-            <div id="statusTag" class="bg-slate-100 text-slate-500 text-[10px] px-2.5 py-1 rounded-full font-black uppercase tracking-tighter">同步中</div>
+            <div id="statusTag" class="bg-slate-100 text-slate-500 text-[10px] px-2.5 py-1 rounded-full font-black uppercase tracking-tighter">連線中</div>
         </div>
     </div>
 
@@ -108,27 +106,27 @@
         <div id="captureArea">
             <button id="cameraBtn" class="w-full bg-slate-900 text-white py-6 rounded-3xl font-black text-xl shadow-2xl btn-active flex items-center justify-center gap-4 tracking-tighter">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" /><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
-                現場拍攝
+                拍攝現場照片
             </button>
         </div>
 
         <div id="previewArea" class="hidden animate-in fade-in slide-in-from-bottom-6 duration-500">
             <div class="relative mb-5 group">
                 <img id="capturedImg" src="" class="w-full h-56 object-cover rounded-3xl border-4 border-slate-50 shadow-inner">
-                <button id="retakeBtn" class="absolute bottom-4 right-4 bg-white/90 backdrop-blur-md px-4 py-2 rounded-full text-xs font-black text-slate-800 shadow-xl border border-white/50 btn-active">重拍照片</button>
+                <button id="retakeBtn" class="absolute bottom-4 right-4 bg-white/90 backdrop-blur-md px-4 py-2 rounded-full text-xs font-black text-slate-800 shadow-xl border border-white/50 btn-active">重新拍攝</button>
             </div>
             
             <div class="space-y-3">
                 <button id="shareBtn" class="w-full bg-emerald-600 text-white font-black py-5 rounded-2xl shadow-xl btn-active text-lg flex items-center justify-center gap-3">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z" /></svg>
-                    產生圖卡並存至雲端
+                    產生圖卡並上傳同步
                 </button>
                 <div class="grid grid-cols-2 gap-3">
                     <button id="exportBtn" class="bg-slate-100 text-slate-600 font-bold py-4 rounded-2xl btn-active text-sm shadow-sm">
-                        下載成果檔案
+                        僅下載 Excel
                     </button>
                     <button id="finishBtn" class="bg-blue-50 text-blue-700 font-black py-4 rounded-2xl btn-active text-sm shadow-sm border border-blue-100">
-                        完成回地圖
+                        關閉面板
                     </button>
                 </div>
             </div>
@@ -138,22 +136,18 @@
     </div>
 
     <script type="module">
-        /**
-         * --- 重要：在此填入您的 Firebase 配置 ---
-         * 您可以從 Firebase Console -> 專案設定 -> 一般 -> 您的應用程式 -> SDK 設定與配置 中找到這段程式碼
-         */
+        // Firebase 配置
         const manualFirebaseConfig = {
-              apiKey: "AIzaSyAQtyOTpKY3ajw6u4spxwLyFZDw19xhQEE",
-              authDomain: "fieldsurveyproject-cba4e.firebaseapp.com",
-              projectId: "fieldsurveyproject-cba4e",
-              storageBucket: "fieldsurveyproject-cba4e.firebasestorage.app",
-              messagingSenderId: "118885164027",
-              appId: "1:118885164027:web:d8a0e0478eddfc48ba615e"
+            apiKey: "AIzaSyAQtyOTpKY3ajw6u4spxwLyFZDw19xhQEE",
+            authDomain: "fieldsurveyproject-cba4e.firebaseapp.com",
+            projectId: "fieldsurveyproject-cba4e",
+            storageBucket: "fieldsurveyproject-cba4e.firebasestorage.app",
+            messagingSenderId: "118885164027",
+            appId: "1:118885164027:web:d8a0e0478eddfc48ba615e"
         };
-        // ----------------------------------------
 
-        let map, markersLayer, userLocationMarker, selectedPoint = null, templateData = null, capturedPhotoBase64 = null, selectedMarker = null;
-        let finishedPoints = new Set();
+        let map, markersLayer, userLocationMarker, selectedPoint = null, templateData = null, processedPhotoBase64 = null, selectedMarker = null;
+        let finishedPoints = new Map(); // 使用 Map 存儲更多資訊
         let db, auth, user, appId;
         const XLSX_MIME = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
 
@@ -164,34 +158,15 @@
         };
 
         async function initFirebase() {
-            const { initializeApp, getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged, getFirestore, collection, onSnapshot } = window.firebaseCore;
+            const { initializeApp, getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged, getFirestore, collection, onSnapshot, query } = window.firebaseCore;
             
             let config = manualFirebaseConfig;
-
-            // 檢查是否已填入有效配置，若無則嘗試讀取系統環境變數
-            if (!config || config.apiKey.startsWith("您的")) {
-                try {
-                    config = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : null;
-                } catch (e) { config = null; }
-            }
-
-            if (!config) {
-                document.getElementById('loadingMsg').innerHTML = `
-                    <div class="text-amber-400 font-bold mb-4">尚未設定 Firebase</div>
-                    <div class="text-xs text-slate-300 text-left px-6">
-                        請編輯 <span class="text-white">index.html</span> 並在第 106 行的 <span class="text-white">manualFirebaseConfig</span> 填入您的 Firebase 配置。<br><br>
-                        如果您在本地執行且不需要儲存功能，系統將無法正常同步進度。
-                    </div>
-                `;
-                return;
-            }
-
             const app = initializeApp(config);
             auth = getAuth(app);
             db = getFirestore(app);
             appId = typeof __app_id !== 'undefined' ? __app_id : 'field-survey-app';
 
-            // 認證邏輯
+            // 認證 (規則 3)
             const initAuth = async () => {
                 if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
                     await signInWithCustomToken(auth, __initial_auth_token);
@@ -205,13 +180,15 @@
                 onAuthStateChanged(auth, (u) => {
                     user = u;
                     if (user) {
-                        // 監聽雲端儲存的已完成點位
-                        const finishedCol = collection(db, 'artifacts', appId, 'users', user.uid, 'finished_points');
-                        onSnapshot(finishedCol, (snapshot) => {
+                        // 重要：改為監聽公共路徑 (RULE 1)，達成協同效果
+                        const publicDataCol = collection(db, 'artifacts', appId, 'public', 'data', 'finished_points');
+                        onSnapshot(publicDataCol, (snapshot) => {
                             finishedPoints.clear();
-                            snapshot.forEach(doc => finishedPoints.add(doc.id));
+                            snapshot.forEach(doc => {
+                                finishedPoints.set(doc.id, doc.data());
+                            });
                             refreshMarkers();
-                        }, (error) => console.error("Firebase 同步失敗:", error));
+                        }, (error) => console.error("團隊同步失敗:", error));
                     }
                     resolve();
                 });
@@ -219,10 +196,9 @@
         }
 
         function initMap() {
-            map = L.map('map', { zoomControl: false }).setView([23.5, 121], 7);
+            map = L.map('map', { zoomControl: false, maxZoom: 20 }).setView([23.5, 121], 7);
             L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { attribution: '© OSM' }).addTo(map);
             markersLayer = L.layerGroup().addTo(map);
-            L.control.zoom({ position: 'topright' }).addTo(map);
 
             const LocateControl = L.Control.extend({
                 options: { position: 'topright' },
@@ -242,7 +218,6 @@
         }
 
         async function autoLoadAssets() {
-            const loadingMsg = document.getElementById('loadingMsg');
             try {
                 const kmlRes = await fetch('./POI.kml');
                 if (!kmlRes.ok) throw new Error('讀取 POI.kml 失敗');
@@ -255,11 +230,10 @@
                 templateData = await xlsxRes.arrayBuffer();
 
                 document.getElementById('loading').style.display = 'none';
-                document.getElementById('statusTag').textContent = '雲端同步就緒';
+                document.getElementById('statusTag').textContent = '團隊同步中';
                 document.getElementById('statusIndicator').className = 'w-2.5 h-2.5 rounded-full bg-emerald-500';
             } catch (err) {
-                console.error(err);
-                loadingMsg.innerHTML = `<div class="text-red-400">自動載入失敗: ${err.message}</div>`;
+                document.getElementById('loadingMsg').innerHTML = `<div class="text-red-400">載入失敗: ${err.message}</div>`;
             }
         }
 
@@ -295,7 +269,7 @@
                     selectedPoint = p;
                     document.getElementById('actionPanel').classList.add('show');
                     document.getElementById('selectedId').textContent = p.id;
-                    document.getElementById('selectedCoords').textContent = `LAT: ${p.lat.toFixed(6)} / LNG: ${p.lng.toFixed(6)}`;
+                    document.getElementById('selectedCoords').textContent = `緯度: ${p.lat.toFixed(6)} / 經度: ${p.lng.toFixed(6)}`;
                     resetUIState();
                 });
                 markersLayer.addLayer(m);
@@ -312,28 +286,60 @@
         function refreshMarkers() {
             markersLayer.eachLayer(m => {
                 const latlng = m.getLatLng();
-                const p = window.allPoints?.find(pt => Math.abs(pt.lat - latlng.lat) < 0.00001 && Math.abs(pt.lng - latlng.lng) < 0.00001);
+                const p = window.allPoints?.find(pt => Math.abs(pt.lat - latlng.lat) < 0.0001 && Math.abs(pt.lng - latlng.lng) < 0.0001);
                 const el = m.getElement();
                 if (p && finishedPoints.has(p.id) && el) {
                     el.classList.add('finished-marker');
+                } else if (el) {
+                    el.classList.remove('finished-marker');
                 }
             });
         }
 
-        const cameraBtn = document.getElementById('cameraBtn');
+        /**
+         * 核心：處理照片轉向問題
+         * 利用 Canvas 重新繪製照片，會將手機 EXIF 資訊抹除並根據視覺方向「定型」
+         */
+        async function processImage(file) {
+            return new Promise((resolve) => {
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    const img = new Image();
+                    img.onload = () => {
+                        const canvas = document.createElement('canvas');
+                        // 這裡可以限制最大寬度以縮小檔案體積
+                        const MAX_WIDTH = 1200;
+                        let width = img.width;
+                        let height = img.height;
+                        if (width > MAX_WIDTH) {
+                            height *= MAX_WIDTH / width;
+                            width = MAX_WIDTH;
+                        }
+                        canvas.width = width;
+                        canvas.height = height;
+                        const ctx = canvas.getContext('2d');
+                        ctx.drawImage(img, 0, 0, width, height);
+                        // 輸出成修正後的 Base64
+                        resolve(canvas.toDataURL('image/jpeg', 0.8));
+                    };
+                    img.src = e.target.result;
+                };
+                reader.readAsDataURL(file);
+            });
+        }
+
         const cameraInput = document.getElementById('cameraInput');
-        cameraBtn.onclick = () => cameraInput.click();
+        document.getElementById('cameraBtn').onclick = () => cameraInput.click();
         document.getElementById('retakeBtn').onclick = () => cameraInput.click();
-        cameraInput.onchange = e => {
+        
+        cameraInput.onchange = async e => {
             if (!e.target.files[0]) return;
-            const reader = new FileReader();
-            reader.onload = ev => {
-                capturedPhotoBase64 = ev.target.result;
-                document.getElementById('capturedImg').src = capturedPhotoBase64;
-                document.getElementById('captureArea').classList.add('hidden');
-                document.getElementById('previewArea').classList.remove('hidden');
-            };
-            reader.readAsDataURL(e.target.files[0]);
+            showLoadingMask(true, "處理照片轉向中...");
+            processedPhotoBase64 = await processImage(e.target.files[0]);
+            document.getElementById('capturedImg').src = processedPhotoBase64;
+            document.getElementById('captureArea').classList.add('hidden');
+            document.getElementById('previewArea').classList.remove('hidden');
+            showLoadingMask(false);
         };
 
         document.getElementById('closePanelBtn').onclick = closePanel;
@@ -347,7 +353,7 @@
             resetUIState();
         }
         function resetUIState() {
-            capturedPhotoBase64 = null;
+            processedPhotoBase64 = null;
             document.getElementById('captureArea').classList.remove('hidden');
             document.getElementById('previewArea').classList.add('hidden');
         }
@@ -355,21 +361,29 @@
             if (selectedPoint) window.open(`https://www.google.com/maps/dir/?api=1&destination=${selectedPoint.lat},${selectedPoint.lng}`, '_blank');
         };
 
+        // 存儲到公共路徑達成團隊同步
         async function saveFinishedState(pointId) {
             if (!user) return;
             const { doc, setDoc } = window.firebaseCore;
-            const docRef = doc(db, 'artifacts', appId, 'users', user.uid, 'finished_points', pointId);
-            await setDoc(docRef, { finished: true, timestamp: Date.now() });
+            // RULE 1: 使用 public/data 路徑
+            const docRef = doc(db, 'artifacts', appId, 'public', 'data', 'finished_points', pointId);
+            await setDoc(docRef, { 
+                finished: true, 
+                timestamp: Date.now(),
+                user: user.uid
+            });
         }
 
         async function generateExcel() {
-            if (!templateData || !capturedPhotoBase64) throw new Error("資料尚未就緒");
+            if (!templateData || !processedPhotoBase64) throw new Error("尚未拍攝照片");
             const workbook = new ExcelJS.Workbook();
             await workbook.xlsx.load(templateData);
-            const imageId = workbook.addImage({ base64: capturedPhotoBase64, extension: 'png' });
             
-            const targetHeightPx = 227; // 6cm
-            const dims = await new Promise(r => { const i = new Image(); i.onload = () => r({w:i.width,h:i.height}); i.src = capturedPhotoBase64; });
+            // 使用處理過的 Base64 (已校正方向)
+            const imageId = workbook.addImage({ base64: processedPhotoBase64, extension: 'jpeg' });
+            
+            const targetHeightPx = 250; 
+            const dims = await new Promise(r => { const i = new Image(); i.onload = () => r({w:i.width,h:i.height}); i.src = processedPhotoBase64; });
             const targetWidthPx = targetHeightPx * (dims.w / dims.h);
 
             workbook.eachSheet(sheet => {
@@ -378,10 +392,17 @@
                     row.eachCell({ includeEmpty: true }, (cell, colNumber) => {
                         if (cell.address !== cell.master.address) return;
                         const val = cell.value ? String(cell.value).trim() : "";
+                        
+                        // 插入照片
                         if (!photoInserted && val.includes("現場照片")) {
-                            sheet.addImage(imageId, { tl: { col: colNumber - 1 + 0.1, row: rowNumber + 0.1 }, ext: { width: targetWidthPx, height: targetHeightPx }, editAs: 'oneCell' });
+                            sheet.addImage(imageId, { 
+                                tl: { col: colNumber - 1 + 0.1, row: rowNumber + 0.1 }, 
+                                ext: { width: targetWidthPx, height: targetHeightPx }, 
+                                editAs: 'oneCell' 
+                            });
                             photoInserted = true; 
                         }
+                        // 填入編號
                         if (val === "編號") {
                             const cellBelow = sheet.getRow(rowNumber + 1).getCell(colNumber);
                             cellBelow.value = selectedPoint.id;
@@ -390,23 +411,32 @@
                 });
             });
 
-            if (selectedPoint) {
-                await saveFinishedState(selectedPoint.id);
-            }
             const buffer = await workbook.xlsx.writeBuffer();
             return new Blob([buffer], { type: XLSX_MIME });
         }
 
         document.getElementById('shareBtn').onclick = async () => {
             try {
-                showLoadingMask(true, "處理並同步進度中...");
+                showLoadingMask(true, "正在產生成果並同步至團隊...");
                 const blob = await generateExcel();
-                const fileName = `${selectedPoint.id}_成果圖卡.xlsx`;
+                
+                // 同步狀態到 Firebase 公共區域
+                if (selectedPoint) {
+                    await saveFinishedState(selectedPoint.id);
+                }
+
+                const fileName = `${selectedPoint.id}_調查成果.xlsx`;
                 const file = new File([blob], fileName, { type: XLSX_MIME });
+                
                 if (navigator.share && navigator.canShare({ files: [file] })) {
-                    await navigator.share({ files: [file], title: '成果分享', text: `點號: ${selectedPoint.id}` });
-                } else { triggerDownload(blob, fileName); }
-            } catch (err) { alert(err.message); }
+                    await navigator.share({ files: [file], title: '外業成果分享', text: `編號: ${selectedPoint.id}` });
+                } else { 
+                    triggerDownload(blob, fileName); 
+                }
+            } catch (err) { 
+                console.error(err);
+                alert("操作失敗: " + err.message); 
+            }
             showLoadingMask(false);
         };
 
@@ -414,7 +444,7 @@
             try {
                 showLoadingMask(true, "產生成果檔案中...");
                 const blob = await generateExcel();
-                triggerDownload(blob, `${selectedPoint.id}_成果圖卡.xlsx`);
+                triggerDownload(blob, `${selectedPoint.id}_僅下載.xlsx`);
             } catch (err) { alert(err.message); }
             showLoadingMask(false);
         };
