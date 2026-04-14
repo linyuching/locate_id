@@ -34,7 +34,6 @@
         
         .selected-marker { filter: hue-rotate(140deg) brightness(1.2); transform: scale(1.3); transition: all 0.3s; z-index: 999 !important; }
         
-        /* 避免 Leaflet 控制項被面板擋住 */
         .leaflet-bottom { bottom: 10px; transition: bottom 0.4s; }
         #actionPanel.show ~ #map .leaflet-bottom { bottom: 420px; }
     </style>
@@ -46,7 +45,7 @@
         <div class="animate-spin rounded-full h-16 w-16 border-t-4 border-blue-500 mb-6"></div>
         <h2 class="text-xl font-bold mb-2 tracking-tight text-center px-4">外業系統自動初始化</h2>
         <div id="loadingMsg" class="text-slate-400 text-sm text-center px-8 space-y-2">
-            <p>正在嘗試從 GitHub 目錄讀取 POI.kml 與 template.xlsx...</p>
+            <p>正在從 GitHub 目錄讀取 POI.kml 與 template.xlsx...</p>
         </div>
     </div>
 
@@ -103,11 +102,11 @@
             <div class="space-y-3">
                 <button id="shareBtn" class="w-full bg-emerald-600 text-white font-black py-5 rounded-2xl shadow-xl btn-active text-lg flex items-center justify-center gap-3">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z" /></svg>
-                    產生圖卡並另存雲端
+                    產生圖卡並分享/存雲端
                 </button>
                 <div class="grid grid-cols-2 gap-3">
                     <button id="exportBtn" class="bg-slate-100 text-slate-600 font-bold py-4 rounded-2xl btn-active text-sm shadow-sm">
-                        下載圖卡檔案
+                        下載成果檔案
                     </button>
                     <button id="finishBtn" class="bg-blue-50 text-blue-700 font-black py-4 rounded-2xl btn-active text-sm shadow-sm border border-blue-100">
                         完成回地圖
@@ -130,84 +129,53 @@
 
         function initMap() {
             map = L.map('map', { zoomControl: false }).setView([23.5, 121], 7);
-            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                attribution: '© OpenStreetMap contributors'
-            }).addTo(map);
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
             markersLayer = L.layerGroup().addTo(map);
             L.control.zoom({ position: 'topright' }).addTo(map);
         }
 
-        /**
-         * 修正：更加強健的自動載入邏輯
-         * 優先嘗試相對路徑讀取。如果失敗，則顯示手動上傳介面。
-         */
         async function autoLoadAssets() {
             const loadingMsg = document.getElementById('loadingMsg');
+            // GitHub Pages 相對路徑
+            const baseUrl = './';
             
             try {
-                // 1. 嘗試讀取 POI.kml
-                const kmlRes = await fetch('./POI.kml');
-                if (!kmlRes.ok) throw new Error('伺服器目錄找不到 POI.kml');
+                const kmlRes = await fetch(baseUrl + 'POI.kml');
+                if (!kmlRes.ok) throw new Error('讀取 POI.kml 失敗');
                 const kmlText = await kmlRes.text();
                 plotPoints(parseKML(kmlText));
 
-                // 2. 嘗試讀取 template.xlsx
-                const xlsxRes = await fetch('./template.xlsx');
-                if (!xlsxRes.ok) throw new Error('伺服器目錄找不到 template.xlsx');
+                const xlsxRes = await fetch(baseUrl + 'template.xlsx');
+                if (!xlsxRes.ok) throw new Error('讀取 template.xlsx 失敗');
                 templateData = await xlsxRes.arrayBuffer();
 
-                // 成功後隱藏遮罩
                 document.getElementById('loading').style.display = 'none';
                 document.getElementById('statusTag').textContent = '資料同步成功';
                 document.getElementById('statusIndicator').className = 'w-2.5 h-2.5 rounded-full bg-emerald-500';
             } catch (err) {
-                console.warn("自動載入資源失敗 (可能原因：CORS、檔案缺失或本地執行):", err);
-                
-                // 顯示手動備援介面
+                console.error("初始化失敗:", err);
                 loadingMsg.innerHTML = `
-                    <div class="text-amber-400 font-bold mb-4 text-lg text-center">無法讀取伺服器資源</div>
-                    <div class="text-xs text-slate-300 px-6 leading-relaxed mb-6 text-left">
-                        原因：${err.message}<br><br>
-                        請確保 <span class="text-white">POI.kml</span> 與 <span class="text-white">template.xlsx</span> 與本網頁放在 GitHub 同一目錄下。<br>
-                        <hr class="border-slate-700 my-4">
-                        <b>外業備援方案：請在此手動選取本機檔案</b>
-                    </div>
+                    <div class="text-red-400 font-bold mb-4 text-lg text-center">無法自動讀取資源</div>
+                    <p class="text-xs text-slate-300 px-6 mb-6">${err.message}</p>
                     <div class="flex flex-col gap-3 w-full max-w-xs mx-auto">
-                        <div class="flex flex-col">
-                            <span class="text-[10px] text-slate-500 mb-1">選擇點位 (POI.kml)</span>
-                            <input type="file" id="manualKml" accept=".kml" class="text-xs bg-slate-800 p-2 rounded border border-slate-700">
-                        </div>
-                        <div class="flex flex-col">
-                            <span class="text-[10px] text-slate-500 mb-1">選擇範本 (template.xlsx)</span>
-                            <input type="file" id="manualXlsx" accept=".xlsx" class="text-xs bg-slate-800 p-2 rounded border border-slate-700">
-                        </div>
+                        <input type="file" id="manualKml" accept=".kml" class="text-xs bg-slate-800 p-2 rounded">
+                        <input type="file" id="manualXlsx" accept=".xlsx" class="text-xs bg-slate-800 p-2 rounded">
                     </div>
-                    <button onclick="location.reload()" class="mt-8 text-blue-400 text-xs underline">重新整理頁面</button>
                 `;
-
-                // 監聽手動上傳按鈕
                 document.getElementById('manualKml')?.addEventListener('change', async (e) => {
-                    if (e.target.files[0]) {
-                        const text = await e.target.files[0].text();
-                        plotPoints(parseKML(text));
-                        checkAndHideOverlay();
-                    }
+                    const text = await e.target.files[0].text();
+                    plotPoints(parseKML(text));
+                    checkReady();
                 });
                 document.getElementById('manualXlsx')?.addEventListener('change', async (e) => {
-                    if (e.target.files[0]) {
-                        templateData = await e.target.files[0].arrayBuffer();
-                        checkAndHideOverlay();
-                    }
+                    templateData = await e.target.files[0].arrayBuffer();
+                    checkReady();
                 });
             }
         }
 
-        function checkAndHideOverlay() {
-            if (templateData && markersLayer.getLayers().length > 0) {
-                document.getElementById('loading').style.display = 'none';
-                document.getElementById('statusTag').textContent = '手動載入就緒';
-                document.getElementById('statusIndicator').className = 'w-2.5 h-2.5 rounded-full bg-blue-500';
-            }
+        function checkReady() {
+            if (templateData && markersLayer.getLayers().length > 0) document.getElementById('loading').style.display = 'none';
         }
 
         function parseKML(text) {
@@ -217,13 +185,11 @@
             const results = [];
             for (let i = 0; i < placemarks.length; i++) {
                 const p = placemarks[i];
-                const name = p.getElementsByTagName("name")[0]?.textContent || "未命名點位";
+                const name = p.getElementsByTagName("name")[0]?.textContent || "未命名";
                 const coords = p.getElementsByTagName("coordinates")[0]?.textContent?.trim();
                 if (coords) {
                     const parts = coords.split(",");
-                    if (parts.length >= 2) {
-                        results.push({ id: name, lat: parseFloat(parts[1]), lng: parseFloat(parts[0]) });
-                    }
+                    if (parts.length >= 2) results.push({ id: name, lat: parseFloat(parts[1]), lng: parseFloat(parts[0]) });
                 }
             }
             return results;
@@ -236,7 +202,6 @@
                     if (selectedMarker) selectedMarker.getElement()?.classList.remove('selected-marker');
                     selectedMarker = m;
                     m.getElement()?.classList.add('selected-marker');
-
                     selectedPoint = p;
                     document.getElementById('actionPanel').classList.add('show');
                     document.getElementById('selectedId').textContent = p.id;
@@ -248,7 +213,6 @@
             if (points.length > 0) map.fitBounds(markersLayer.getLayers().map(l => l.getLatLng()), { padding: [60, 60] });
         }
 
-        // 相機控制邏輯
         const cameraBtn = document.getElementById('cameraBtn');
         const cameraInput = document.getElementById('cameraInput');
         cameraBtn.onclick = () => cameraInput.click();
@@ -267,7 +231,6 @@
             reader.readAsDataURL(file);
         };
 
-        // 面板與介面重設
         document.getElementById('closePanelBtn').onclick = closePanel;
         document.getElementById('finishBtn').onclick = closePanel;
 
@@ -283,39 +246,42 @@
             document.getElementById('previewArea').classList.add('hidden');
         }
 
-        // 導航
         document.getElementById('navBtn').onclick = () => {
             if (selectedPoint) window.open(`https://www.google.com/maps/dir/?api=1&destination=${selectedPoint.lat},${selectedPoint.lng}`, '_blank');
         };
 
         /**
-         * 核心生成邏輯：保留所有分頁，僅針對關鍵字「編號」與「現場照片」填入資料
+         * 核心生成邏輯：修正重複插入與合併儲存格衝突
          */
         async function generateExcel() {
-            if (!templateData || !capturedPhotoBase64) throw new Error("範本或照片資料缺失");
+            if (!templateData || !capturedPhotoBase64) throw new Error("資料尚未就緒");
             
             const workbook = new ExcelJS.Workbook();
             await workbook.xlsx.load(templateData);
-
             const imageId = workbook.addImage({ base64: capturedPhotoBase64, extension: 'png' });
 
-            // 遍歷所有工作表
             workbook.eachSheet(sheet => {
+                // 為了解決重複插入，確保每個分頁的照片只插入一次
+                let photoInsertedInThisSheet = false;
+
                 sheet.eachRow({ includeEmpty: true }, (row, rowNumber) => {
                     row.eachCell({ includeEmpty: true }, (cell, colNumber) => {
+                        // 修正：僅處理「主要單元格」(解決合併儲存格導致的重複遍歷問題)
+                        if (cell.address !== cell.master.address) return;
+
                         const val = cell.value ? String(cell.value).trim() : "";
                         
-                        // 1. 照片插入：定位到含有「現場照片」字樣的欄位
-                        if (val.includes("現場照片")) {
-                            // 置入相片範圍 (C5:G14 相對位置)
+                        // 1. 照片插入 (僅限尚未插入且匹配的分頁)
+                        if (!photoInsertedInThisSheet && val.includes("現場照片")) {
                             sheet.addImage(imageId, {
                                 tl: { col: colNumber - 1 + 0.02, row: rowNumber + 0.05 },
                                 br: { col: colNumber - 1 + 5 - 0.02, row: rowNumber + 10 - 0.05 }, 
                                 editAs: 'oneCell'
                             });
+                            photoInsertedInThisSheet = true; 
                         }
 
-                        // 2. 編號填入：定位到標籤為「編號」的儲存格，填入其右側
+                        // 2. 編號填入
                         if (val === "編號") {
                             const nextCell = row.getCell(colNumber + 1);
                             nextCell.value = selectedPoint.id;
@@ -328,49 +294,40 @@
             return new Blob([buffer], { type: XLSX_MIME });
         }
 
-        // 分享與另存
         document.getElementById('shareBtn').onclick = async () => {
             try {
-                showLoadingMask(true, "正為您合併照片成果...");
+                showLoadingMask(true, "整合圖卡成果中...");
                 const blob = await generateExcel();
                 const fileName = `${selectedPoint.id}_成果圖卡.xlsx`;
                 const file = new File([blob], fileName, { type: XLSX_MIME });
 
                 if (navigator.share && navigator.canShare({ files: [file] })) {
-                    await navigator.share({
-                        files: [file],
-                        title: '現勘圖卡成果',
-                        text: `案號: ${selectedPoint.id}`
-                    });
+                    await navigator.share({ files: [file], title: '成果分享' });
                 } else {
                     triggerDownload(blob, fileName);
                 }
-            } catch (err) { alert("操作失敗: " + err.message); }
+            } catch (err) { alert(err.message); }
             showLoadingMask(false);
         };
 
-        // 純下載
         document.getElementById('exportBtn').onclick = async () => {
             try {
-                showLoadingMask(true, "生成成果圖卡檔案中...");
+                showLoadingMask(true, "生成 Excel 檔案中...");
                 const blob = await generateExcel();
                 triggerDownload(blob, `${selectedPoint.id}_成果圖卡.xlsx`);
-            } catch (err) { alert("操作失敗: " + err.message); }
+            } catch (err) { alert(err.message); }
             showLoadingMask(false);
         };
 
         function triggerDownload(blob, fileName) {
             const a = document.createElement("a");
-            const url = URL.createObjectURL(blob);
-            a.href = url;
+            a.href = URL.createObjectURL(blob);
             a.download = fileName;
             a.click();
-            setTimeout(() => URL.revokeObjectURL(url), 100);
         }
 
         function showLoadingMask(s, t) {
-            const l = document.getElementById('loading');
-            l.style.display = s ? 'flex' : 'none';
+            document.getElementById('loading').style.display = s ? 'flex' : 'none';
             if (s) document.getElementById('loadingMsg').textContent = t;
         }
     </script>
