@@ -42,7 +42,6 @@
         #actionPanel::-webkit-scrollbar { display: none; }
         #actionPanel.show { transform: translateY(0); }
         
-        /* 標記狀態樣式 */
         .selected-marker { filter: hue-rotate(240deg) brightness(1.2); transform: scale(1.3); transition: all 0.3s; z-index: 999 !important; }
         .finished-marker { filter: hue-rotate(90deg) brightness(1.1) saturate(1.5); opacity: 0.9; }
         
@@ -136,8 +135,8 @@
     </div>
 
     <script type="module">
-        // Firebase 配置
-        const manualFirebaseConfig = {
+        // 預設備份配置 (僅供本地測試)
+        const backupConfig = {
             apiKey: "AIzaSyAQtyOTpKY3ajw6u4spxwLyFZDw19xhQEE",
             authDomain: "fieldsurveyproject-cba4e.firebaseapp.com",
             projectId: "fieldsurveyproject-cba4e",
@@ -147,7 +146,7 @@
         };
 
         let map, markersLayer, userLocationMarker, selectedPoint = null, templateData = null, processedPhotoBase64 = null, selectedMarker = null;
-        let finishedPoints = new Map(); // 使用 Map 存儲更多資訊
+        let finishedPoints = new Map();
         let db, auth, user, appId;
         const XLSX_MIME = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
 
@@ -158,37 +157,50 @@
         };
 
         async function initFirebase() {
-            const { initializeApp, getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged, getFirestore, collection, onSnapshot, query } = window.firebaseCore;
+            const { initializeApp, getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged, getFirestore, collection, onSnapshot } = window.firebaseCore;
             
-            let config = manualFirebaseConfig;
+            // 優先讀取環境變數 (Canvas 必要規則)
+            let config;
+            try {
+                config = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : backupConfig;
+            } catch (e) {
+                config = backupConfig;
+            }
+
             const app = initializeApp(config);
             auth = getAuth(app);
             db = getFirestore(app);
             appId = typeof __app_id !== 'undefined' ? __app_id : 'field-survey-app';
 
-            // 認證 (規則 3)
-            const initAuth = async () => {
-                if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
-                    await signInWithCustomToken(auth, __initial_auth_token);
-                } else {
-                    await signInAnonymously(auth);
+            // 嚴格執行驗證 (規則 3)
+            const performAuth = async () => {
+                try {
+                    if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
+                        await signInWithCustomToken(auth, __initial_auth_token);
+                    } else {
+                        await signInAnonymously(auth);
+                    }
+                } catch (err) {
+                    console.error("Auth Failed:", err);
                 }
             };
-            await initAuth();
+
+            await performAuth();
 
             return new Promise((resolve) => {
                 onAuthStateChanged(auth, (u) => {
                     user = u;
                     if (user) {
-                        // 重要：改為監聽公共路徑 (RULE 1)，達成協同效果
+                        // 連線成功後開始監聽 (規則 1 路徑)
                         const publicDataCol = collection(db, 'artifacts', appId, 'public', 'data', 'finished_points');
                         onSnapshot(publicDataCol, (snapshot) => {
                             finishedPoints.clear();
-                            snapshot.forEach(doc => {
-                                finishedPoints.set(doc.id, doc.data());
-                            });
+                            snapshot.forEach(doc => finishedPoints.set(doc.id, doc.data()));
                             refreshMarkers();
-                        }, (error) => console.error("團隊同步失敗:", error));
+                        }, (error) => {
+                            console.error("Firestore Permission Error:", error);
+                            document.getElementById('statusTag').textContent = "權限錯誤";
+                        });
                     }
                     resolve();
                 });
@@ -257,7 +269,6 @@
         function plotPoints(points) {
             markersLayer.clearLayers();
             points.forEach(p => {
-                const isFinished = finishedPoints.has(p.id);
                 const m = L.marker([p.lat, p.lng]).on('click', () => {
                     if (selectedMarker) {
                         const el = selectedMarker.getElement();
@@ -273,13 +284,8 @@
                     resetUIState();
                 });
                 markersLayer.addLayer(m);
-                if (isFinished) {
-                    m.on('add', () => {
-                        const el = m.getElement();
-                        if (el) el.classList.add('finished-marker');
-                    });
-                }
             });
+            refreshMarkers();
             if (points.length > 0) map.fitBounds(markersLayer.getLayers().map(l => l.getLatLng()), { padding: [60, 60] });
         }
 
@@ -296,10 +302,6 @@
             });
         }
 
-        /**
-         * 核心：處理照片轉向問題
-         * 利用 Canvas 重新繪製照片，會將手機 EXIF 資訊抹除並根據視覺方向「定型」
-         */
         async function processImage(file) {
             return new Promise((resolve) => {
                 const reader = new FileReader();
@@ -307,7 +309,6 @@
                     const img = new Image();
                     img.onload = () => {
                         const canvas = document.createElement('canvas');
-                        // 這裡可以限制最大寬度以縮小檔案體積
                         const MAX_WIDTH = 1200;
                         let width = img.width;
                         let height = img.height;
@@ -319,7 +320,6 @@
                         canvas.height = height;
                         const ctx = canvas.getContext('2d');
                         ctx.drawImage(img, 0, 0, width, height);
-                        // 輸出成修正後的 Base64
                         resolve(canvas.toDataURL('image/jpeg', 0.8));
                     };
                     img.src = e.target.result;
@@ -361,17 +361,24 @@
             if (selectedPoint) window.open(`https://www.google.com/maps/dir/?api=1&destination=${selectedPoint.lat},${selectedPoint.lng}`, '_blank');
         };
 
-        // 存儲到公共路徑達成團隊同步
         async function saveFinishedState(pointId) {
-            if (!user) return;
+            if (!user) {
+                console.error("User not authenticated");
+                return;
+            }
             const { doc, setDoc } = window.firebaseCore;
-            // RULE 1: 使用 public/data 路徑
+            // 規則 1: 存至 public/data
             const docRef = doc(db, 'artifacts', appId, 'public', 'data', 'finished_points', pointId);
-            await setDoc(docRef, { 
-                finished: true, 
-                timestamp: Date.now(),
-                user: user.uid
-            });
+            try {
+                await setDoc(docRef, { 
+                    finished: true, 
+                    timestamp: Date.now(),
+                    uid: user.uid 
+                });
+            } catch (err) {
+                console.error("Save Error:", err);
+                throw new Error("無法同步至雲端，請確認權限設定。");
+            }
         }
 
         async function generateExcel() {
@@ -379,9 +386,7 @@
             const workbook = new ExcelJS.Workbook();
             await workbook.xlsx.load(templateData);
             
-            // 使用處理過的 Base64 (已校正方向)
             const imageId = workbook.addImage({ base64: processedPhotoBase64, extension: 'jpeg' });
-            
             const targetHeightPx = 250; 
             const dims = await new Promise(r => { const i = new Image(); i.onload = () => r({w:i.width,h:i.height}); i.src = processedPhotoBase64; });
             const targetWidthPx = targetHeightPx * (dims.w / dims.h);
@@ -392,8 +397,6 @@
                     row.eachCell({ includeEmpty: true }, (cell, colNumber) => {
                         if (cell.address !== cell.master.address) return;
                         const val = cell.value ? String(cell.value).trim() : "";
-                        
-                        // 插入照片
                         if (!photoInserted && val.includes("現場照片")) {
                             sheet.addImage(imageId, { 
                                 tl: { col: colNumber - 1 + 0.1, row: rowNumber + 0.1 }, 
@@ -402,7 +405,6 @@
                             });
                             photoInserted = true; 
                         }
-                        // 填入編號
                         if (val === "編號") {
                             const cellBelow = sheet.getRow(rowNumber + 1).getCell(colNumber);
                             cellBelow.value = selectedPoint.id;
@@ -417,13 +419,12 @@
 
         document.getElementById('shareBtn').onclick = async () => {
             try {
-                showLoadingMask(true, "正在產生成果並同步至團隊...");
-                const blob = await generateExcel();
+                showLoadingMask(true, "正在同步雲端狀態...");
+                // 優先同步雲端，再產生檔案
+                await saveFinishedState(selectedPoint.id);
                 
-                // 同步狀態到 Firebase 公共區域
-                if (selectedPoint) {
-                    await saveFinishedState(selectedPoint.id);
-                }
+                showLoadingMask(true, "正在產生成果圖卡...");
+                const blob = await generateExcel();
 
                 const fileName = `${selectedPoint.id}_調查成果.xlsx`;
                 const file = new File([blob], fileName, { type: XLSX_MIME });
@@ -435,7 +436,7 @@
                 }
             } catch (err) { 
                 console.error(err);
-                alert("操作失敗: " + err.message); 
+                alert(err.message); 
             }
             showLoadingMask(false);
         };
