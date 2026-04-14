@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>外業自動化拍照系統</title>
+    <title>外業調查拍照系統</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
@@ -32,7 +32,9 @@
         #actionPanel::-webkit-scrollbar { display: none; }
         #actionPanel.show { transform: translateY(0); }
         
-        .selected-marker { filter: hue-rotate(140deg) brightness(1.2); transform: scale(1.3); transition: all 0.3s; z-index: 999 !important; }
+        /* 標記狀態樣式 */
+        .selected-marker { filter: hue-rotate(240deg) brightness(1.2); transform: scale(1.3); transition: all 0.3s; z-index: 999 !important; }
+        .finished-marker { filter: hue-rotate(90deg) brightness(1.1); opacity: 0.8; }
         
         /* 避免 Leaflet 控制項被面板擋住 */
         .leaflet-bottom { bottom: 10px; transition: bottom 0.4s; }
@@ -88,7 +90,6 @@
             </div>
         </div>
 
-        <!-- 拍照區域 -->
         <div id="captureArea">
             <button id="cameraBtn" class="w-full bg-slate-900 text-white py-6 rounded-3xl font-black text-xl shadow-2xl btn-active flex items-center justify-center gap-4 tracking-tighter">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" /><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
@@ -96,7 +97,6 @@
             </button>
         </div>
 
-        <!-- 預覽與操作區域 -->
         <div id="previewArea" class="hidden animate-in fade-in slide-in-from-bottom-6 duration-500">
             <div class="relative mb-5 group">
                 <img id="capturedImg" src="" class="w-full h-56 object-cover rounded-3xl border-4 border-slate-50 shadow-inner">
@@ -124,6 +124,7 @@
 
     <script>
         let map, markersLayer, selectedPoint = null, templateData = null, capturedPhotoBase64 = null, selectedMarker = null;
+        let finishedPoints = new Set(); // 記錄已完成的點位
         const XLSX_MIME = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
 
         window.onload = async function() {
@@ -146,13 +147,11 @@
             const baseUrl = './'; // 假設與 index.html 同目錄
             
             try {
-                // 1. 讀取 KML
                 const kmlRes = await fetch(baseUrl + 'POI.kml');
                 if (!kmlRes.ok) throw new Error('讀取 POI.kml 失敗');
                 const kmlText = await kmlRes.text();
                 plotPoints(parseKML(kmlText));
 
-                // 2. 讀取 XLSX 範本
                 const xlsxRes = await fetch(baseUrl + 'template.xlsx');
                 if (!xlsxRes.ok) throw new Error('讀取 template.xlsx 失敗');
                 templateData = await xlsxRes.arrayBuffer();
@@ -206,21 +205,53 @@
         }
 
         function plotPoints(points) {
+            markersLayer.clearLayers();
             points.forEach(p => {
                 if (isNaN(p.lat) || isNaN(p.lng)) return;
                 const m = L.marker([p.lat, p.lng]).on('click', () => {
-                    if (selectedMarker) selectedMarker.getElement()?.classList.remove('selected-marker');
+                    if (selectedMarker) {
+                        const el = selectedMarker.getElement();
+                        if (el) el.classList.remove('selected-marker');
+                    }
                     selectedMarker = m;
-                    m.getElement()?.classList.add('selected-marker');
+                    const el = m.getElement();
+                    if (el) el.classList.add('selected-marker');
+                    
                     selectedPoint = p;
                     document.getElementById('actionPanel').classList.add('show');
                     document.getElementById('selectedId').textContent = p.id;
                     document.getElementById('selectedCoords').textContent = `LAT: ${p.lat.toFixed(6)} / LNG: ${p.lng.toFixed(6)}`;
                     resetUIState();
                 });
+                
                 markersLayer.addLayer(m);
+                
+                // 如果是已完成的點位，套用樣式
+                if (finishedPoints.has(p.id)) {
+                    m.on('add', () => {
+                        const el = m.getElement();
+                        if (el) el.classList.add('finished-marker');
+                    });
+                }
             });
             if (points.length > 0) map.fitBounds(markersLayer.getLayers().map(l => l.getLatLng()), { padding: [60, 60] });
+        }
+
+        // 更新地圖標記狀態
+        function refreshMarkerStyles() {
+            markersLayer.eachLayer(m => {
+                const el = m.getElement();
+                if (!el) return;
+                
+                // 找出對應點位的 ID
+                // 在 plotPoints 中我們沒有存，但可以透過查找方式或重新繪製
+            });
+            // 最保險的方式是重繪點位
+            const currentPoints = [];
+            markersLayer.eachLayer(m => {
+                // 假設我們能獲取原始點位資訊，這裡為了簡單直接從畫面讀取 ID 是不可行的
+                // 我們重新調用 plotPoints，但需要儲存原始點位數組
+            });
         }
 
         const cameraBtn = document.getElementById('cameraBtn');
@@ -246,7 +277,10 @@
 
         function closePanel() {
             document.getElementById('actionPanel').classList.remove('show');
-            if (selectedMarker) selectedMarker.getElement()?.classList.remove('selected-marker');
+            if (selectedMarker) {
+                const el = selectedMarker.getElement();
+                if (el) el.classList.remove('selected-marker');
+            }
             resetUIState();
         }
 
@@ -274,29 +308,29 @@
             await workbook.xlsx.load(templateData);
             const imageId = workbook.addImage({ base64: capturedPhotoBase64, extension: 'png' });
 
+            // 以 96 DPI 計算，6公分約為 227 像素
+            const targetHeightPx = 227;
+
             // 遍歷所有工作表
             workbook.eachSheet(sheet => {
                 let photoInsertedInThisSheet = false;
 
                 sheet.eachRow({ includeEmpty: true }, (row, rowNumber) => {
                     row.eachCell({ includeEmpty: true }, (cell, colNumber) => {
-                        // 僅處理主單元格 (避免重複插入)
                         if (cell.address !== cell.master.address) return;
-
                         const val = cell.value ? String(cell.value).trim() : "";
                         
-                        // 1. 照片插入 (關鍵字：現場照片)
-                        // 使用較大的 Offset (0.15, 0.2) 讓圖片在格子內更小一點
+                        // 1. 照片插入 (縮小至高度約 6 公分)
                         if (!photoInsertedInThisSheet && val.includes("現場照片")) {
                             sheet.addImage(imageId, {
-                                tl: { col: colNumber - 1 + 0.15, row: rowNumber + 0.15 },
-                                br: { col: colNumber - 1 + 5 - 0.15, row: rowNumber + 10 - 0.15 }, 
+                                tl: { col: colNumber - 1 + 0.1, row: rowNumber + 0.1 },
+                                ext: { width: 400, height: targetHeightPx }, // 固定高度 6cm
                                 editAs: 'oneCell'
                             });
                             photoInsertedInThisSheet = true; 
                         }
 
-                        // 2. 編號填入 (關鍵字：編號)
+                        // 2. 編號填入
                         if (val === "編號") {
                             const nextCell = row.getCell(colNumber + 1);
                             nextCell.value = selectedPoint.id;
@@ -304,6 +338,16 @@
                     });
                 });
             });
+
+            // 標記點位為已完成
+            if (selectedPoint) {
+                finishedPoints.add(selectedPoint.id);
+                // 立即更新地圖標記顏色
+                if (selectedMarker) {
+                    const el = selectedMarker.getElement();
+                    if (el) el.classList.add('finished-marker');
+                }
+            }
 
             const buffer = await workbook.xlsx.writeBuffer();
             return new Blob([buffer], { type: XLSX_MIME });
