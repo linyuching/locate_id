@@ -8,6 +8,16 @@
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/exceljs/4.4.0/exceljs.min.js"></script>
+    
+    <!-- Firebase SDKs -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getFirestore, doc, setDoc, collection, onSnapshot } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+        window.firebaseCore = { initializeApp, getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged, getFirestore, doc, setDoc, collection, onSnapshot };
+    </script>
+
     <style>
         #map { height: 100vh; width: 100%; z-index: 1; }
         .loading-overlay {
@@ -34,54 +44,44 @@
         
         /* 標記狀態樣式 */
         .selected-marker { filter: hue-rotate(240deg) brightness(1.2); transform: scale(1.3); transition: all 0.3s; z-index: 999 !important; }
-        /* 已完成點位：變為綠色 */
         .finished-marker { filter: hue-rotate(90deg) brightness(1.1) saturate(1.5); opacity: 0.9; }
         
-        /* 定位按鈕樣式 */
         .leaflet-control-locate {
             background: white;
-            width: 34px;
-            height: 34px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            border-radius: 4px;
+            width: 34px; height: 34px;
+            display: flex; align-items: center; justify-content: center;
+            cursor: pointer; border-radius: 4px;
             box-shadow: 0 1px 5px rgba(0,0,0,0.4);
         }
-        .leaflet-control-locate:hover { background: #f4f4f4; }
-        
-        /* 避免 Leaflet 控制項被面板擋住 */
         .leaflet-bottom { bottom: 10px; transition: bottom 0.4s; }
         #actionPanel.show ~ #map .leaflet-bottom { bottom: 420px; }
     </style>
 </head>
 <body class="bg-slate-900 min-h-screen overflow-hidden">
 
-    <!-- 啟動載入遮罩 -->
+    <!-- 初始化遮罩 -->
     <div id="loading" class="loading-overlay">
         <div class="animate-spin rounded-full h-16 w-16 border-t-4 border-blue-500 mb-6"></div>
-        <h2 class="text-xl font-bold mb-2 tracking-tight text-center px-4">外業系統自動初始化</h2>
+        <h2 class="text-xl font-bold mb-2 tracking-tight text-center px-4">外業系統資料同步中</h2>
         <div id="loadingMsg" class="text-slate-400 text-sm text-center px-8 space-y-2">
-            <p>正在讀取 POI.kml 與 template.xlsx...</p>
+            <p>正在連接雲端並載入資源...</p>
         </div>
     </div>
 
-    <!-- 地圖主體 -->
     <div id="map"></div>
 
-    <!-- 頂部狀態列 -->
+    <!-- 狀態列 -->
     <div class="absolute top-4 left-4 right-4 z-[1000] pointer-events-none">
         <div class="bg-white/95 backdrop-blur-md p-3 rounded-2xl shadow-2xl flex justify-between items-center pointer-events-auto border border-white/20">
             <div class="flex items-center gap-2">
                 <div id="statusIndicator" class="w-2.5 h-2.5 rounded-full bg-yellow-500 animate-pulse"></div>
                 <h1 class="text-lg font-black text-slate-800 tracking-tighter italic">外業全能拍照系統</h1>
             </div>
-            <div id="statusTag" class="bg-slate-100 text-slate-500 text-[10px] px-2.5 py-1 rounded-full font-black uppercase tracking-tighter">連接中</div>
+            <div id="statusTag" class="bg-slate-100 text-slate-500 text-[10px] px-2.5 py-1 rounded-full font-black uppercase tracking-tighter">同步中</div>
         </div>
     </div>
 
-    <!-- 底部操作面板 -->
+    <!-- 操作面板 -->
     <div id="actionPanel" class="fixed bottom-0 left-0 right-0 z-[2000] bg-white rounded-t-[2.5rem] shadow-[0_-15px_50px_rgba(0,0,0,0.4)] p-6 pb-12 border-t border-slate-100">
         <div class="w-12 h-1.5 bg-slate-200 rounded-full mx-auto mb-6"></div>
         
@@ -121,7 +121,7 @@
             <div class="space-y-3">
                 <button id="shareBtn" class="w-full bg-emerald-600 text-white font-black py-5 rounded-2xl shadow-xl btn-active text-lg flex items-center justify-center gap-3">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z" /></svg>
-                    產生圖卡並分享/存雲端
+                    產生圖卡並存至雲端
                 </button>
                 <div class="grid grid-cols-2 gap-3">
                     <button id="exportBtn" class="bg-slate-100 text-slate-600 font-bold py-4 rounded-2xl btn-active text-sm shadow-sm">
@@ -137,97 +137,130 @@
         <input type="file" id="cameraInput" accept="image/*" capture="camera" class="hidden">
     </div>
 
-    <script>
+    <script type="module">
+        /**
+         * --- 重要：在此填入您的 Firebase 配置 ---
+         * 您可以從 Firebase Console -> 專案設定 -> 一般 -> 您的應用程式 -> SDK 設定與配置 中找到這段程式碼
+         */
+        const manualFirebaseConfig = {
+              apiKey: "AIzaSyAQtyOTpKY3ajw6u4spxwLyFZDw19xhQEE",
+              authDomain: "fieldsurveyproject-cba4e.firebaseapp.com",
+              projectId: "fieldsurveyproject-cba4e",
+              storageBucket: "fieldsurveyproject-cba4e.firebasestorage.app",
+              messagingSenderId: "118885164027",
+              appId: "1:118885164027:web:d8a0e0478eddfc48ba615e"
+        };
+        // ----------------------------------------
+
         let map, markersLayer, userLocationMarker, selectedPoint = null, templateData = null, capturedPhotoBase64 = null, selectedMarker = null;
-        let finishedPoints = new Set(); // 記錄已完成的點位
+        let finishedPoints = new Set();
+        let db, auth, user, appId;
         const XLSX_MIME = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
 
         window.onload = async function() {
             initMap();
+            await initFirebase();
             await autoLoadAssets();
         };
 
+        async function initFirebase() {
+            const { initializeApp, getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged, getFirestore, collection, onSnapshot } = window.firebaseCore;
+            
+            let config = manualFirebaseConfig;
+
+            // 檢查是否已填入有效配置，若無則嘗試讀取系統環境變數
+            if (!config || config.apiKey.startsWith("您的")) {
+                try {
+                    config = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : null;
+                } catch (e) { config = null; }
+            }
+
+            if (!config) {
+                document.getElementById('loadingMsg').innerHTML = `
+                    <div class="text-amber-400 font-bold mb-4">尚未設定 Firebase</div>
+                    <div class="text-xs text-slate-300 text-left px-6">
+                        請編輯 <span class="text-white">index.html</span> 並在第 106 行的 <span class="text-white">manualFirebaseConfig</span> 填入您的 Firebase 配置。<br><br>
+                        如果您在本地執行且不需要儲存功能，系統將無法正常同步進度。
+                    </div>
+                `;
+                return;
+            }
+
+            const app = initializeApp(config);
+            auth = getAuth(app);
+            db = getFirestore(app);
+            appId = typeof __app_id !== 'undefined' ? __app_id : 'field-survey-app';
+
+            // 認證邏輯
+            const initAuth = async () => {
+                if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
+                    await signInWithCustomToken(auth, __initial_auth_token);
+                } else {
+                    await signInAnonymously(auth);
+                }
+            };
+            await initAuth();
+
+            return new Promise((resolve) => {
+                onAuthStateChanged(auth, (u) => {
+                    user = u;
+                    if (user) {
+                        // 監聽雲端儲存的已完成點位
+                        const finishedCol = collection(db, 'artifacts', appId, 'users', user.uid, 'finished_points');
+                        onSnapshot(finishedCol, (snapshot) => {
+                            finishedPoints.clear();
+                            snapshot.forEach(doc => finishedPoints.add(doc.id));
+                            refreshMarkers();
+                        }, (error) => console.error("Firebase 同步失敗:", error));
+                    }
+                    resolve();
+                });
+            });
+        }
+
         function initMap() {
             map = L.map('map', { zoomControl: false }).setView([23.5, 121], 7);
-            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                attribution: '© OpenStreetMap contributors'
-            }).addTo(map);
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { attribution: '© OSM' }).addTo(map);
             markersLayer = L.layerGroup().addTo(map);
             L.control.zoom({ position: 'topright' }).addTo(map);
 
-            // 自定義定位按鈕
             const LocateControl = L.Control.extend({
                 options: { position: 'topright' },
                 onAdd: function() {
                     const container = L.DomUtil.create('div', 'leaflet-control-locate');
                     container.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-slate-700" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4-1.79-4-4-4zm8.94 3c-.46-4.17-3.77-7.48-7.94-7.94V1h-2v2.06C6.83 3.52 3.52 6.83 3.06 11H1v2h2.06c.46 4.17 3.77 7.48 7.94 7.94V23h2v-2.06c4.17-.46 7.48-3.77 7.94-7.94H23v-2h-2.06z" /></svg>`;
-                    container.title = "我的位置";
-                    container.onclick = function() {
-                        map.locate({ setView: true, maxZoom: 16 });
-                    };
+                    container.onclick = () => map.locate({ setView: true, maxZoom: 16 });
                     return container;
                 }
             });
             map.addControl(new LocateControl());
 
-            // 定位成功與失敗監聽
             map.on('locationfound', (e) => {
                 if (userLocationMarker) map.removeLayer(userLocationMarker);
-                userLocationMarker = L.circleMarker(e.latlng, {
-                    radius: 8,
-                    fillColor: "#3b82f6",
-                    color: "white",
-                    weight: 2,
-                    opacity: 1,
-                    fillOpacity: 0.8
-                }).addTo(map);
-            });
-            map.on('locationerror', (e) => {
-                console.warn("定位失敗:", e.message);
+                userLocationMarker = L.circleMarker(e.latlng, { radius: 8, fillColor: "#3b82f6", color: "white", weight: 2, fillOpacity: 0.8 }).addTo(map);
             });
         }
 
         async function autoLoadAssets() {
             const loadingMsg = document.getElementById('loadingMsg');
-            const baseUrl = './'; 
-            
             try {
-                const kmlRes = await fetch(baseUrl + 'POI.kml');
+                const kmlRes = await fetch('./POI.kml');
                 if (!kmlRes.ok) throw new Error('讀取 POI.kml 失敗');
                 const kmlText = await kmlRes.text();
-                plotPoints(parseKML(kmlText));
+                window.allPoints = parseKML(kmlText); 
+                plotPoints(window.allPoints);
 
-                const xlsxRes = await fetch(baseUrl + 'template.xlsx');
+                const xlsxRes = await fetch('./template.xlsx');
                 if (!xlsxRes.ok) throw new Error('讀取 template.xlsx 失敗');
                 templateData = await xlsxRes.arrayBuffer();
 
                 document.getElementById('loading').style.display = 'none';
-                document.getElementById('statusTag').textContent = '資料同步成功';
+                document.getElementById('statusTag').textContent = '雲端同步就緒';
                 document.getElementById('statusIndicator').className = 'w-2.5 h-2.5 rounded-full bg-emerald-500';
             } catch (err) {
-                console.error("初始化失敗:", err);
-                loadingMsg.innerHTML = `
-                    <div class="text-red-400 font-bold mb-4 text-lg text-center">自動載入失敗</div>
-                    <p class="text-xs text-slate-300 px-6 mb-6 text-center">${err.message}</p>
-                    <div class="flex flex-col gap-3 w-full max-w-xs mx-auto text-black">
-                        <input type="file" id="manualKml" accept=".kml" class="text-xs bg-slate-800 text-white p-2 rounded">
-                        <input type="file" id="manualXlsx" accept=".xlsx" class="text-xs bg-slate-800 text-white p-2 rounded">
-                    </div>
-                `;
-                document.getElementById('manualKml')?.addEventListener('change', async (e) => {
-                    const text = await e.target.files[0].text();
-                    plotPoints(parseKML(text));
-                    checkReady();
-                });
-                document.getElementById('manualXlsx')?.addEventListener('change', async (e) => {
-                    templateData = await e.target.files[0].arrayBuffer();
-                    checkReady();
-                });
+                console.error(err);
+                loadingMsg.innerHTML = `<div class="text-red-400">自動載入失敗: ${err.message}</div>`;
             }
-        }
-
-        function checkReady() {
-            if (templateData && markersLayer.getLayers().length > 0) document.getElementById('loading').style.display = 'none';
         }
 
         function parseKML(text) {
@@ -250,7 +283,7 @@
         function plotPoints(points) {
             markersLayer.clearLayers();
             points.forEach(p => {
-                if (isNaN(p.lat) || isNaN(p.lng)) return;
+                const isFinished = finishedPoints.has(p.id);
                 const m = L.marker([p.lat, p.lng]).on('click', () => {
                     if (selectedMarker) {
                         const el = selectedMarker.getElement();
@@ -259,16 +292,14 @@
                     selectedMarker = m;
                     const el = m.getElement();
                     if (el) el.classList.add('selected-marker');
-                    
                     selectedPoint = p;
                     document.getElementById('actionPanel').classList.add('show');
                     document.getElementById('selectedId').textContent = p.id;
                     document.getElementById('selectedCoords').textContent = `LAT: ${p.lat.toFixed(6)} / LNG: ${p.lng.toFixed(6)}`;
                     resetUIState();
                 });
-                
                 markersLayer.addLayer(m);
-                if (finishedPoints.has(p.id)) {
+                if (isFinished) {
                     m.on('add', () => {
                         const el = m.getElement();
                         if (el) el.classList.add('finished-marker');
@@ -278,14 +309,23 @@
             if (points.length > 0) map.fitBounds(markersLayer.getLayers().map(l => l.getLatLng()), { padding: [60, 60] });
         }
 
+        function refreshMarkers() {
+            markersLayer.eachLayer(m => {
+                const latlng = m.getLatLng();
+                const p = window.allPoints?.find(pt => Math.abs(pt.lat - latlng.lat) < 0.00001 && Math.abs(pt.lng - latlng.lng) < 0.00001);
+                const el = m.getElement();
+                if (p && finishedPoints.has(p.id) && el) {
+                    el.classList.add('finished-marker');
+                }
+            });
+        }
+
         const cameraBtn = document.getElementById('cameraBtn');
         const cameraInput = document.getElementById('cameraInput');
         cameraBtn.onclick = () => cameraInput.click();
         document.getElementById('retakeBtn').onclick = () => cameraInput.click();
-
         cameraInput.onchange = e => {
-            const file = e.target.files[0];
-            if (!file) return;
+            if (!e.target.files[0]) return;
             const reader = new FileReader();
             reader.onload = ev => {
                 capturedPhotoBase64 = ev.target.result;
@@ -293,12 +333,11 @@
                 document.getElementById('captureArea').classList.add('hidden');
                 document.getElementById('previewArea').classList.remove('hidden');
             };
-            reader.readAsDataURL(file);
+            reader.readAsDataURL(e.target.files[0]);
         };
 
         document.getElementById('closePanelBtn').onclick = closePanel;
         document.getElementById('finishBtn').onclick = closePanel;
-
         function closePanel() {
             document.getElementById('actionPanel').classList.remove('show');
             if (selectedMarker) {
@@ -307,43 +346,31 @@
             }
             resetUIState();
         }
-
         function resetUIState() {
             capturedPhotoBase64 = null;
             document.getElementById('captureArea').classList.remove('hidden');
             document.getElementById('previewArea').classList.add('hidden');
         }
-
         document.getElementById('navBtn').onclick = () => {
-            if (selectedPoint) {
-                const url = `https://www.google.com/maps/dir/?api=1&destination=${selectedPoint.lat},${selectedPoint.lng}`;
-                window.open(url, '_blank');
-            }
+            if (selectedPoint) window.open(`https://www.google.com/maps/dir/?api=1&destination=${selectedPoint.lat},${selectedPoint.lng}`, '_blank');
         };
 
-        function getImageDimensions(base64) {
-            return new Promise((resolve) => {
-                const img = new Image();
-                img.onload = () => resolve({ width: img.width, height: img.height });
-                img.src = base64;
-            });
+        async function saveFinishedState(pointId) {
+            if (!user) return;
+            const { doc, setDoc } = window.firebaseCore;
+            const docRef = doc(db, 'artifacts', appId, 'users', user.uid, 'finished_points', pointId);
+            await setDoc(docRef, { finished: true, timestamp: Date.now() });
         }
 
-        /**
-         * 核心生成邏輯：修正填入位置、照片比例與點位變色
-         */
         async function generateExcel() {
             if (!templateData || !capturedPhotoBase64) throw new Error("資料尚未就緒");
-            
             const workbook = new ExcelJS.Workbook();
             await workbook.xlsx.load(templateData);
             const imageId = workbook.addImage({ base64: capturedPhotoBase64, extension: 'png' });
-
-            // 計算照片尺寸：高度固定 6cm (約 227 像素)，寬度依比例縮放
-            const targetHeightPx = 227; 
-            const dims = await getImageDimensions(capturedPhotoBase64);
-            const aspectRatio = dims.width / dims.height;
-            const targetWidthPx = targetHeightPx * aspectRatio;
+            
+            const targetHeightPx = 227; // 6cm
+            const dims = await new Promise(r => { const i = new Image(); i.onload = () => r({w:i.width,h:i.height}); i.src = capturedPhotoBase64; });
+            const targetWidthPx = targetHeightPx * (dims.w / dims.h);
 
             workbook.eachSheet(sheet => {
                 let photoInserted = false;
@@ -351,18 +378,10 @@
                     row.eachCell({ includeEmpty: true }, (cell, colNumber) => {
                         if (cell.address !== cell.master.address) return;
                         const val = cell.value ? String(cell.value).trim() : "";
-                        
-                        // 1. 照片插入 (高度固定 6cm, 比例保護)
                         if (!photoInserted && val.includes("現場照片")) {
-                            sheet.addImage(imageId, {
-                                tl: { col: colNumber - 1 + 0.1, row: rowNumber + 0.1 },
-                                ext: { width: targetWidthPx, height: targetHeightPx }, 
-                                editAs: 'oneCell'
-                            });
+                            sheet.addImage(imageId, { tl: { col: colNumber - 1 + 0.1, row: rowNumber + 0.1 }, ext: { width: targetWidthPx, height: targetHeightPx }, editAs: 'oneCell' });
                             photoInserted = true; 
                         }
-
-                        // 2. 編號填入 (填入下方儲存格 - 黃色區塊)
                         if (val === "編號") {
                             const cellBelow = sheet.getRow(rowNumber + 1).getCell(colNumber);
                             cellBelow.value = selectedPoint.id;
@@ -371,38 +390,29 @@
                 });
             });
 
-            // 更新已完成點位與地圖顏色
             if (selectedPoint) {
-                finishedPoints.add(selectedPoint.id);
-                if (selectedMarker) {
-                    const el = selectedMarker.getElement();
-                    if (el) el.classList.add('finished-marker');
-                }
+                await saveFinishedState(selectedPoint.id);
             }
-
             const buffer = await workbook.xlsx.writeBuffer();
             return new Blob([buffer], { type: XLSX_MIME });
         }
 
         document.getElementById('shareBtn').onclick = async () => {
             try {
-                showLoadingMask(true, "整合圖卡成果中...");
+                showLoadingMask(true, "處理並同步進度中...");
                 const blob = await generateExcel();
                 const fileName = `${selectedPoint.id}_成果圖卡.xlsx`;
                 const file = new File([blob], fileName, { type: XLSX_MIME });
-
                 if (navigator.share && navigator.canShare({ files: [file] })) {
                     await navigator.share({ files: [file], title: '成果分享', text: `點號: ${selectedPoint.id}` });
-                } else {
-                    triggerDownload(blob, fileName);
-                }
+                } else { triggerDownload(blob, fileName); }
             } catch (err) { alert(err.message); }
             showLoadingMask(false);
         };
 
         document.getElementById('exportBtn').onclick = async () => {
             try {
-                showLoadingMask(true, "生成 Excel 檔案中...");
+                showLoadingMask(true, "產生成果檔案中...");
                 const blob = await generateExcel();
                 triggerDownload(blob, `${selectedPoint.id}_成果圖卡.xlsx`);
             } catch (err) { alert(err.message); }
