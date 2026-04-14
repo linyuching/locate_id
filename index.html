@@ -42,6 +42,9 @@
         #actionPanel::-webkit-scrollbar { display: none; }
         #actionPanel.show { transform: translateY(0); }
         
+        /* 增加地圖控制項的邊距，避開頂部狀態列 */
+        .leaflet-top { margin-top: 80px; }
+
         .selected-marker { filter: hue-rotate(240deg) brightness(1.2); transform: scale(1.3); transition: all 0.3s; z-index: 999 !important; }
         .finished-marker { filter: hue-rotate(90deg) brightness(1.1) saturate(1.5); opacity: 0.9; }
         
@@ -115,19 +118,14 @@
                 <button id="retakeBtn" class="absolute bottom-4 right-4 bg-white/90 backdrop-blur-md px-4 py-2 rounded-full text-xs font-black text-slate-800 shadow-xl border border-white/50 btn-active">重新拍攝</button>
             </div>
             
-            <div class="space-y-3">
-                <button id="shareBtn" class="w-full bg-emerald-600 text-white font-black py-5 rounded-2xl shadow-xl btn-active text-lg flex items-center justify-center gap-3">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z" /></svg>
-                    產生圖卡並上傳同步
+            <div class="space-y-4">
+                <button id="exportBtn" class="w-full bg-emerald-600 text-white font-black py-5 rounded-2xl shadow-xl btn-active text-lg flex items-center justify-center gap-3">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" /></svg>
+                    產生成果並下載 Excel
                 </button>
-                <div class="grid grid-cols-2 gap-3">
-                    <button id="exportBtn" class="bg-slate-100 text-slate-600 font-bold py-4 rounded-2xl btn-active text-sm shadow-sm">
-                        僅下載 Excel
-                    </button>
-                    <button id="finishBtn" class="bg-blue-50 text-blue-700 font-black py-4 rounded-2xl btn-active text-sm shadow-sm border border-blue-100">
-                        關閉面板
-                    </button>
-                </div>
+                <button id="finishBtn" class="w-full bg-slate-100 text-slate-600 font-black py-4 rounded-2xl btn-active text-sm shadow-sm border border-slate-200">
+                    取消並回地圖
+                </button>
             </div>
         </div>
 
@@ -135,7 +133,7 @@
     </div>
 
     <script type="module">
-        // 預設備份配置 (僅供本地測試)
+        // 預設備份配置
         const backupConfig = {
             apiKey: "AIzaSyAQtyOTpKY3ajw6u4spxwLyFZDw19xhQEE",
             authDomain: "fieldsurveyproject-cba4e.firebaseapp.com",
@@ -159,7 +157,6 @@
         async function initFirebase() {
             const { initializeApp, getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged, getFirestore, collection, onSnapshot } = window.firebaseCore;
             
-            // 優先讀取環境變數 (Canvas 必要規則)
             let config;
             try {
                 config = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : backupConfig;
@@ -172,7 +169,6 @@
             db = getFirestore(app);
             appId = typeof __app_id !== 'undefined' ? __app_id : 'field-survey-app';
 
-            // 嚴格執行驗證 (規則 3)
             const performAuth = async () => {
                 try {
                     if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
@@ -191,15 +187,13 @@
                 onAuthStateChanged(auth, (u) => {
                     user = u;
                     if (user) {
-                        // 連線成功後開始監聽 (規則 1 路徑)
                         const publicDataCol = collection(db, 'artifacts', appId, 'public', 'data', 'finished_points');
                         onSnapshot(publicDataCol, (snapshot) => {
                             finishedPoints.clear();
                             snapshot.forEach(doc => finishedPoints.set(doc.id, doc.data()));
                             refreshMarkers();
                         }, (error) => {
-                            console.error("Firestore Permission Error:", error);
-                            document.getElementById('statusTag').textContent = "權限錯誤";
+                            console.error("Firestore Error:", error);
                         });
                     }
                     resolve();
@@ -212,8 +206,10 @@
             L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { attribution: '© OSM' }).addTo(map);
             markersLayer = L.layerGroup().addTo(map);
 
+            L.control.zoom({ position: 'topleft' }).addTo(map);
+
             const LocateControl = L.Control.extend({
-                options: { position: 'topright' },
+                options: { position: 'topleft' },
                 onAdd: function() {
                     const container = L.DomUtil.create('div', 'leaflet-control-locate');
                     container.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-slate-700" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4-1.79-4-4-4zm8.94 3c-.46-4.17-3.77-7.48-7.94-7.94V1h-2v2.06C6.83 3.52 3.52 6.83 3.06 11H1v2h2.06c.46 4.17 3.77 7.48 7.94 7.94V23h2v-2.06c4.17-.46 7.48-3.77 7.94-7.94H23v-2h-2.06z" /></svg>`;
@@ -270,6 +266,13 @@
             markersLayer.clearLayers();
             points.forEach(p => {
                 const m = L.marker([p.lat, p.lng]).on('click', () => {
+                    // 1. 視覺強化：點擊時移動並放大到該點
+                    map.flyTo([p.lat, p.lng], 18, {
+                        animate: true,
+                        duration: 0.8
+                    });
+
+                    // 2. 標記狀態管理
                     if (selectedMarker) {
                         const el = selectedMarker.getElement();
                         if (el) el.classList.remove('selected-marker');
@@ -277,6 +280,8 @@
                     selectedMarker = m;
                     const el = m.getElement();
                     if (el) el.classList.add('selected-marker');
+                    
+                    // 3. UI 狀態更新
                     selectedPoint = p;
                     document.getElementById('actionPanel').classList.add('show');
                     document.getElementById('selectedId').textContent = p.id;
@@ -362,12 +367,8 @@
         };
 
         async function saveFinishedState(pointId) {
-            if (!user) {
-                console.error("User not authenticated");
-                return;
-            }
+            if (!user) return;
             const { doc, setDoc } = window.firebaseCore;
-            // 規則 1: 存至 public/data
             const docRef = doc(db, 'artifacts', appId, 'public', 'data', 'finished_points', pointId);
             try {
                 await setDoc(docRef, { 
@@ -377,7 +378,6 @@
                 });
             } catch (err) {
                 console.error("Save Error:", err);
-                throw new Error("無法同步至雲端，請確認權限設定。");
             }
         }
 
@@ -417,35 +417,15 @@
             return new Blob([buffer], { type: XLSX_MIME });
         }
 
-        document.getElementById('shareBtn').onclick = async () => {
-            try {
-                showLoadingMask(true, "正在同步雲端狀態...");
-                // 優先同步雲端，再產生檔案
-                await saveFinishedState(selectedPoint.id);
-                
-                showLoadingMask(true, "正在產生成果圖卡...");
-                const blob = await generateExcel();
-
-                const fileName = `${selectedPoint.id}_調查成果.xlsx`;
-                const file = new File([blob], fileName, { type: XLSX_MIME });
-                
-                if (navigator.share && navigator.canShare({ files: [file] })) {
-                    await navigator.share({ files: [file], title: '外業成果分享', text: `編號: ${selectedPoint.id}` });
-                } else { 
-                    triggerDownload(blob, fileName); 
-                }
-            } catch (err) { 
-                console.error(err);
-                alert(err.message); 
-            }
-            showLoadingMask(false);
-        };
-
         document.getElementById('exportBtn').onclick = async () => {
             try {
-                showLoadingMask(true, "產生成果檔案中...");
+                showLoadingMask(true, "產生成果並同步雲端...");
+                if (selectedPoint) {
+                    await saveFinishedState(selectedPoint.id);
+                }
                 const blob = await generateExcel();
-                triggerDownload(blob, `${selectedPoint.id}_僅下載.xlsx`);
+                triggerDownload(blob, `${selectedPoint.id}_成果圖卡.xlsx`);
+                setTimeout(closePanel, 500);
             } catch (err) { alert(err.message); }
             showLoadingMask(false);
         };
