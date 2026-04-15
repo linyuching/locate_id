@@ -121,7 +121,7 @@
             <div class="space-y-4">
                 <button id="exportBtn" class="w-full bg-emerald-600 text-white font-black py-5 rounded-2xl shadow-xl btn-active text-lg flex items-center justify-center gap-3">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" /></svg>
-                    匯出成果圖卡 (.xlsx)
+                    匯出記錄與圖卡 (.xlsx)
                 </button>
                 <button id="finishBtn" class="w-full bg-slate-100 text-slate-600 font-black py-4 rounded-2xl btn-active text-sm shadow-sm border border-slate-200">
                     取消並回地圖
@@ -464,13 +464,39 @@
             showLoadingMask(false);
         };
 
+        /**
+         * 優化版下載函式 (相容手機)
+         */
         function triggerDownload(blob, fileName) {
-            const a = document.createElement("a");
             const url = URL.createObjectURL(blob);
+            const a = document.createElement("a");
+            
+            // 重要：部分瀏覽器需要將元素掛載到 DOM 才能下載
+            a.style.display = "none";
             a.href = url;
             a.download = fileName;
-            a.click();
-            setTimeout(() => URL.revokeObjectURL(url), 100);
+            document.body.appendChild(a);
+            
+            try {
+                a.click();
+            } catch (e) {
+                console.error("下載點擊失敗", e);
+                // 備用方案：直接跳轉網址 (部分環境適用)
+                window.location.href = url;
+            }
+            
+            // 延遲移除，確保啟動下載過程
+            setTimeout(() => {
+                document.body.removeChild(a);
+                // 手機版延長 revoke 時間，避免下載中斷
+                URL.revokeObjectURL(url);
+            }, 10000); 
+
+            // 針對 LINE/FB 的提示
+            const isInsideApp = /Line|FBAN|FBAV|Messenger/i.test(navigator.userAgent);
+            if (isInsideApp) {
+                alert("偵測到您正在使用社群 App 內建瀏覽器，若下載未啟動，請點選右上方按鈕並選擇「以預設瀏覽器開啟」。");
+            }
         }
 
         function showLoadingMask(s, t) {
