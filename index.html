@@ -41,12 +41,9 @@
         }
         #actionPanel::-webkit-scrollbar { display: none; }
         #actionPanel.show { transform: translateY(0); }
-        
         .leaflet-top { margin-top: 80px; }
-
         .selected-marker { filter: hue-rotate(240deg) brightness(1.2); transform: scale(1.3); transition: all 0.3s; z-index: 999 !important; }
         .finished-marker { filter: hue-rotate(90deg) brightness(1.1) saturate(1.5); opacity: 0.9; }
-        
         .leaflet-control-locate {
             background: white;
             width: 34px; height: 34px;
@@ -58,7 +55,6 @@
 </head>
 <body class="bg-slate-900 min-h-screen overflow-hidden">
 
-    <!-- 初始化遮罩 -->
     <div id="loading" class="loading-overlay">
         <div class="animate-spin rounded-full h-16 w-16 border-t-4 border-blue-500 mb-6"></div>
         <h2 class="text-xl font-bold mb-2 tracking-tight text-center px-4">系統資料同步中</h2>
@@ -69,7 +65,6 @@
 
     <div id="map"></div>
 
-    <!-- 狀態列 -->
     <div class="absolute top-4 left-4 right-4 z-[1000] pointer-events-none">
         <div class="bg-white/95 backdrop-blur-md p-3 rounded-2xl shadow-2xl flex justify-between items-center pointer-events-auto border border-white/20">
             <div class="flex items-center gap-2">
@@ -80,13 +75,12 @@
         </div>
     </div>
 
-    <!-- 操作面板 -->
     <div id="actionPanel" class="fixed bottom-0 left-0 right-0 z-[2000] bg-white rounded-t-[2.5rem] shadow-[0_-15px_50px_rgba(0,0,0,0.4)] p-6 pb-12 border-t border-slate-100">
         <div class="w-12 h-1.5 bg-slate-200 rounded-full mx-auto mb-6"></div>
         
         <div class="flex justify-between items-start mb-6">
             <div class="flex-1">
-                <span class="text-[10px] font-black text-blue-600 uppercase tracking-widest bg-blue-50 px-2 py-0.5 rounded-md">目前選定點位 (Unific ID)</span>
+                <span class="text-[10px] font-black text-blue-600 uppercase tracking-widest bg-blue-50 px-2 py-0.5 rounded-md">目前選定點位</span>
                 <h2 class="text-2xl font-black text-slate-900 mt-2 break-all leading-tight" id="selectedId">讀取中</h2>
                 <p id="selectedCoords" class="text-xs font-mono text-slate-400 mt-2 tracking-tighter"></p>
                 <p id="selectedLoc" class="text-xs text-slate-500 mt-1 font-medium"></p>
@@ -121,7 +115,7 @@
             <div class="space-y-4">
                 <button id="exportBtn" class="w-full bg-emerald-600 text-white font-black py-5 rounded-2xl shadow-xl btn-active text-lg flex items-center justify-center gap-3">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" /></svg>
-                    匯出記錄與圖卡 (.xlsx)
+                    匯出成果圖卡 (.xlsx)
                 </button>
                 <button id="finishBtn" class="w-full bg-slate-100 text-slate-600 font-black py-4 rounded-2xl btn-active text-sm shadow-sm border border-slate-200">
                     取消並回地圖
@@ -155,49 +149,32 @@
 
         async function initFirebase() {
             const { initializeApp, getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged, getFirestore, collection, onSnapshot } = window.firebaseCore;
-            
             let config;
-            try {
-                config = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : backupConfig;
-            } catch (e) { config = backupConfig; }
-
+            try { config = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : backupConfig; } catch (e) { config = backupConfig; }
             const app = initializeApp(config);
             auth = getAuth(app);
             db = getFirestore(app);
             appId = typeof __app_id !== 'undefined' ? __app_id : 'field-survey-app';
 
-            const performAuth = async () => {
-                try {
-                    if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
-                        await signInWithCustomToken(auth, __initial_auth_token);
-                    } else { await signInAnonymously(auth); }
-                } catch (err) { console.error("Auth Failed:", err); }
-            };
-
-            await performAuth();
-
-            return new Promise((resolve) => {
-                onAuthStateChanged(auth, (u) => {
-                    user = u;
-                    if (user) {
-                        const publicDataCol = collection(db, 'artifacts', appId, 'public', 'data', 'finished_points');
-                        onSnapshot(publicDataCol, (snapshot) => {
-                            finishedPoints.clear();
-                            snapshot.forEach(doc => finishedPoints.set(doc.id, doc.data()));
-                            refreshMarkers();
-                        }, (error) => { console.error("Firestore Error:", error); });
-                    }
-                    resolve();
-                });
+            onAuthStateChanged(auth, (u) => {
+                user = u;
+                if (user) {
+                    const publicDataCol = collection(db, 'artifacts', appId, 'public', 'data', 'finished_points');
+                    onSnapshot(publicDataCol, (snapshot) => {
+                        finishedPoints.clear();
+                        snapshot.forEach(doc => finishedPoints.set(doc.id, doc.data()));
+                        refreshMarkers();
+                    });
+                } else {
+                    signInAnonymously(auth);
+                }
             });
         }
 
         function initMap() {
             map = L.map('map', { zoomControl: false, maxZoom: 20 }).setView([23.5, 121], 7);
-            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { attribution: '© OSM' }).addTo(map);
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
             markersLayer = L.layerGroup().addTo(map);
-            L.control.zoom({ position: 'topleft' }).addTo(map);
-
             const LocateControl = L.Control.extend({
                 options: { position: 'topleft' },
                 onAdd: function() {
@@ -208,31 +185,21 @@
                 }
             });
             map.addControl(new LocateControl());
-
-            map.on('locationfound', (e) => {
-                if (userLocationMarker) map.removeLayer(userLocationMarker);
-                userLocationMarker = L.circleMarker(e.latlng, { radius: 8, fillColor: "#3b82f6", color: "white", weight: 2, fillOpacity: 0.8 }).addTo(map);
-            });
         }
 
         async function autoLoadAssets() {
             try {
                 const kmlRes = await fetch('./POI.kml');
-                if (!kmlRes.ok) throw new Error('讀取 POI.kml 失敗');
                 const kmlText = await kmlRes.text();
                 window.allPoints = parseKML(kmlText); 
                 plotPoints(window.allPoints);
 
                 const xlsxRes = await fetch('./template.xlsx');
-                if (!xlsxRes.ok) throw new Error('讀取 template.xlsx 失敗');
                 templateData = await xlsxRes.arrayBuffer();
 
                 document.getElementById('loading').style.display = 'none';
-                document.getElementById('statusTag').textContent = '團隊同步中';
                 document.getElementById('statusIndicator').className = 'w-2.5 h-2.5 rounded-full bg-emerald-500';
-            } catch (err) {
-                document.getElementById('loadingMsg').innerHTML = `<div class="text-red-400">載入失敗: ${err.message}</div>`;
-            }
+            } catch (err) { console.error(err); }
         }
 
         function parseKML(text) {
@@ -240,38 +207,19 @@
             const xml = parser.parseFromString(text, "text/xml");
             const placemarks = xml.getElementsByTagName("Placemark");
             const results = [];
-
             for (let i = 0; i < placemarks.length; i++) {
                 const p = placemarks[i];
                 const name = p.getElementsByTagName("name")[0]?.textContent || "未命名";
-                const description = p.getElementsByTagName("description")[0]?.textContent || "";
+                const desc = p.getElementsByTagName("description")[0]?.textContent || "";
                 const coords = p.getElementsByTagName("coordinates")[0]?.textContent?.trim();
                 
-                let unific_id = name;
                 let bury_loc = "";
-                let type = "";
-
-                if (description) {
-                    const idMatch = description.match(/unific_id:\s*([^<|\n|\r]+)/i);
-                    const locMatch = description.match(/bury_loc:\s*([^<|\n|\r]+)/i);
-                    const typeMatch = description.match(/閥栓種類:\s*([^<|\n|\r]+)/i);
-
-                    if (idMatch) unific_id = idMatch[1].trim();
-                    if (locMatch) bury_loc = locMatch[1].trim();
-                    if (typeMatch) type = typeMatch[1].trim();
-                }
+                const locMatch = desc.match(/bury_loc:\s*([^<|\n|\r]+)/i);
+                if (locMatch) bury_loc = locMatch[1].trim();
 
                 if (coords) {
                     const parts = coords.split(",");
-                    if (parts.length >= 2) {
-                        results.push({ 
-                            id: unific_id, 
-                            lat: parseFloat(parts[1]), 
-                            lng: parseFloat(parts[0]),
-                            bury_loc: bury_loc,
-                            type: type
-                        });
-                    }
+                    results.push({ id: name, lat: parseFloat(parts[1]), lng: parseFloat(parts[0]), bury_loc: bury_loc });
                 }
             }
             return results;
@@ -281,16 +229,10 @@
             markersLayer.clearLayers();
             points.forEach(p => {
                 const m = L.marker([p.lat, p.lng]).on('click', () => {
-                    map.flyTo([p.lat, p.lng], 18, { animate: true, duration: 0.8 });
-
-                    if (selectedMarker) {
-                        const el = selectedMarker.getElement();
-                        if (el) el.classList.remove('selected-marker');
-                    }
+                    map.flyTo([p.lat, p.lng], 18);
+                    if (selectedMarker) { selectedMarker.getElement()?.classList.remove('selected-marker'); }
                     selectedMarker = m;
-                    const el = m.getElement();
-                    if (el) el.classList.add('selected-marker');
-                    
+                    m.getElement()?.classList.add('selected-marker');
                     selectedPoint = p;
                     document.getElementById('actionPanel').classList.add('show');
                     document.getElementById('selectedId').textContent = p.id;
@@ -300,152 +242,85 @@
                 });
                 markersLayer.addLayer(m);
             });
-            refreshMarkers();
-            if (points.length > 0) map.fitBounds(markersLayer.getLayers().map(l => l.getLatLng()), { padding: [60, 60] });
         }
 
         function refreshMarkers() {
             markersLayer.eachLayer(m => {
                 const latlng = m.getLatLng();
-                const p = window.allPoints?.find(pt => Math.abs(pt.lat - latlng.lat) < 0.0001 && Math.abs(pt.lng - latlng.lng) < 0.0001);
-                const el = m.getElement();
-                if (p && finishedPoints.has(p.id) && el) { el.classList.add('finished-marker'); } 
-                else if (el) { el.classList.remove('finished-marker'); }
-            });
-        }
-
-        async function processImage(file) {
-            return new Promise((resolve) => {
-                const reader = new FileReader();
-                reader.onload = (e) => {
-                    const img = new Image();
-                    img.onload = () => {
-                        const canvas = document.createElement('canvas');
-                        const MAX_WIDTH = 1200;
-                        let width = img.width;
-                        let height = img.height;
-                        if (width > MAX_WIDTH) { height *= MAX_WIDTH / width; width = MAX_WIDTH; }
-                        canvas.width = width;
-                        canvas.height = height;
-                        const ctx = canvas.getContext('2d');
-                        ctx.drawImage(img, 0, 0, width, height);
-                        resolve(canvas.toDataURL('image/jpeg', 0.8));
-                    };
-                    img.src = e.target.result;
-                };
-                reader.readAsDataURL(file);
+                const p = window.allPoints?.find(pt => Math.abs(pt.lat - latlng.lat) < 0.0001);
+                if (p && finishedPoints.has(p.id)) { m.getElement()?.classList.add('finished-marker'); }
             });
         }
 
         const cameraInput = document.getElementById('cameraInput');
         document.getElementById('cameraBtn').onclick = () => cameraInput.click();
         document.getElementById('retakeBtn').onclick = () => cameraInput.click();
-        
         cameraInput.onchange = async e => {
             if (!e.target.files[0]) return;
             showLoadingMask(true, "處理照片中...");
-            processedPhotoBase64 = await processImage(e.target.files[0]);
-            document.getElementById('capturedImg').src = processedPhotoBase64;
-            document.getElementById('captureArea').classList.add('hidden');
-            document.getElementById('previewArea').classList.remove('hidden');
-            showLoadingMask(false);
+            const reader = new FileReader();
+            reader.onload = (ev) => {
+                const img = new Image();
+                img.onload = () => {
+                    const canvas = document.createElement('canvas');
+                    const MAX_WIDTH = 1200;
+                    let width = img.width, height = img.height;
+                    if (width > MAX_WIDTH) { height *= MAX_WIDTH / width; width = MAX_WIDTH; }
+                    canvas.width = width; canvas.height = height;
+                    canvas.getContext('2d').drawImage(img, 0, 0, width, height);
+                    processedPhotoBase64 = canvas.toDataURL('image/jpeg', 0.8);
+                    document.getElementById('capturedImg').src = processedPhotoBase64;
+                    document.getElementById('captureArea').classList.add('hidden');
+                    document.getElementById('previewArea').classList.remove('hidden');
+                    showLoadingMask(false);
+                };
+                img.src = ev.target.result;
+            };
+            reader.readAsDataURL(e.target.files[0]);
         };
 
+        function closePanel() { document.getElementById('actionPanel').classList.remove('show'); resetUIState(); }
+        function resetUIState() { processedPhotoBase64 = null; document.getElementById('captureArea').classList.remove('hidden'); document.getElementById('previewArea').classList.add('hidden'); }
         document.getElementById('closePanelBtn').onclick = closePanel;
         document.getElementById('finishBtn').onclick = closePanel;
-        function closePanel() {
-            document.getElementById('actionPanel').classList.remove('show');
-            if (selectedMarker) {
-                const el = selectedMarker.getElement();
-                if (el) el.classList.remove('selected-marker');
-            }
-            resetUIState();
-        }
-        function resetUIState() {
-            processedPhotoBase64 = null;
-            document.getElementById('captureArea').classList.remove('hidden');
-            document.getElementById('previewArea').classList.add('hidden');
-        }
-        document.getElementById('navBtn').onclick = () => {
-            if (selectedPoint) window.open(`https://www.google.com/maps/dir/?api=1&destination=${selectedPoint.lat},${selectedPoint.lng}`, '_blank');
-        };
 
-        async function saveFinishedState(pointId) {
-            if (!user) return;
-            const { doc, setDoc } = window.firebaseCore;
-            const docRef = doc(db, 'artifacts', appId, 'public', 'data', 'finished_points', pointId);
-            try { await setDoc(docRef, { finished: true, timestamp: Date.now(), uid: user.uid }); } 
-            catch (err) { console.error("Save Error:", err); }
-        }
-
-        /**
-         * 修正版 Excel 填入邏輯:
-         * 1. 照片高度固定為 6公分 (約 227 像素)，自動比例縮放。
-         * 2. 「位置」與「編號」填入標籤右側儲存格，不覆蓋標籤。
-         */
         async function generateExcel() {
-            if (!templateData || !processedPhotoBase64) throw new Error("尚未拍攝照片");
             const workbook = new ExcelJS.Workbook();
             await workbook.xlsx.load(templateData);
-            
             const imageId = workbook.addImage({ base64: processedPhotoBase64, extension: 'jpeg' });
             
-            // 設定照片高度為 6公分 (1cm 約等於 37.8 像素)
+            // 高度固定 6cm (約 227 像素)
             const targetHeightPx = 227; 
             const dims = await new Promise(r => { const i = new Image(); i.onload = () => r({w:i.width,h:i.height}); i.src = processedPhotoBase64; });
-            const targetWidthPx = targetHeightPx * (dims.w / dims.h); // 依高度比例計算寬度，確保不變形
+            const targetWidthPx = targetHeightPx * (dims.w / dims.h);
 
-            // 遍歷所有分頁
             workbook.eachSheet((sheet) => {
                 const sheetName = sheet.name.replace(/\s/g, '');
-                let photoInsertedInThisSheet = false;
-
+                let photoInserted = false;
                 sheet.eachRow({ includeEmpty: true }, (row, rowNumber) => {
                     row.eachCell({ includeEmpty: true }, (cell, colNumber) => {
                         const cleanVal = (cell.value ? String(cell.value) : "").replace(/\s/g, '');
-                        
-                        // 1. 填入「位置」: 寫入右側欄位
                         if (cleanVal === "位置") {
-                            // 根據範例圖，跳過合併的標籤儲存格 (通常位移 2 欄可避開標籤)
                             let offset = 1;
-                            // 尋找第一個 master 與標籤不同的儲存格
-                            while (sheet.getRow(rowNumber).getCell(colNumber + offset).master.address === cell.master.address) {
-                                offset++;
-                            }
-                            const targetCell = sheet.getRow(rowNumber).getCell(colNumber + offset);
-                            targetCell.value = selectedPoint.bury_loc || "";
+                            while (sheet.getRow(rowNumber).getCell(colNumber + offset).master.address === cell.master.address) { offset++; }
+                            sheet.getRow(rowNumber).getCell(colNumber + offset).value = selectedPoint.bury_loc || "";
                         }
-
-                        // 2. 填入「編號」: 
                         if (cleanVal === "編號") {
                             if (sheetName.includes("圖卡背面")) {
-                                // 圖卡背面邏輯不變：寫入標籤下方
-                                const targetCell = sheet.getRow(rowNumber + 1).getCell(colNumber);
-                                targetCell.master.value = selectedPoint.id;
+                                sheet.getRow(rowNumber + 1).getCell(colNumber).master.value = selectedPoint.id;
                             } else {
-                                // 制水閥記錄卡：寫入右方儲存格
                                 let offset = 1;
-                                while (sheet.getRow(rowNumber).getCell(colNumber + offset).master.address === cell.master.address) {
-                                    offset++;
-                                }
-                                const targetCell = sheet.getRow(rowNumber).getCell(colNumber + offset);
-                                targetCell.value = selectedPoint.id;
+                                while (sheet.getRow(rowNumber).getCell(colNumber + offset).master.address === cell.master.address) { offset++; }
+                                sheet.getRow(rowNumber).getCell(colNumber + offset).value = selectedPoint.id;
                             }
                         }
-
-                        // 3. 填入照片: 尋找「現場照片」標籤，插入在其下方
-                        if (!photoInsertedInThisSheet && cleanVal.includes("現場照片")) {
-                            sheet.addImage(imageId, { 
-                                tl: { col: colNumber - 1 + 0.1, row: rowNumber + 0.1 }, 
-                                ext: { width: targetWidthPx, height: targetHeightPx }, 
-                                editAs: 'oneCell' 
-                            });
-                            photoInsertedInThisSheet = true; 
+                        if (!photoInserted && cleanVal.includes("現場照片")) {
+                            sheet.addImage(imageId, { tl: { col: colNumber - 1 + 0.1, row: rowNumber + 0.1 }, ext: { width: targetWidthPx, height: targetHeightPx } });
+                            photoInserted = true; 
                         }
                     });
                 });
             });
-
             const buffer = await workbook.xlsx.writeBuffer();
             return new Blob([buffer], { type: XLSX_MIME });
         }
@@ -453,49 +328,30 @@
         document.getElementById('exportBtn').onclick = async () => {
             try {
                 showLoadingMask(true, "產生成果中...");
-                if (selectedPoint) { await saveFinishedState(selectedPoint.id); }
                 const blob = await generateExcel();
                 triggerDownload(blob, `${selectedPoint.id}.xlsx`);
                 setTimeout(closePanel, 500);
-            } catch (err) { 
-                console.error(err);
-                alert("匯出失敗: " + err.message); 
-            }
+            } catch (err) { alert("出錯: " + err.message); }
             showLoadingMask(false);
         };
 
-        /**
-         * 優化版下載函式 (相容手機)
-         */
         function triggerDownload(blob, fileName) {
             const url = URL.createObjectURL(blob);
             const a = document.createElement("a");
-            
-            // 重要：部分瀏覽器需要將元素掛載到 DOM 才能下載
             a.style.display = "none";
             a.href = url;
             a.download = fileName;
-            document.body.appendChild(a);
+            document.body.appendChild(a); // 手機必須掛載到 DOM
+            try { a.click(); } catch (e) { window.location.href = url; }
             
-            try {
-                a.click();
-            } catch (e) {
-                console.error("下載點擊失敗", e);
-                // 備用方案：直接跳轉網址 (部分環境適用)
-                window.location.href = url;
-            }
-            
-            // 延遲移除，確保啟動下載過程
+            // 延長釋放時間至 10 秒，手機上下載才不會斷掉
             setTimeout(() => {
                 document.body.removeChild(a);
-                // 手機版延長 revoke 時間，避免下載中斷
                 URL.revokeObjectURL(url);
             }, 10000); 
 
-            // 針對 LINE/FB 的提示
-            const isInsideApp = /Line|FBAN|FBAV|Messenger/i.test(navigator.userAgent);
-            if (isInsideApp) {
-                alert("偵測到您正在使用社群 App 內建瀏覽器，若下載未啟動，請點選右上方按鈕並選擇「以預設瀏覽器開啟」。");
+            if (/Line|FBAN|FBAV|Messenger/i.test(navigator.userAgent)) {
+                alert("提醒：您正在使用社群 App 內建瀏覽器，若下載沒反應，請點選右上角並選擇「以 Chrome/Safari 開啟」。");
             }
         }
 
