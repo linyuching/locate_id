@@ -42,7 +42,6 @@
         #actionPanel::-webkit-scrollbar { display: none; }
         #actionPanel.show { transform: translateY(0); }
         
-        /* 增加地圖控制項的邊距，避開頂部狀態列 */
         .leaflet-top { margin-top: 80px; }
 
         .selected-marker { filter: hue-rotate(240deg) brightness(1.2); transform: scale(1.3); transition: all 0.3s; z-index: 999 !important; }
@@ -70,7 +69,6 @@
 
     <div id="map"></div>
 
-    <!-- 狀態列 -->
     <div class="absolute top-4 left-4 right-4 z-[1000] pointer-events-none">
         <div class="bg-white/95 backdrop-blur-md p-3 rounded-2xl shadow-2xl flex justify-between items-center pointer-events-auto border border-white/20">
             <div class="flex items-center gap-2">
@@ -90,6 +88,7 @@
                 <span class="text-[10px] font-black text-blue-600 uppercase tracking-widest bg-blue-50 px-2 py-0.5 rounded-md">目前選定點位</span>
                 <h2 class="text-3xl font-black text-slate-900 mt-2 break-all" id="selectedId">讀取中</h2>
                 <p id="selectedCoords" class="text-xs font-mono text-slate-400 mt-2 tracking-tighter"></p>
+                <p id="selectedLoc" class="text-xs text-slate-500 mt-1"></p>
             </div>
             <div class="flex flex-col gap-2 ml-4">
                 <button id="closePanelBtn" class="bg-slate-100 text-slate-400 p-2.5 rounded-full btn-active self-end shadow-sm">
@@ -133,7 +132,6 @@
     </div>
 
     <script type="module">
-        // 預設備份配置
         const backupConfig = {
             apiKey: "AIzaSyAQtyOTpKY3ajw6u4spxwLyFZDw19xhQEE",
             authDomain: "fieldsurveyproject-cba4e.firebaseapp.com",
@@ -160,9 +158,7 @@
             let config;
             try {
                 config = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : backupConfig;
-            } catch (e) {
-                config = backupConfig;
-            }
+            } catch (e) { config = backupConfig; }
 
             const app = initializeApp(config);
             auth = getAuth(app);
@@ -173,12 +169,8 @@
                 try {
                     if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
                         await signInWithCustomToken(auth, __initial_auth_token);
-                    } else {
-                        await signInAnonymously(auth);
-                    }
-                } catch (err) {
-                    console.error("Auth Failed:", err);
-                }
+                    } else { await signInAnonymously(auth); }
+                } catch (err) { console.error("Auth Failed:", err); }
             };
 
             await performAuth();
@@ -192,9 +184,7 @@
                             finishedPoints.clear();
                             snapshot.forEach(doc => finishedPoints.set(doc.id, doc.data()));
                             refreshMarkers();
-                        }, (error) => {
-                            console.error("Firestore Error:", error);
-                        });
+                        }, (error) => { console.error("Firestore Error:", error); });
                     }
                     resolve();
                 });
@@ -245,18 +235,48 @@
             }
         }
 
+        /**
+         * 加強版 KML 解析，抓取 unific_id, bury_loc, 閥栓種類
+         */
         function parseKML(text) {
             const parser = new DOMParser();
             const xml = parser.parseFromString(text, "text/xml");
             const placemarks = xml.getElementsByTagName("Placemark");
             const results = [];
+
             for (let i = 0; i < placemarks.length; i++) {
                 const p = placemarks[i];
                 const name = p.getElementsByTagName("name")[0]?.textContent || "未命名";
                 const coords = p.getElementsByTagName("coordinates")[0]?.textContent?.trim();
+                
+                // 抓取 ExtendedData 中的欄位
+                const extendedData = p.getElementsByTagName("ExtendedData")[0];
+                let unific_id = name;
+                let bury_loc = "";
+                let type = "";
+
+                if (extendedData) {
+                    const simpleData = extendedData.getElementsByTagName("SimpleData");
+                    for (let j = 0; j < simpleData.length; j++) {
+                        const attrName = simpleData[j].getAttribute("name");
+                        const val = simpleData[j].textContent;
+                        if (attrName === "unific_id") unific_id = val;
+                        if (attrName === "bury_loc") bury_loc = val;
+                        if (attrName === "閥栓種類") type = val;
+                    }
+                }
+
                 if (coords) {
                     const parts = coords.split(",");
-                    if (parts.length >= 2) results.push({ id: name, lat: parseFloat(parts[1]), lng: parseFloat(parts[0]) });
+                    if (parts.length >= 2) {
+                        results.push({ 
+                            id: unific_id, 
+                            lat: parseFloat(parts[1]), 
+                            lng: parseFloat(parts[0]),
+                            bury_loc: bury_loc,
+                            type: type
+                        });
+                    }
                 }
             }
             return results;
@@ -266,13 +286,8 @@
             markersLayer.clearLayers();
             points.forEach(p => {
                 const m = L.marker([p.lat, p.lng]).on('click', () => {
-                    // 1. 視覺強化：點擊時移動並放大到該點
-                    map.flyTo([p.lat, p.lng], 18, {
-                        animate: true,
-                        duration: 0.8
-                    });
+                    map.flyTo([p.lat, p.lng], 18, { animate: true, duration: 0.8 });
 
-                    // 2. 標記狀態管理
                     if (selectedMarker) {
                         const el = selectedMarker.getElement();
                         if (el) el.classList.remove('selected-marker');
@@ -281,11 +296,11 @@
                     const el = m.getElement();
                     if (el) el.classList.add('selected-marker');
                     
-                    // 3. UI 狀態更新
                     selectedPoint = p;
                     document.getElementById('actionPanel').classList.add('show');
                     document.getElementById('selectedId').textContent = p.id;
                     document.getElementById('selectedCoords').textContent = `緯度: ${p.lat.toFixed(6)} / 經度: ${p.lng.toFixed(6)}`;
+                    document.getElementById('selectedLoc').textContent = p.bury_loc ? `位置: ${p.bury_loc}` : "";
                     resetUIState();
                 });
                 markersLayer.addLayer(m);
@@ -299,11 +314,8 @@
                 const latlng = m.getLatLng();
                 const p = window.allPoints?.find(pt => Math.abs(pt.lat - latlng.lat) < 0.0001 && Math.abs(pt.lng - latlng.lng) < 0.0001);
                 const el = m.getElement();
-                if (p && finishedPoints.has(p.id) && el) {
-                    el.classList.add('finished-marker');
-                } else if (el) {
-                    el.classList.remove('finished-marker');
-                }
+                if (p && finishedPoints.has(p.id) && el) { el.classList.add('finished-marker'); } 
+                else if (el) { el.classList.remove('finished-marker'); }
             });
         }
 
@@ -317,10 +329,7 @@
                         const MAX_WIDTH = 1200;
                         let width = img.width;
                         let height = img.height;
-                        if (width > MAX_WIDTH) {
-                            height *= MAX_WIDTH / width;
-                            width = MAX_WIDTH;
-                        }
+                        if (width > MAX_WIDTH) { height *= MAX_WIDTH / width; width = MAX_WIDTH; }
                         canvas.width = width;
                         canvas.height = height;
                         const ctx = canvas.getContext('2d');
@@ -370,46 +379,59 @@
             if (!user) return;
             const { doc, setDoc } = window.firebaseCore;
             const docRef = doc(db, 'artifacts', appId, 'public', 'data', 'finished_points', pointId);
-            try {
-                await setDoc(docRef, { 
-                    finished: true, 
-                    timestamp: Date.now(),
-                    uid: user.uid 
-                });
-            } catch (err) {
-                console.error("Save Error:", err);
-            }
+            try { await setDoc(docRef, { finished: true, timestamp: Date.now(), uid: user.uid }); } 
+            catch (err) { console.error("Save Error:", err); }
         }
 
+        /**
+         * 修改後的 Excel 產製邏輯
+         */
         async function generateExcel() {
             if (!templateData || !processedPhotoBase64) throw new Error("尚未拍攝照片");
             const workbook = new ExcelJS.Workbook();
             await workbook.xlsx.load(templateData);
             
+            // 處理分頁選擇：如果閥栓種類是 "閥"，找 "制     水     閥     記     錄     卡"
+            let sheetToUse = workbook.worksheets[0];
+            if (selectedPoint.type === "閥") {
+                const targetSheetName = "制     水     閥     記     錄     卡";
+                const found = workbook.worksheets.find(s => s.name.replace(/\s/g, '').includes("制水閥記錄卡"));
+                if (found) sheetToUse = found;
+            }
+
             const imageId = workbook.addImage({ base64: processedPhotoBase64, extension: 'jpeg' });
             const targetHeightPx = 250; 
             const dims = await new Promise(r => { const i = new Image(); i.onload = () => r({w:i.width,h:i.height}); i.src = processedPhotoBase64; });
             const targetWidthPx = targetHeightPx * (dims.w / dims.h);
 
-            workbook.eachSheet(sheet => {
-                let photoInserted = false;
-                sheet.eachRow({ includeEmpty: true }, (row, rowNumber) => {
-                    row.eachCell({ includeEmpty: true }, (cell, colNumber) => {
-                        if (cell.address !== cell.master.address) return;
-                        const val = cell.value ? String(cell.value).trim() : "";
-                        if (!photoInserted && val.includes("現場照片")) {
-                            sheet.addImage(imageId, { 
-                                tl: { col: colNumber - 1 + 0.1, row: rowNumber + 0.1 }, 
-                                ext: { width: targetWidthPx, height: targetHeightPx }, 
-                                editAs: 'oneCell' 
-                            });
-                            photoInserted = true; 
-                        }
-                        if (val === "編號") {
-                            const cellBelow = sheet.getRow(rowNumber + 1).getCell(colNumber);
-                            cellBelow.value = selectedPoint.id;
-                        }
-                    });
+            let photoInserted = false;
+            sheetToUse.eachRow({ includeEmpty: true }, (row, rowNumber) => {
+                row.eachCell({ includeEmpty: true }, (cell, colNumber) => {
+                    if (cell.address !== cell.master.address) return;
+                    const val = cell.value ? String(cell.value).trim() : "";
+                    
+                    // 1. 填入照片
+                    if (!photoInserted && val.includes("現場照片")) {
+                        sheetToUse.addImage(imageId, { 
+                            tl: { col: colNumber - 1 + 0.1, row: rowNumber + 0.1 }, 
+                            ext: { width: targetWidthPx, height: targetHeightPx }, 
+                            editAs: 'oneCell' 
+                        });
+                        photoInserted = true; 
+                    }
+                    
+                    // 2. 填入 unific_id 至 "編號" 下方
+                    if (val === "編號") {
+                        const cellBelow = sheetToUse.getRow(rowNumber + 1).getCell(colNumber);
+                        cellBelow.value = selectedPoint.id;
+                    }
+
+                    // 3. 填入 bury_loc 至 "位置" 旁邊
+                    if (val === "位置") {
+                        // 嘗試填入右邊的第一個單元格或合併區域
+                        const cellBeside = sheetToUse.getRow(rowNumber).getCell(colNumber + 1);
+                        cellBeside.value = selectedPoint.bury_loc;
+                    }
                 });
             });
 
@@ -420,9 +442,7 @@
         document.getElementById('exportBtn').onclick = async () => {
             try {
                 showLoadingMask(true, "產生成果並同步雲端...");
-                if (selectedPoint) {
-                    await saveFinishedState(selectedPoint.id);
-                }
+                if (selectedPoint) { await saveFinishedState(selectedPoint.id); }
                 const blob = await generateExcel();
                 triggerDownload(blob, `${selectedPoint.id}_成果圖卡.xlsx`);
                 setTimeout(closePanel, 500);
