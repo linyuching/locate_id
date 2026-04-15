@@ -50,7 +50,6 @@
             cursor: pointer; border-radius: 4px;
             box-shadow: 0 1px 5px rgba(0,0,0,0.4);
         }
-        /* 自定義彈出視窗樣式 */
         .nav-popup .leaflet-popup-content-wrapper { border-radius: 12px; padding: 5px; }
         .nav-popup .leaflet-popup-content { margin: 10px; text-align: center; }
         input[type="number"]::-webkit-inner-spin-button, 
@@ -74,7 +73,7 @@
         <div class="bg-white/95 backdrop-blur-md p-3 rounded-2xl shadow-2xl flex justify-between items-center pointer-events-auto border border-white/20">
             <div class="flex items-center gap-2">
                 <div id="statusIndicator" class="w-2.5 h-2.5 rounded-full bg-yellow-500 animate-pulse"></div>
-                <h1 class="text-lg font-black text-slate-800 tracking-tighter">外業調查拍照 <span class="text-blue-500 text-xs">V2.5</span></h1>
+                <h1 class="text-lg font-black text-slate-800 tracking-tighter">外業調查拍照 <span class="text-blue-500 text-xs">V2.6.1</span></h1>
             </div>
             <div id="statusTag" class="bg-slate-100 text-slate-500 text-[10px] px-2.5 py-1 rounded-full font-black uppercase">連線中</div>
         </div>
@@ -117,7 +116,7 @@
                 </div>
             </div>
             <button id="cameraBtn" class="w-full bg-slate-900 text-white py-5 rounded-3xl font-black text-lg shadow-xl btn-active flex items-center justify-center gap-4 tracking-tighter">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" /><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812-1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" /><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
                 拍攝現場照片
             </button>
         </div>
@@ -154,6 +153,7 @@
         };
 
         let map, markersLayer, selectedPoint = null, templateData = null, processedPhotoBase64 = null, selectedMarker = null;
+        let finishedPoints = new Map();
         let db, auth, user, appId;
         const XLSX_MIME = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
 
@@ -165,10 +165,34 @@
 
         window.onload = async function() {
             initMap();
-            initFirebase();
+            await initFirebase();
             createFormRows();
             await autoLoadAssets();
         };
+
+        async function initFirebase() {
+            const { initializeApp, getAuth, signInAnonymously, onAuthStateChanged, getFirestore, collection, onSnapshot } = window.firebaseCore;
+            let config;
+            try { config = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : backupConfig; } catch (e) { config = backupConfig; }
+            const app = initializeApp(config);
+            auth = getAuth(app);
+            db = getFirestore(app);
+            appId = typeof __app_id !== 'undefined' ? __app_id : 'field-survey-app';
+
+            onAuthStateChanged(auth, async (u) => {
+                user = u;
+                if (user) {
+                    const publicDataCol = collection(db, 'artifacts', appId, 'public', 'data', 'finished_points');
+                    onSnapshot(publicDataCol, (snapshot) => {
+                        finishedPoints.clear();
+                        snapshot.forEach(doc => finishedPoints.set(doc.id, doc.data()));
+                        refreshMarkers();
+                    });
+                } else {
+                    await signInAnonymously(auth);
+                }
+            });
+        }
 
         function initMap() {
             map = L.map('map', { zoomControl: false, maxZoom: 20 }).setView([23.5, 121], 7);
@@ -223,21 +247,6 @@
             }
         }
 
-        async function initFirebase() {
-            const { initializeApp, getAuth, signInAnonymously, onAuthStateChanged, getFirestore } = window.firebaseCore;
-            let config;
-            try { config = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : backupConfig; } catch (e) { config = backupConfig; }
-            const app = initializeApp(config);
-            auth = getAuth(app);
-            db = getFirestore(app);
-            appId = typeof __app_id !== 'undefined' ? __app_id : 'field-survey-app';
-
-            onAuthStateChanged(auth, async (u) => {
-                user = u;
-                if (!user) await signInAnonymously(auth);
-            });
-        }
-
         async function autoLoadAssets() {
             try {
                 const kmlRes = await fetch('./POI.kml');
@@ -273,11 +282,13 @@
                     for (const node of dataNodes) {
                         const dataName = node.getAttribute("name");
                         const val = node.getElementsByTagName("value")[0]?.textContent?.trim();
+                        // 處理 bury_loc，確保讀取 Data 標籤中的值
                         if (dataName === "unific_id") unific_id = val;
                         if (dataName === "bury_loc") bury_loc = val;
                     }
                 }
 
+                // Fallback: 如果 ExtendedData 沒有，則從 description 嘗試解析
                 if (!unific_id) {
                     const idMatch = desc.match(/unific_id:\s*([^<|\n|\r]+)/i);
                     unific_id = idMatch ? idMatch[1].trim() : name;
@@ -301,7 +312,7 @@
             markersLayer.clearLayers();
             points.forEach(p => {
                 const m = L.marker([p.lat, p.lng]).on('click', () => {
-                    map.flyTo([p.lat, p.lng], 17); // 縮放至 17 級
+                    map.flyTo([p.lat, p.lng], 17);
                     if (selectedMarker) selectedMarker.getElement()?.classList.remove('selected-marker');
                     selectedMarker = m;
                     m.getElement()?.classList.add('selected-marker');
@@ -328,7 +339,21 @@
                 
                 markersLayer.addLayer(m);
             });
+            refreshMarkers();
             if (points.length) map.fitBounds(L.featureGroup(markersLayer.getLayers()).getBounds());
+        }
+
+        function refreshMarkers() {
+            markersLayer.eachLayer(m => {
+                const latlng = m.getLatLng();
+                const p = window.allPoints?.find(pt => Math.abs(pt.lat - latlng.lat) < 0.0001 && Math.abs(pt.lng - latlng.lng) < 0.0001);
+                const el = m.getElement();
+                if (p && finishedPoints.has(p.unific_id) && el) {
+                    el.classList.add('finished-marker');
+                } else if (el) {
+                    el.classList.remove('finished-marker');
+                }
+            });
         }
 
         document.getElementById('navBtn').onclick = () => {
@@ -384,9 +409,21 @@
             document.getElementById('previewArea').classList.add('hidden');
         };
 
+        async function saveFinishedState(pointId) {
+            if (!user) return;
+            const { doc, setDoc } = window.firebaseCore;
+            const docRef = doc(db, 'artifacts', appId, 'public', 'data', 'finished_points', pointId);
+            try {
+                await setDoc(docRef, { 
+                    finished: true, 
+                    timestamp: Date.now(),
+                    uid: user.uid 
+                });
+            } catch (err) { console.error("Save Error:", err); }
+        }
+
         async function generateExcel() {
-            if (!templateData) throw new Error("範本檔案未載入，請稍後再試。");
-            
+            if (!templateData) throw new Error("範本未載入");
             const workbook = new ExcelJS.Workbook();
             await workbook.xlsx.load(templateData);
             
@@ -416,7 +453,6 @@
                         const cellText = String(cell.value || "").trim();
                         const cleanVal = cellText.replace(/\s/g, '');
                         
-                        // 1. 處理「編號」標籤：填入 unific_id
                         if (cleanVal === "編號") {
                             if (sheetName.includes("圖卡背面")) {
                                 let rowOffset = 1;
@@ -441,7 +477,7 @@
                             }
                         }
                         
-                        // 2. 處理「位置」標籤：填入 bury_loc
+                        // 位置欄位填入 bury_loc
                         if (cleanVal === "位置") {
                             let offset = 1;
                             while (colNumber + offset <= sheet.columnCount) {
@@ -454,7 +490,6 @@
                             }
                         }
 
-                        // 3. 處理「支距」表格
                         if (cleanVal === "支距") {
                             for (let i = 0; i < 3; i++) {
                                 const dataRow = sheet.getRow(rowNumber + 1 + i);
@@ -463,7 +498,6 @@
                             }
                         }
 
-                        // 4. 填入照片
                         if (!photoInsertedInSheet && cleanVal.includes("現場照片")) {
                             sheet.addImage(imageId, { 
                                 tl: { col: colNumber - 1 + 0.1, row: rowNumber + 0.1 }, 
@@ -483,12 +517,19 @@
         document.getElementById('exportBtn').onclick = async () => {
             const statusText = document.getElementById('exportStatusText');
             try {
-                statusText.textContent = "正在產生成果...";
+                statusText.textContent = "同步雲端並產生成果...";
                 showLoadingMask(true, "產生成果圖卡中，請勿關閉視窗...");
+                
+                if (selectedPoint) {
+                    await saveFinishedState(selectedPoint.unific_id);
+                }
+
                 const blob = await generateExcel();
-                triggerDownload(blob, `${selectedPoint.unific_id}_成果圖卡.xlsx`);
-                setTimeout(closePanel, 1500);
-            } catch (err) { alert("匯出出錯: " + err.message); }
+                // 參考 index0415.html 的下載方式
+                triggerDownload(blob, `${selectedPoint.unific_id}_調查成果.xlsx`);
+                
+                setTimeout(closePanel, 800);
+            } catch (err) { alert("出錯: " + err.message); }
             finally {
                 statusText.textContent = "完成量測";
                 showLoadingMask(false);
@@ -496,39 +537,12 @@
         };
 
         function triggerDownload(blob, fileName) {
-            const url = URL.createObjectURL(blob);
             const a = document.createElement("a");
-            
-            // 強化手機 Webview 下載相容性
-            a.style.display = "none";
+            const url = URL.createObjectURL(blob);
             a.href = url;
             a.download = fileName;
-            a.target = "_blank";
-            a.rel = "noopener";
-            
-            document.body.appendChild(a);
-            
-            // 延遲觸發 click，並增加 fallback 導向
-            setTimeout(() => {
-                try {
-                    a.click();
-                    // 若在特定環境 click 無反應，則嘗試 location 導向
-                    if (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
-                        // 某些安卓 Webview 對 Blob 直接導向較穩定
-                    }
-                } catch (e) {
-                    window.location.href = url;
-                }
-                
-                setTimeout(() => {
-                    document.body.removeChild(a);
-                    URL.revokeObjectURL(url);
-                }, 15000);
-            }, 100);
-
-            if (/Line|FBAN|FBAV|Messenger/i.test(navigator.userAgent)) {
-                alert("手機 App 提醒：偵測到您正在使用社群 App 內建瀏覽器。\n\n若下載無反應，請點選右上角「...」並選擇「以 Chrome/Safari 開啟」或「在瀏覽器中開啟」後再次操作。");
-            }
+            a.click();
+            setTimeout(() => URL.revokeObjectURL(url), 100);
         }
 
         function showLoadingMask(s, t) {
