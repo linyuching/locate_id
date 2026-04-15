@@ -144,7 +144,7 @@
         <div class="bg-white/95 backdrop-blur-md p-3 rounded-2xl shadow-2xl flex justify-between items-center pointer-events-auto border border-white/20">
             <div class="flex items-center gap-2">
                 <div id="statusIndicator" class="w-2.5 h-2.5 rounded-full bg-yellow-500 animate-pulse"></div>
-                <h1 class="text-lg font-black text-slate-800 tracking-tighter">外業調查拍照 <span class="text-blue-500 text-xs">V3.0</span></h1>
+                <h1 class="text-lg font-black text-slate-800 tracking-tighter">外業調查拍照 <span class="text-blue-500 text-xs">V3.1</span></h1>
             </div>
             <div id="statusTag" class="bg-slate-100 text-slate-500 text-[10px] px-2.5 py-1 rounded-full font-black uppercase">連線中</div>
         </div>
@@ -228,7 +228,7 @@
 
     <script type="module">
         const backupConfig = {
-            apiKey: "AIzaSyAQtyOTpKY3ajw6u4spxwLyFZDw19xhQEE",
+            apiKey: "請填入你自己的 Firebase Web API Key",
             authDomain: "fieldsurveyproject-cba4e.firebaseapp.com",
             projectId: "fieldsurveyproject-cba4e",
             storageBucket: "fieldsurveyproject-cba4e.firebasestorage.app",
@@ -416,6 +416,12 @@
                 config = backupConfig;
             }
 
+            if (!config?.apiKey) {
+                alert("Firebase 設定缺少 apiKey，請先填入正確的 Web API Key。");
+                console.error("Invalid Firebase config:", config);
+                return;
+            }
+
             const app = initializeApp(config);
             auth = getAuth(app);
             db = getFirestore(app);
@@ -519,23 +525,33 @@
                     for (const node of dataNodes) {
                         const dataName = node.getAttribute("name");
                         const val = node.getElementsByTagName("value")[0]?.textContent?.trim();
-                        if (dataName === "unific_id") unific_id = val;
-                        if (dataName === "bury_loc") bury_loc = val;
+
+                        if (dataName === "unific_id" || dataName === "識別碼") {
+                            unific_id = val;
+                        }
+                        if (dataName === "bury_loc") {
+                            bury_loc = val;
+                        }
                     }
                 }
 
                 if (!unific_id) {
-                    const idMatch = desc.match(/unific_id:\s*([^<|\n|\r]+)/i);
-                    unific_id = idMatch ? idMatch[1].trim() : "";
+                    let match = desc.match(/unific_id\s*:\s*([^<|\n|\r]+)/i);
+                    if (!match) {
+                        match = desc.match(/識別碼\s*:\s*([^<|\n|\r]+)/i);
+                    }
+                    if (match) {
+                        unific_id = match[1].trim();
+                    }
                 }
 
                 if (!bury_loc) {
-                    const locMatch = desc.match(/bury_loc:\s*([^<|\n|\r]+)/i);
+                    const locMatch = desc.match(/bury_loc\s*:\s*([^<|\n|\r]+)/i);
                     bury_loc = locMatch ? locMatch[1].trim() : "";
                 }
 
                 if (!unific_id) {
-                    console.warn("⚠️ KML 點缺少 unific_id：", name);
+                    console.warn("⚠️ 無法解析 unific_id / 識別碼：", name, desc);
                 }
 
                 return {
@@ -553,6 +569,16 @@
                 throw new Error("Point missing unific_id");
             }
             return point.unific_id.trim();
+        }
+
+        function sanitizeFileName(str) {
+            return (str || "").replace(/[\\/:*?"<>|]/g, "_").trim();
+        }
+
+        function buildExcelFileName(point) {
+            const id = getPointKey(point);
+            const safeId = sanitizeFileName(id);
+            return `${safeId}.xlsx`;
         }
 
         function createFeatureIcon(iconType, color, isCompleted = false) {
@@ -815,16 +841,6 @@
             }).join("");
         }
 
-        function sanitizeFileName(str) {
-            return (str || "").replace(/[\\/:*?"<>|]/g, "_").trim();
-        }
-
-        function buildExcelFileName(point) {
-            const id = getPointKey(point);
-            const safeId = sanitizeFileName(id);
-            return `${safeId}.xlsx`;
-        }
-
         async function uploadExcelToCloud(blob, point) {
             const { ref, uploadBytes, getDownloadURL } = window.firebaseCore;
             const id = getPointKey(point);
@@ -902,6 +918,7 @@
         cameraInput.onchange = async e => {
             if (!e.target.files[0]) return;
             showLoadingMask(true, "縮圖處理中...");
+
             const reader = new FileReader();
             reader.onload = (ev) => {
                 const img = new Image();
@@ -993,7 +1010,6 @@
             const targetWidthPx = targetHeightPx * (dims.w / dims.h);
 
             workbook.eachSheet((sheet) => {
-                const sheetName = sheet.name.replace(/\s/g, "");
                 let photoInsertedInSheet = false;
 
                 sheet.eachRow({ includeEmpty: true }, (row, rowNumber) => {
@@ -1002,26 +1018,14 @@
                         const cleanVal = cellText.replace(/\s/g, "");
 
                         if (cleanVal === "編號") {
-                            if (sheetName.includes("圖卡背面")) {
-                                let rowOffset = 1;
-                                while (rowNumber + rowOffset <= sheet.rowCount) {
-                                    const targetCell = sheet.getRow(rowNumber + rowOffset).getCell(colNumber);
-                                    if (targetCell.master.address !== cell.master.address) {
-                                        targetCell.master.value = selectedPoint.unific_id;
-                                        break;
-                                    }
-                                    rowOffset++;
+                            let offset = 1;
+                            while (colNumber + offset <= sheet.columnCount) {
+                                const targetCell = sheet.getRow(rowNumber).getCell(colNumber + offset);
+                                if (targetCell.master.address !== cell.master.address) {
+                                    targetCell.master.value = selectedPoint.unific_id || "";
+                                    break;
                                 }
-                            } else {
-                                let colOffset = 1;
-                                while (colNumber + colOffset <= sheet.columnCount) {
-                                    const targetCell = sheet.getRow(rowNumber).getCell(colNumber + colOffset);
-                                    if (targetCell.master.address !== cell.master.address) {
-                                        targetCell.master.value = selectedPoint.unific_id;
-                                        break;
-                                    }
-                                    colOffset++;
-                                }
+                                offset++;
                             }
                         }
 
@@ -1034,6 +1038,18 @@
                                     break;
                                 }
                                 offset++;
+                            }
+                        }
+
+                        if (cleanVal === "位置描述") {
+                            let rowOffset = 1;
+                            while (rowNumber + rowOffset <= sheet.rowCount) {
+                                const targetCell = sheet.getRow(rowNumber + rowOffset).getCell(colNumber);
+                                if (targetCell.master.address !== cell.master.address) {
+                                    targetCell.master.value = selectedPoint.bury_loc || "";
+                                    break;
+                                }
+                                rowOffset++;
                             }
                         }
 
