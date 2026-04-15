@@ -1,24 +1,62 @@
 <!DOCTYPE html>
 <html lang="zh-TW">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>外業調查拍照系統 (支距增強版)</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>外業調查拍照系統（多 KML / 雲端同步版）</title>
+
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/exceljs/4.4.0/exceljs.min.js"></script>
-    
-    <!-- Firebase SDKs -->
+
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
         import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-        import { getFirestore, doc, setDoc, collection, onSnapshot, query } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
-        window.firebaseCore = { initializeApp, getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged, getFirestore, doc, setDoc, collection, onSnapshot, query };
+        import {
+            getFirestore,
+            doc,
+            setDoc,
+            collection,
+            onSnapshot,
+            query,
+            serverTimestamp,
+            deleteDoc
+        } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+        import {
+            getStorage,
+            ref,
+            uploadBytes,
+            getDownloadURL
+        } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-storage.js";
+
+        window.firebaseCore = {
+            initializeApp,
+            getAuth,
+            signInAnonymously,
+            signInWithCustomToken,
+            onAuthStateChanged,
+            getFirestore,
+            doc,
+            setDoc,
+            collection,
+            onSnapshot,
+            query,
+            serverTimestamp,
+            deleteDoc,
+            getStorage,
+            ref,
+            uploadBytes,
+            getDownloadURL
+        };
     </script>
 
     <style>
+        html, body { margin: 0; padding: 0; }
+        body { background: #0f172a; overflow: hidden; }
         #map { height: 100vh; width: 100%; z-index: 1; }
+
         .loading-overlay {
             display: flex;
             position: fixed;
@@ -30,8 +68,10 @@
             color: white;
             flex-direction: column;
         }
+
         .btn-active:active { transform: scale(0.95); }
-        #actionPanel { 
+
+        #actionPanel {
             transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             transform: translateY(100%);
             max-height: 90vh;
@@ -40,21 +80,52 @@
         }
         #actionPanel::-webkit-scrollbar { display: none; }
         #actionPanel.show { transform: translateY(0); }
-        .selected-marker { filter: hue-rotate(240deg) brightness(1.2); transform: scale(1.3); transition: all 0.3s; z-index: 999 !important; }
-        .finished-marker { filter: hue-rotate(90deg) brightness(1.1) saturate(1.5); opacity: 0.9; }
+
         .leaflet-top { margin-top: 80px; }
         .leaflet-control-locate {
             background: white;
-            width: 34px; height: 34px;
-            display: flex; align-items: center; justify-content: center;
-            cursor: pointer; border-radius: 4px;
+            width: 34px;
+            height: 34px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            border-radius: 4px;
             box-shadow: 0 1px 5px rgba(0,0,0,0.4);
         }
-        /* 自定義彈出視窗樣式 */
         .nav-popup .leaflet-popup-content-wrapper { border-radius: 12px; padding: 5px; }
         .nav-popup .leaflet-popup-content { margin: 10px; text-align: center; }
-        input[type="number"]::-webkit-inner-spin-button, 
-        input[type="number"]::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; }
+
+        .selected-marker {
+            transform: scale(1.18);
+            z-index: 999 !important;
+        }
+
+        .finished-marker {
+            opacity: 0.92;
+            filter: grayscale(0.15);
+        }
+
+        .custom-poi-marker.is-completed {
+            box-shadow: 0 0 0 2px rgba(16,185,129,0.35), 0 2px 8px rgba(0,0,0,0.28);
+        }
+
+        input[type="number"]::-webkit-inner-spin-button,
+        input[type="number"]::-webkit-outer-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
+        .leaflet-control-layers {
+            border-radius: 14px !important;
+            overflow: hidden;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.18) !important;
+            border: 1px solid rgba(255,255,255,0.4) !important;
+        }
+
+        .file-card a {
+            text-decoration: none;
+        }
     </style>
 </head>
 <body class="bg-slate-900 min-h-screen overflow-hidden">
@@ -69,31 +140,41 @@
 
     <div id="map"></div>
 
-    <!-- 頂部狀態欄 -->
     <div class="absolute top-4 left-4 right-4 z-[1000] pointer-events-none">
         <div class="bg-white/95 backdrop-blur-md p-3 rounded-2xl shadow-2xl flex justify-between items-center pointer-events-auto border border-white/20">
             <div class="flex items-center gap-2">
                 <div id="statusIndicator" class="w-2.5 h-2.5 rounded-full bg-yellow-500 animate-pulse"></div>
-                <h1 class="text-lg font-black text-slate-800 tracking-tighter">外業調查拍照 <span class="text-blue-500 text-xs">V2.4</span></h1>
+                <h1 class="text-lg font-black text-slate-800 tracking-tighter">外業調查拍照 <span class="text-blue-500 text-xs">V3.0</span></h1>
             </div>
             <div id="statusTag" class="bg-slate-100 text-slate-500 text-[10px] px-2.5 py-1 rounded-full font-black uppercase">連線中</div>
         </div>
     </div>
 
-    <!-- 操作面版 -->
+    <div id="completedFilesPanel" class="absolute right-4 bottom-4 z-[1200] w-[360px] max-w-[92vw] bg-white/95 backdrop-blur-md rounded-2xl shadow-2xl border border-white/30 overflow-hidden">
+        <div class="px-4 py-3 border-b border-slate-200 flex items-center justify-between">
+            <h3 class="text-sm font-black text-slate-800">已完成成果圖卡</h3>
+            <span id="completedFilesCount" class="text-[10px] px-2 py-1 rounded-full bg-emerald-50 text-emerald-700 font-bold">0</span>
+        </div>
+        <div id="completedFilesList" class="max-h-[320px] overflow-y-auto p-3 space-y-2 text-sm text-slate-700">
+            <div class="text-slate-400 text-xs">尚無已上傳成果檔</div>
+        </div>
+    </div>
+
     <div id="actionPanel" class="fixed bottom-0 left-0 right-0 z-[2000] bg-white rounded-t-[2.5rem] shadow-[0_-15px_50px_rgba(0,0,0,0.4)] p-6 pb-12 border-t border-slate-100">
         <div class="w-12 h-1.5 bg-slate-200 rounded-full mx-auto mb-6"></div>
-        
+
         <div class="flex justify-between items-start mb-6">
             <div class="flex-1">
-                <span class="text-[10px] font-black text-blue-600 uppercase tracking-widest bg-blue-50 px-2 py-0.5 rounded-md">目前選定點位 (Name)</span>
+                <span class="text-[10px] font-black text-blue-600 uppercase tracking-widest bg-blue-50 px-2 py-0.5 rounded-md">目前選定點位</span>
                 <h2 class="text-2xl font-black text-slate-900 mt-2 break-all leading-tight" id="selectedId">讀取中</h2>
                 <p id="selectedLoc" class="text-xs text-slate-500 mt-1 font-medium italic"></p>
                 <p id="selectedUnific" class="text-[10px] text-slate-400 mt-1 font-mono"></p>
             </div>
             <div class="flex flex-col gap-2 ml-4">
                 <button id="closePanelBtn" class="bg-slate-100 text-slate-400 p-2.5 rounded-full btn-active self-end shadow-sm">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                    </svg>
                 </button>
                 <button id="navBtn" class="bg-blue-600 text-white p-4 rounded-2xl btn-active shadow-lg shadow-blue-200 flex flex-col items-center justify-center gap-1">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -105,27 +186,29 @@
             </div>
         </div>
 
-        <!-- 支距填寫區 -->
         <div id="formArea" class="space-y-4 mb-6">
             <div class="bg-slate-50 rounded-3xl p-4 border border-slate-100">
                 <div class="flex items-center gap-2 mb-3 px-1">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" /></svg>
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+                    </svg>
                     <span class="text-xs font-bold text-slate-500 uppercase tracking-wider">支距量測資料</span>
                 </div>
-                <div class="space-y-3" id="offsetRows">
-                    <!-- Row 1, 2, 3 -->
-                </div>
+                <div class="space-y-3" id="offsetRows"></div>
             </div>
+
             <button id="cameraBtn" class="w-full bg-slate-900 text-white py-5 rounded-3xl font-black text-lg shadow-xl btn-active flex items-center justify-center gap-4 tracking-tighter">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" /><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" />
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z" />
+                </svg>
                 拍攝現場照片
             </button>
         </div>
 
-        <!-- 預覽與匯出區 -->
         <div id="previewArea" class="hidden animate-in fade-in slide-in-from-bottom-6 duration-500">
             <div class="relative mb-6 group">
-                <img id="capturedImg" src="" class="w-full h-52 object-cover rounded-3xl border-4 border-slate-50 shadow-inner">
+                <img id="capturedImg" src="" class="w-full h-52 object-cover rounded-3xl border-4 border-slate-50 shadow-inner" />
                 <div class="absolute top-4 left-4 bg-black/50 backdrop-blur-md px-3 py-1.5 rounded-full text-[10px] text-white font-bold">照片已就緒</div>
                 <button id="retakeBtn" class="absolute bottom-4 right-4 bg-white/90 backdrop-blur-md px-4 py-2 rounded-full text-xs font-black text-slate-800 shadow-xl border border-white/50 btn-active">重新拍攝</button>
             </div>
@@ -140,7 +223,7 @@
             </div>
         </div>
 
-        <input type="file" id="cameraInput" accept="image/*" capture="camera" class="hidden">
+        <input type="file" id="cameraInput" accept="image/*" capture="camera" class="hidden" />
     </div>
 
     <script type="module">
@@ -153,34 +236,123 @@
             appId: "1:118885164027:web:d8a0e0478eddfc48ba615e"
         };
 
-        let map, markersLayer, selectedPoint = null, templateData = null, processedPhotoBase64 = null, selectedMarker = null;
-        let db, auth, user, appId;
         const XLSX_MIME = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
 
         const NOTE_OPTIONS = [
-            "建築物( )", "門柱( )", "圍牆( )", "橋墩", "轉角", "電桿( )", 
-            "電信桿( )", "路燈( )", "路標", "交通號誌", "變電箱", 
+            "建築物( )", "門柱( )", "圍牆( )", "橋墩", "轉角", "電桿( )",
+            "電信桿( )", "路燈( )", "路標", "交通號誌", "變電箱",
             "窨井蓋", "閥栓孔蓋", "道路邊緣", "水溝蓋"
         ];
 
-        window.onload = async function() {
+        const KML_FILES = [
+            {
+                file: "./湖口所_制水閥_僅測三支距.kml",
+                label: "制水閥｜僅測三支距",
+                color: "#2563eb",
+                category: "制水閥",
+                status: "僅測三支距",
+                iconType: "valve"
+            },
+            {
+                file: "./湖口所_制水閥_未測量.kml",
+                label: "制水閥｜未測量",
+                color: "#93c5fd",
+                category: "制水閥",
+                status: "未測量",
+                iconType: "valve"
+            },
+            {
+                file: "./湖口所_消防栓_僅測三支距.kml",
+                label: "消防栓｜僅測三支距",
+                color: "#dc2626",
+                category: "消防栓",
+                status: "僅測三支距",
+                iconType: "hydrant"
+            },
+            {
+                file: "./湖口所_消防栓_未測量.kml",
+                label: "消防栓｜未測量",
+                color: "#fca5a5",
+                category: "消防栓",
+                status: "未測量",
+                iconType: "hydrant"
+            },
+            {
+                file: "./湖口所_窨井_僅測三支距.kml",
+                label: "窨井｜僅測三支距",
+                color: "#16a34a",
+                category: "窨井",
+                status: "僅測三支距",
+                iconType: "manhole"
+            },
+            {
+                file: "./湖口所_窨井_未測量.kml",
+                label: "窨井｜未測量",
+                color: "#86efac",
+                category: "窨井",
+                status: "未測量",
+                iconType: "manhole"
+            }
+        ];
+
+        const COMPLETED_LAYER_LABEL = "已完成 / 已測量";
+
+        let map;
+        let selectedPoint = null;
+        let templateData = null;
+        let processedPhotoBase64 = null;
+        let selectedMarker = null;
+
+        let allPoints = [];
+        let layerControl = null;
+        let kmlLayers = {};
+        let completedLayerGroup = null;
+
+        let pointMarkerMap = new Map();
+        let pointDataMap = new Map();
+        let pointSourceLayerMap = new Map();
+        let completedPointIds = new Set();
+
+        let completedUnsubscribe = null;
+        let filesUnsubscribe = null;
+        let assetsLoaded = false;
+
+        let db, auth, user, appId, storage;
+
+        window.onload = async function () {
             initMap();
-            initFirebase();
             createFormRows();
-            await autoLoadAssets();
+            initFirebase();
         };
 
         function initMap() {
-            map = L.map('map', { zoomControl: false, maxZoom: 20 }).setView([23.5, 121], 7);
-            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
-            markersLayer = L.layerGroup().addTo(map);
-            
+            map = L.map("map", { zoomControl: false, maxZoom: 20 }).setView([24.9, 121.0], 13);
+
+            const osm = L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+                attribution: "&copy; OpenStreetMap contributors"
+            }).addTo(map);
+
+            const baseMaps = { "OpenStreetMap": osm };
+
+            completedLayerGroup = L.layerGroup().addTo(map);
+
+            layerControl = L.control.layers(baseMaps, {}, {
+                collapsed: false,
+                position: "topright"
+            }).addTo(map);
+
+            layerControl.addOverlay(completedLayerGroup, COMPLETED_LAYER_LABEL);
+
             const LocateControl = L.Control.extend({
-                options: { position: 'topleft' },
-                onAdd: function() {
-                    const container = L.DomUtil.create('div', 'leaflet-control-locate');
-                    container.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-slate-700" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4-1.79-4-4-4zm8.94 3c-.46-4.17-3.77-7.48-7.94-7.94V1h-2v2.06C6.83 3.52 3.52 6.83 3.06 11H1v2h2.06c.46 4.17 3.77 7.48 7.94 7.94V23h2v-2.06c4.17-.46 7.48-3.77 7.94-7.94H23v-2h-2.06z" /></svg>`;
-                    container.onclick = () => map.locate({ setView: true, maxZoom: 16 });
+                options: { position: "topleft" },
+                onAdd: function () {
+                    const container = L.DomUtil.create("div", "leaflet-control-locate");
+                    container.innerHTML = `
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-slate-700" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4-1.79-4-4-4zm8.94 3c-.46-4.17-3.77-7.48-7.94-7.94V1h-2v2.06C6.83 3.52 3.52 6.83 3.06 11H1v2h2.06c.46 4.17 3.77 7.48 7.94 7.94V23h2v-2.06c4.17-.46 7.48-3.77 7.94-7.94H23v-2h-2.06z" />
+                        </svg>
+                    `;
+                    container.onclick = () => map.locate({ setView: true, maxZoom: 18 });
                     return container;
                 }
             });
@@ -188,11 +360,12 @@
         }
 
         function createFormRows() {
-            const container = document.getElementById('offsetRows');
-            container.innerHTML = '';
+            const container = document.getElementById("offsetRows");
+            container.innerHTML = "";
+
             for (let i = 1; i <= 3; i++) {
-                const row = document.createElement('div');
-                row.className = 'grid grid-cols-12 gap-2 items-center';
+                const row = document.createElement("div");
+                row.className = "grid grid-cols-12 gap-2 items-center";
                 row.innerHTML = `
                     <div class="col-span-1 text-center font-black text-slate-300 text-sm">${i}</div>
                     <div class="col-span-3">
@@ -201,7 +374,7 @@
                     <div class="col-span-5">
                         <select id="note_type_${i}" class="w-full bg-white border border-slate-200 rounded-xl px-2 py-2.5 text-xs font-bold text-slate-800 outline-none focus:border-blue-500 shadow-sm appearance-none">
                             <option value="">選擇註記</option>
-                            ${NOTE_OPTIONS.map(opt => `<option value="${opt}">${opt}</option>`).join('')}
+                            ${NOTE_OPTIONS.map(opt => `<option value="${opt}">${opt}</option>`).join("")}
                         </select>
                     </div>
                     <div class="col-span-3">
@@ -212,58 +385,131 @@
 
                 const select = row.querySelector(`#note_type_${i}`);
                 const idInput = row.querySelector(`#note_id_${i}`);
+
                 select.onchange = (e) => {
-                    if (e.target.value.includes('( )')) {
-                        idInput.classList.remove('hidden');
+                    if (e.target.value.includes("( )")) {
+                        idInput.classList.remove("hidden");
                     } else {
-                        idInput.classList.add('hidden');
-                        idInput.value = '';
+                        idInput.classList.add("hidden");
+                        idInput.value = "";
                     }
                 };
             }
         }
 
         async function initFirebase() {
-            const { initializeApp, getAuth, signInAnonymously, onAuthStateChanged, getFirestore } = window.firebaseCore;
+            const {
+                initializeApp,
+                getAuth,
+                signInAnonymously,
+                onAuthStateChanged,
+                getFirestore,
+                getStorage
+            } = window.firebaseCore;
+
             let config;
-            try { config = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : backupConfig; } catch (e) { config = backupConfig; }
+            try {
+                config = typeof __firebase_config !== "undefined"
+                    ? JSON.parse(__firebase_config)
+                    : backupConfig;
+            } catch (e) {
+                config = backupConfig;
+            }
+
             const app = initializeApp(config);
             auth = getAuth(app);
             db = getFirestore(app);
-            appId = typeof __app_id !== 'undefined' ? __app_id : 'field-survey-app';
+            storage = getStorage(app);
+            appId = typeof __app_id !== "undefined" ? __app_id : "field-survey-app";
 
             onAuthStateChanged(auth, async (u) => {
                 user = u;
-                if (!user) await signInAnonymously(auth);
+                if (!user) {
+                    await signInAnonymously(auth);
+                    return;
+                }
+
+                if (!assetsLoaded) {
+                    assetsLoaded = true;
+                    await autoLoadAssets();
+                    subscribeCompletedPoints();
+                    subscribeCompletedFiles();
+                }
             });
         }
 
         async function autoLoadAssets() {
             try {
-                const kmlRes = await fetch('./POI.kml');
-                const kmlText = await kmlRes.text();
-                window.allPoints = parseKML(kmlText); 
-                plotPoints(window.allPoints);
+                showLoadingMask(true, "正在載入 KML 圖層與樣板...");
+                allPoints = [];
+                const allMarkersForBounds = [];
 
-                const xlsxRes = await fetch('./template.xlsx');
+                for (const cfg of KML_FILES) {
+                    try {
+                        const res = await fetch(cfg.file);
+                        if (!res.ok) throw new Error(`讀取失敗: ${cfg.file}`);
+                        const text = await res.text();
+
+                        const points = parseKML(text).map(p => ({
+                            ...p,
+                            layerLabel: cfg.label,
+                            category: cfg.category,
+                            status: cfg.status,
+                            color: cfg.color,
+                            iconType: cfg.iconType
+                        }));
+
+                        allPoints.push(...points);
+
+                        const layer = plotPointsToLayer(points, cfg);
+                        kmlLayers[cfg.label] = layer;
+
+                        if (cfg.status === "未測量") {
+                            layer.addTo(map);
+                        }
+
+                        layerControl.addOverlay(layer, cfg.label);
+                        allMarkersForBounds.push(...layer.getLayers());
+                    } catch (e) {
+                        console.error("KML 載入失敗：", cfg.file, e);
+                    }
+                }
+
+                const xlsxRes = await fetch("./template.xlsx");
+                if (!xlsxRes.ok) throw new Error("template.xlsx 讀取失敗");
                 templateData = await xlsxRes.arrayBuffer();
 
-                document.getElementById('loading').style.display = 'none';
-                document.getElementById('statusIndicator').className = 'w-2.5 h-2.5 rounded-full bg-emerald-500';
-            } catch (err) { console.error(err); }
+                const combined = [
+                    ...allMarkersForBounds,
+                    ...completedLayerGroup.getLayers()
+                ];
+
+                if (combined.length > 0) {
+                    const group = L.featureGroup(combined);
+                    map.fitBounds(group.getBounds().pad(0.1));
+                }
+
+                document.getElementById("loading").style.display = "none";
+                document.getElementById("statusIndicator").className = "w-2.5 h-2.5 rounded-full bg-emerald-500";
+                document.getElementById("statusTag").textContent = "已載入";
+            } catch (err) {
+                console.error(err);
+                alert("載入 KML 或 template.xlsx 失敗，請確認檔案是否放在同一資料夾。");
+                showLoadingMask(false);
+            }
         }
 
         function parseKML(text) {
             const parser = new DOMParser();
             const xml = parser.parseFromString(text, "text/xml");
             const placemarks = Array.from(xml.getElementsByTagName("Placemark"));
-            
+
             return placemarks.map(p => {
                 const name = p.getElementsByTagName("name")[0]?.textContent || "未命名";
                 const desc = p.getElementsByTagName("description")[0]?.textContent || "";
                 const coordsNode = p.getElementsByTagName("coordinates")[0];
-                const coords = coordsNode ? coordsNode.textContent.trim().split(",") : [0,0];
-                
+                const coords = coordsNode ? coordsNode.textContent.trim().split(",") : [0, 0];
+
                 let unific_id = "";
                 let bury_loc = "";
 
@@ -280,68 +526,379 @@
 
                 if (!unific_id) {
                     const idMatch = desc.match(/unific_id:\s*([^<|\n|\r]+)/i);
-                    unific_id = idMatch ? idMatch[1].trim() : name;
+                    unific_id = idMatch ? idMatch[1].trim() : "";
                 }
+
                 if (!bury_loc) {
                     const locMatch = desc.match(/bury_loc:\s*([^<|\n|\r]+)/i);
                     bury_loc = locMatch ? locMatch[1].trim() : "";
                 }
 
+                if (!unific_id) {
+                    console.warn("⚠️ KML 點缺少 unific_id：", name);
+                }
+
                 return {
                     id: name,
-                    unific_id: unific_id,
+                    unific_id,
                     lat: parseFloat(coords[1]),
                     lng: parseFloat(coords[0]),
-                    bury_loc: bury_loc
+                    bury_loc
                 };
+            }).filter(p => !isNaN(p.lat) && !isNaN(p.lng));
+        }
+
+        function getPointKey(point) {
+            if (!point?.unific_id) {
+                throw new Error("Point missing unific_id");
+            }
+            return point.unific_id.trim();
+        }
+
+        function createFeatureIcon(iconType, color, isCompleted = false) {
+            const iconSvg = getFeatureSvg(iconType, isCompleted);
+            const bgColor = isCompleted ? "#64748b" : color;
+            const borderColor = isCompleted ? "#334155" : "#ffffff";
+
+            return L.divIcon({
+                className: "",
+                html: `
+                    <div class="custom-poi-marker ${isCompleted ? "is-completed" : ""}" style="
+                        width: 34px;
+                        height: 34px;
+                        border-radius: 999px;
+                        background: ${bgColor};
+                        border: 3px solid ${borderColor};
+                        box-shadow: 0 2px 8px rgba(0,0,0,0.28);
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        transition: all 0.25s ease;
+                    ">
+                        ${iconSvg}
+                    </div>
+                `,
+                iconSize: [34, 34],
+                iconAnchor: [17, 17],
+                popupAnchor: [0, -18]
             });
         }
 
-        function plotPoints(points) {
-            markersLayer.clearLayers();
+        function getFeatureSvg(iconType, isCompleted = false) {
+            const stroke = isCompleted ? "#e2e8f0" : "#ffffff";
+
+            if (iconType === "valve") {
+                return `
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+                        <circle cx="12" cy="12" r="4" stroke="${stroke}" stroke-width="2"/>
+                        <path d="M12 2V6M12 18V22M2 12H6M18 12H22" stroke="${stroke}" stroke-width="2" stroke-linecap="round"/>
+                    </svg>
+                `;
+            }
+
+            if (iconType === "hydrant") {
+                return `
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+                        <path d="M9 21V14a3 3 0 0 1 6 0v7" stroke="${stroke}" stroke-width="2" stroke-linecap="round"/>
+                        <path d="M8 10h8M10 6h4M7 21h10" stroke="${stroke}" stroke-width="2" stroke-linecap="round"/>
+                        <path d="M8 10V8a4 4 0 1 1 8 0v2" stroke="${stroke}" stroke-width="2"/>
+                    </svg>
+                `;
+            }
+
+            if (iconType === "manhole") {
+                return `
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+                        <circle cx="12" cy="12" r="7" stroke="${stroke}" stroke-width="2"/>
+                        <path d="M8 12h8M12 8v8" stroke="${stroke}" stroke-width="2" stroke-linecap="round"/>
+                    </svg>
+                `;
+            }
+
+            return `
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+                    <circle cx="12" cy="12" r="5" stroke="${stroke}" stroke-width="2"/>
+                </svg>
+            `;
+        }
+
+        function updateMarkerPopup(marker, point, isCompleted) {
+            const doneText = isCompleted
+                ? `<div class="text-[11px] text-emerald-600 font-bold mb-2">已完成成果圖卡</div>`
+                : `<div class="text-[11px] text-amber-600 font-bold mb-2">尚未完成成果圖卡</div>`;
+
+            const popupContent = `
+                <div class="text-center min-w-[180px]">
+                    <div class="font-bold text-slate-800 mb-1">${point.id}</div>
+                    <div class="text-[11px] text-slate-500 mb-1">${point.category}｜原始：${point.status}</div>
+                    <div class="text-[11px] text-slate-400 mb-1">${point.unific_id || "缺少 unific_id"}</div>
+                    ${doneText}
+                    <button onclick="window.open('https://www.google.com/maps/dir/?api=1&destination=${point.lat},${point.lng}', '_blank')"
+                            class="bg-blue-600 text-white px-4 py-2 rounded-lg text-xs font-bold shadow-md active:scale-95 transition-transform">
+                        Google 導航
+                    </button>
+                </div>
+            `;
+            marker.bindPopup(popupContent, { className: "nav-popup", offset: [0, -10] });
+        }
+
+        function plotPointsToLayer(points, cfg) {
+            const layer = L.layerGroup();
+
             points.forEach(p => {
-                const m = L.marker([p.lat, p.lng]).on('click', () => {
-                    map.flyTo([p.lat, p.lng], 17); // 縮放至 17 級 (小2級)
-                    if (selectedMarker) selectedMarker.getElement()?.classList.remove('selected-marker');
-                    selectedMarker = m;
-                    m.getElement()?.classList.add('selected-marker');
+                let pointKey = null;
+                try {
+                    pointKey = getPointKey(p);
+                } catch (err) {
+                    console.warn("略過缺少 unific_id 的點位：", p);
+                    return;
+                }
+
+                const isCompleted = completedPointIds.has(pointKey);
+                pointDataMap.set(pointKey, p);
+
+                const marker = L.marker([p.lat, p.lng], {
+                    icon: createFeatureIcon(cfg.iconType, cfg.color, isCompleted)
+                });
+
+                pointMarkerMap.set(pointKey, marker);
+                pointSourceLayerMap.set(pointKey, layer);
+
+                updateMarkerPopup(marker, p, isCompleted);
+
+                marker.on("click", () => {
+                    map.flyTo([p.lat, p.lng], 18);
+
+                    if (selectedMarker) {
+                        selectedMarker.getElement()?.classList.remove("selected-marker");
+                    }
+
+                    selectedMarker = marker;
+                    marker.getElement()?.classList.add("selected-marker");
                     selectedPoint = p;
-                    
-                    document.getElementById('selectedId').textContent = p.id;
-                    document.getElementById('selectedLoc').textContent = p.bury_loc || "位置未標註";
-                    document.getElementById('selectedUnific').textContent = `ID: ${p.unific_id}`;
-                    
-                    document.getElementById('actionPanel').classList.add('show');
+
+                    const currentCompleted = completedPointIds.has(pointKey);
+
+                    document.getElementById("selectedId").textContent = p.id;
+                    document.getElementById("selectedLoc").textContent = p.bury_loc || "位置未標註";
+                    document.getElementById("selectedUnific").textContent =
+                        `unific_id: ${p.unific_id || "❌缺失"} ｜ ${p.category} ｜ ${currentCompleted ? "已完成" : p.status}`;
+
+                    document.getElementById("actionPanel").classList.add("show");
                     resetUIState();
                 });
 
-                // 加入點位彈出視窗按鈕
-                const popupContent = `
-                    <div class="text-center">
-                        <div class="font-bold text-slate-800 mb-2">${p.id}</div>
-                        <button onclick="window.open('https://www.google.com/maps/dir/?api=1&destination=${p.lat},${p.lng}', '_blank')" 
-                                class="bg-blue-600 text-white px-4 py-2 rounded-lg text-xs font-bold shadow-md active:scale-95 transition-transform">
-                            Google 導航
-                        </button>
-                    </div>
-                `;
-                m.bindPopup(popupContent, { className: 'nav-popup', offset: [0, -32] });
-                
-                markersLayer.addLayer(m);
+                if (!isCompleted) {
+                    layer.addLayer(marker);
+                } else {
+                    completedLayerGroup.addLayer(marker);
+                }
             });
-            if (points.length) map.fitBounds(L.featureGroup(markersLayer.getLayers()).getBounds());
+
+            return layer;
         }
 
-        document.getElementById('navBtn').onclick = () => {
+        function applyCompletedState(nextCompletedIds) {
+            completedPointIds = nextCompletedIds;
+
+            pointDataMap.forEach((point, pointKey) => {
+                const marker = pointMarkerMap.get(pointKey);
+                const sourceLayer = pointSourceLayerMap.get(pointKey);
+                const isCompleted = completedPointIds.has(pointKey);
+
+                if (!marker) return;
+
+                marker.setIcon(createFeatureIcon(point.iconType, point.color, isCompleted));
+
+                const el = marker.getElement();
+                if (el) {
+                    el.classList.toggle("finished-marker", isCompleted);
+                }
+
+                if (isCompleted) {
+                    if (sourceLayer && sourceLayer.hasLayer(marker)) {
+                        sourceLayer.removeLayer(marker);
+                    }
+                    if (!completedLayerGroup.hasLayer(marker)) {
+                        completedLayerGroup.addLayer(marker);
+                    }
+                } else {
+                    if (completedLayerGroup.hasLayer(marker)) {
+                        completedLayerGroup.removeLayer(marker);
+                    }
+                    if (sourceLayer && !sourceLayer.hasLayer(marker)) {
+                        sourceLayer.addLayer(marker);
+                    }
+                }
+
+                updateMarkerPopup(marker, point, isCompleted);
+            });
+        }
+
+        function getCompletedCollectionRef() {
+            return collection(db, `artifacts/${appId}/public/data/completed_points`);
+        }
+
+        function subscribeCompletedPoints() {
+            const { query, onSnapshot } = window.firebaseCore;
+            const q = query(getCompletedCollectionRef());
+
+            if (completedUnsubscribe) completedUnsubscribe();
+
+            completedUnsubscribe = onSnapshot(q, (snapshot) => {
+                const nextCompletedIds = new Set();
+
+                snapshot.forEach((docSnap) => {
+                    const data = docSnap.data();
+                    if (data?.pointKey) nextCompletedIds.add(data.pointKey);
+                });
+
+                applyCompletedState(nextCompletedIds);
+            }, (err) => {
+                console.error("completed_points 同步失敗", err);
+            });
+        }
+
+        function subscribeCompletedFiles() {
+            const { collection, onSnapshot } = window.firebaseCore;
+            const filesRef = collection(db, `artifacts/${appId}/public/data/completed_files`);
+
+            if (filesUnsubscribe) filesUnsubscribe();
+
+            filesUnsubscribe = onSnapshot(filesRef, (snapshot) => {
+                const items = [];
+                snapshot.forEach((docSnap) => {
+                    items.push(docSnap.data());
+                });
+
+                items.sort((a, b) => {
+                    const ta = a?.uploadedAt?.seconds || 0;
+                    const tb = b?.uploadedAt?.seconds || 0;
+                    return tb - ta;
+                });
+
+                renderCompletedFiles(items);
+            }, (err) => {
+                console.error("completed_files 同步失敗", err);
+            });
+        }
+
+        function renderCompletedFiles(items) {
+            const countEl = document.getElementById("completedFilesCount");
+            const listEl = document.getElementById("completedFilesList");
+
+            countEl.textContent = items.length;
+
+            if (!items.length) {
+                listEl.innerHTML = `<div class="text-slate-400 text-xs">尚無已上傳成果檔</div>`;
+                return;
+            }
+
+            listEl.innerHTML = items.map(item => {
+                const title = item.fileName || "未命名成果檔";
+                const pointKey = item.pointKey || "";
+                const category = item.category || "";
+                const originalStatus = item.originalStatus || "";
+                const url = item.downloadURL || "#";
+
+                return `
+                    <div class="file-card border border-slate-200 rounded-xl p-3 bg-slate-50">
+                        <div class="font-bold text-slate-800 text-xs break-all">${title}</div>
+                        <div class="text-[11px] text-slate-500 mt-1">${pointKey} ｜ ${category} ｜ 原始：${originalStatus}</div>
+                        <div class="mt-2">
+                            <a href="${url}" target="_blank" class="inline-flex items-center px-3 py-1.5 rounded-lg bg-blue-600 text-white text-xs font-bold">
+                                開啟 / 下載
+                            </a>
+                        </div>
+                    </div>
+                `;
+            }).join("");
+        }
+
+        function sanitizeFileName(str) {
+            return (str || "").replace(/[\\/:*?"<>|]/g, "_").trim();
+        }
+
+        function buildExcelFileName(point) {
+            const id = getPointKey(point);
+            const safeId = sanitizeFileName(id);
+            return `${safeId}.xlsx`;
+        }
+
+        async function uploadExcelToCloud(blob, point) {
+            const { ref, uploadBytes, getDownloadURL } = window.firebaseCore;
+            const id = getPointKey(point);
+            const safeId = sanitizeFileName(id);
+            const fileName = buildExcelFileName(point);
+            const storagePath = `artifacts/${appId}/completed_xlsx/${safeId}/${safeId}.xlsx`;
+
+            const storageRef = ref(storage, storagePath);
+
+            await uploadBytes(storageRef, blob, {
+                contentType: XLSX_MIME
+            });
+
+            const downloadURL = await getDownloadURL(storageRef);
+
+            return {
+                fileName,
+                storagePath,
+                downloadURL
+            };
+        }
+
+        async function savePointCompleted(point, fileInfo) {
+            const { doc, setDoc, serverTimestamp } = window.firebaseCore;
+            const pointKey = getPointKey(point);
+
+            const pointRef = doc(db, `artifacts/${appId}/public/data/completed_points/${pointKey}`);
+            await setDoc(pointRef, {
+                pointKey,
+                id: point.id || "",
+                unific_id: point.unific_id || "",
+                category: point.category || "",
+                originalStatus: point.status || "",
+                sourceLayerLabel: point.layerLabel || "",
+                status: "已完成",
+                completedBy: user?.uid || "anonymous",
+                completedAt: serverTimestamp(),
+                fileName: fileInfo.fileName,
+                storagePath: fileInfo.storagePath,
+                downloadURL: fileInfo.downloadURL
+            }, { merge: true });
+        }
+
+        async function saveCompletedFileRecord(point, fileInfo) {
+            const { doc, setDoc, serverTimestamp } = window.firebaseCore;
+            const pointKey = getPointKey(point);
+
+            const fileDocId = `${pointKey}__latest`;
+            const fileRef = doc(db, `artifacts/${appId}/public/data/completed_files/${fileDocId}`);
+
+            await setDoc(fileRef, {
+                pointKey,
+                id: point.id || "",
+                unific_id: point.unific_id || "",
+                category: point.category || "",
+                originalStatus: point.status || "",
+                fileName: fileInfo.fileName,
+                storagePath: fileInfo.storagePath,
+                downloadURL: fileInfo.downloadURL,
+                uploadedBy: user?.uid || "anonymous",
+                uploadedAt: serverTimestamp()
+            }, { merge: true });
+        }
+
+        document.getElementById("navBtn").onclick = () => {
             if (!selectedPoint) return;
             const url = `https://www.google.com/maps/dir/?api=1&destination=${selectedPoint.lat},${selectedPoint.lng}`;
-            window.open(url, '_blank');
+            window.open(url, "_blank");
         };
 
-        const cameraInput = document.getElementById('cameraInput');
-        document.getElementById('cameraBtn').onclick = () => cameraInput.click();
-        document.getElementById('retakeBtn').onclick = () => cameraInput.click();
-        
+        const cameraInput = document.getElementById("cameraInput");
+        document.getElementById("cameraBtn").onclick = () => cameraInput.click();
+        document.getElementById("retakeBtn").onclick = () => cameraInput.click();
+
         cameraInput.onchange = async e => {
             if (!e.target.files[0]) return;
             showLoadingMask(true, "縮圖處理中...");
@@ -349,16 +906,23 @@
             reader.onload = (ev) => {
                 const img = new Image();
                 img.onload = () => {
-                    const canvas = document.createElement('canvas');
+                    const canvas = document.createElement("canvas");
                     const MAX_WIDTH = 1200;
-                    let width = img.width, height = img.height;
-                    if (width > MAX_WIDTH) { height *= MAX_WIDTH / width; width = MAX_WIDTH; }
-                    canvas.width = width; canvas.height = height;
-                    canvas.getContext('2d').drawImage(img, 0, 0, width, height);
-                    processedPhotoBase64 = canvas.toDataURL('image/jpeg', 0.8);
-                    document.getElementById('capturedImg').src = processedPhotoBase64;
-                    document.getElementById('formArea').classList.add('hidden');
-                    document.getElementById('previewArea').classList.remove('hidden');
+                    let width = img.width;
+                    let height = img.height;
+
+                    if (width > MAX_WIDTH) {
+                        height *= MAX_WIDTH / width;
+                        width = MAX_WIDTH;
+                    }
+
+                    canvas.width = width;
+                    canvas.height = height;
+                    canvas.getContext("2d").drawImage(img, 0, 0, width, height);
+                    processedPhotoBase64 = canvas.toDataURL("image/jpeg", 0.8);
+                    document.getElementById("capturedImg").src = processedPhotoBase64;
+                    document.getElementById("formArea").classList.add("hidden");
+                    document.getElementById("previewArea").classList.remove("hidden");
                     showLoadingMask(false);
                 };
                 img.src = ev.target.result;
@@ -366,55 +930,77 @@
             reader.readAsDataURL(e.target.files[0]);
         };
 
-        function closePanel() { document.getElementById('actionPanel').classList.remove('show'); resetUIState(); }
+        function closePanel() {
+            document.getElementById("actionPanel").classList.remove("show");
+            resetUIState();
+        }
+
         function resetUIState() {
             processedPhotoBase64 = null;
-            document.getElementById('formArea').classList.remove('hidden');
-            document.getElementById('previewArea').classList.add('hidden');
-            for(let i=1; i<=3; i++) {
-                document.getElementById(`dist_${i}`).value = '';
-                document.getElementById(`note_type_${i}`).value = '';
+            cameraInput.value = "";
+            document.getElementById("formArea").classList.remove("hidden");
+            document.getElementById("previewArea").classList.add("hidden");
+
+            for (let i = 1; i <= 3; i++) {
+                document.getElementById(`dist_${i}`).value = "";
+                document.getElementById(`note_type_${i}`).value = "";
                 const idInput = document.getElementById(`note_id_${i}`);
-                idInput.value = '';
-                idInput.classList.add('hidden');
+                idInput.value = "";
+                idInput.classList.add("hidden");
             }
         }
-        document.getElementById('closePanelBtn').onclick = closePanel;
-        document.getElementById('finishBtn').onclick = () => {
-            document.getElementById('formArea').classList.remove('hidden');
-            document.getElementById('previewArea').classList.add('hidden');
+
+        document.getElementById("closePanelBtn").onclick = closePanel;
+        document.getElementById("finishBtn").onclick = () => {
+            document.getElementById("formArea").classList.remove("hidden");
+            document.getElementById("previewArea").classList.add("hidden");
         };
 
         async function generateExcel() {
+            if (!templateData) throw new Error("template.xlsx 尚未載入");
+            if (!selectedPoint) throw new Error("尚未選定點位");
+            if (!selectedPoint.unific_id) throw new Error("此點缺少 unific_id");
+            if (!processedPhotoBase64) throw new Error("請先拍攝照片");
+
             const workbook = new ExcelJS.Workbook();
             await workbook.xlsx.load(templateData);
-            
+
             const offsets = [];
             for (let i = 1; i <= 3; i++) {
                 const dist = document.getElementById(`dist_${i}`).value;
                 const type = document.getElementById(`note_type_${i}`).value;
                 const noteId = document.getElementById(`note_id_${i}`).value;
+
                 let fullNote = type;
-                if (type.includes('( )') && noteId) {
-                    fullNote = type.replace('( )', `(${noteId})`);
+                if (type.includes("( )") && noteId) {
+                    fullNote = type.replace("( )", `(${noteId})`);
                 }
                 offsets.push({ dist, note: fullNote });
             }
 
-            const imageId = workbook.addImage({ base64: processedPhotoBase64, extension: 'jpeg' });
-            const targetHeightPx = 227; 
-            const dims = await new Promise(r => { const i = new Image(); i.onload = () => r({w:i.width,h:i.height}); i.src = processedPhotoBase64; });
+            const imageId = workbook.addImage({
+                base64: processedPhotoBase64,
+                extension: "jpeg"
+            });
+
+            const dims = await new Promise((resolve) => {
+                const i = new Image();
+                i.onload = () => resolve({ w: i.width, h: i.height });
+                i.src = processedPhotoBase64;
+            });
+
+            const targetHeightPx = 227;
             const targetWidthPx = targetHeightPx * (dims.w / dims.h);
 
             workbook.eachSheet((sheet) => {
-                const sheetName = sheet.name.replace(/\s/g, '');
-                let photoInsertedInSheet = false; 
+                const sheetName = sheet.name.replace(/\s/g, "");
+                let photoInsertedInSheet = false;
 
                 sheet.eachRow({ includeEmpty: true }, (row, rowNumber) => {
                     row.eachCell({ includeEmpty: true }, (cell, colNumber) => {
                         const cellText = String(cell.value || "").trim();
-                        const cleanVal = cellText.replace(/\s/g, '');
-                        
+                        const cleanVal = cellText.replace(/\s/g, "");
+
                         if (cleanVal === "編號") {
                             if (sheetName.includes("圖卡背面")) {
                                 let rowOffset = 1;
@@ -438,7 +1024,7 @@
                                 }
                             }
                         }
-                        
+
                         if (cleanVal === "位置") {
                             let offset = 1;
                             while (colNumber + offset <= sheet.columnCount) {
@@ -460,12 +1046,12 @@
                         }
 
                         if (!photoInsertedInSheet && cleanVal.includes("現場照片")) {
-                            sheet.addImage(imageId, { 
-                                tl: { col: colNumber - 1 + 0.1, row: rowNumber + 0.1 }, 
+                            sheet.addImage(imageId, {
+                                tl: { col: colNumber - 1 + 0.1, row: rowNumber + 0.1 },
                                 ext: { width: targetWidthPx, height: targetHeightPx },
-                                editAs: 'oneCell'
+                                editAs: "oneCell"
                             });
-                            photoInsertedInSheet = true; 
+                            photoInsertedInSheet = true;
                         }
                     });
                 });
@@ -475,14 +1061,40 @@
             return new Blob([buffer], { type: XLSX_MIME });
         }
 
-        document.getElementById('exportBtn').onclick = async () => {
+        document.getElementById("exportBtn").onclick = async () => {
+            if (!selectedPoint?.unific_id) {
+                alert("此點位沒有 unific_id，禁止匯出！");
+                return;
+            }
+
+            const pointKey = getPointKey(selectedPoint);
+            if (completedPointIds.has(pointKey)) {
+                const ok = confirm("此點已有成果檔，是否覆蓋？");
+                if (!ok) return;
+            }
+
             try {
-                showLoadingMask(true, "產生成果圖卡中...");
+                showLoadingMask(true, "產生並上傳成果圖卡中...");
+
                 const blob = await generateExcel();
-                triggerDownload(blob, `${selectedPoint.unific_id}_調查成果.xlsx`);
-                setTimeout(closePanel, 800);
-            } catch (err) { alert("匯出出錯: " + err.message); }
-            showLoadingMask(false);
+                const fileInfo = await uploadExcelToCloud(blob, selectedPoint);
+
+                await saveCompletedFileRecord(selectedPoint, fileInfo);
+                await savePointCompleted(selectedPoint, fileInfo);
+
+                triggerDownload(blob, fileInfo.fileName);
+
+                if (selectedMarker) selectedMarker.closePopup();
+
+                setTimeout(() => {
+                    closePanel();
+                }, 800);
+            } catch (err) {
+                console.error(err);
+                alert("上傳或匯出失敗：" + err.message);
+            } finally {
+                showLoadingMask(false);
+            }
         };
 
         function triggerDownload(blob, fileName) {
@@ -492,21 +1104,28 @@
             a.href = url;
             a.download = fileName;
             document.body.appendChild(a);
-            try { a.click(); } catch (e) { window.location.href = url; }
-            
+
+            try {
+                a.click();
+            } catch (e) {
+                window.location.href = url;
+            }
+
             setTimeout(() => {
                 document.body.removeChild(a);
                 URL.revokeObjectURL(url);
-            }, 10000); 
+            }, 10000);
 
             if (/Line|FBAN|FBAV|Messenger/i.test(navigator.userAgent)) {
                 alert("提醒：您正在使用社群 App 內建瀏覽器，若下載沒反應，請點選右上角並選擇「以 Chrome/Safari 開啟」。");
             }
         }
 
-        function showLoadingMask(s, t) {
-            document.getElementById('loading').style.display = s ? 'flex' : 'none';
-            if (s) document.getElementById('loadingMsg').textContent = t;
+        function showLoadingMask(show, text) {
+            document.getElementById("loading").style.display = show ? "flex" : "none";
+            if (show && text) {
+                document.getElementById("loadingMsg").textContent = text;
+            }
         }
     </script>
 </body>
