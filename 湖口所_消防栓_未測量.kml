@@ -1,0 +1,3113 @@
+<?xml version='1.0' encoding='utf-8'?>
+<ns0:kml xmlns:ns0="http://www.opengis.net/kml/2.2">
+  <ns0:Document>
+    <ns0:name>地下式消防栓</ns0:name>
+    <ns0:Style id="icon-1899-0288D1-normal">
+      <ns0:IconStyle>
+        <ns0:color>ffd18802</ns0:color>
+        <ns0:scale>1</ns0:scale>
+        <ns0:Icon>
+          <ns0:href>https://www.gstatic.com/mapspro/images/stock/503-wht-blank_maps.png</ns0:href>
+        </ns0:Icon>
+        <ns0:hotSpot x="32" xunits="pixels" y="64" yunits="insetPixels" />
+      </ns0:IconStyle>
+      <ns0:LabelStyle>
+        <ns0:scale>0</ns0:scale>
+      </ns0:LabelStyle>
+    </ns0:Style>
+    <ns0:Style id="icon-1899-0288D1-highlight">
+      <ns0:IconStyle>
+        <ns0:color>ffd18802</ns0:color>
+        <ns0:scale>1</ns0:scale>
+        <ns0:Icon>
+          <ns0:href>https://www.gstatic.com/mapspro/images/stock/503-wht-blank_maps.png</ns0:href>
+        </ns0:Icon>
+        <ns0:hotSpot x="32" xunits="pixels" y="64" yunits="insetPixels" />
+      </ns0:IconStyle>
+      <ns0:LabelStyle>
+        <ns0:scale>1</ns0:scale>
+      </ns0:LabelStyle>
+    </ns0:Style>
+    <ns0:StyleMap id="icon-1899-0288D1">
+      <ns0:Pair>
+        <ns0:key>normal</ns0:key>
+        <ns0:styleUrl>#icon-1899-0288D1-normal</ns0:styleUrl>
+      </ns0:Pair>
+      <ns0:Pair>
+        <ns0:key>highlight</ns0:key>
+        <ns0:styleUrl>#icon-1899-0288D1-highlight</ns0:styleUrl>
+      </ns0:Pair>
+    </ns0:StyleMap>
+    <ns0:Placemark>
+      <ns0:name>H1731</ns0:name>
+      <ns0:description>unific_id: 0343006249675160340019&lt;br&gt;bury_loc: 新竹縣新豐鄉員山村文昌街18巷12號前&lt;br&gt;coord_97x: 249,942.174&lt;br&gt;coord_97y: 2,751,751.125&lt;br&gt;經度: 120.999428&lt;br&gt;緯度: 24.873363&lt;br&gt;閥栓種類: 地下式消防栓&lt;br&gt;remark: </ns0:description>
+      <ns0:styleUrl>#icon-1899-0288D1</ns0:styleUrl>
+      <ns0:ExtendedData>
+        <ns0:Data name="unific_id">
+          <ns0:value>0343006249675160340019</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="bury_loc">
+          <ns0:value>新竹縣新豐鄉員山村文昌街18巷12號前</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="coord_97x">
+          <ns0:value>249942.174</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="coord_97y">
+          <ns0:value>2751751.125</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="經度">
+          <ns0:value>120.999428</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="緯度">
+          <ns0:value>24.873363</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="閥栓種類">
+          <ns0:value>地下式消防栓</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="remark">
+          <ns0:value />
+        </ns0:Data>
+      </ns0:ExtendedData>
+      <ns0:Point>
+        <ns0:coordinates>
+          120.999428,24.873363,0
+        </ns0:coordinates>
+      </ns0:Point>
+    </ns0:Placemark>
+    <ns0:Placemark>
+      <ns0:name>H1730</ns0:name>
+      <ns0:description>unific_id: 0343006252075100340058&lt;br&gt;bury_loc: 新竹縣湖口鄉光復東路352號前&lt;br&gt;coord_97x: 252,448.047&lt;br&gt;coord_97y: 2,751,131.02&lt;br&gt;經度: 121.024227&lt;br&gt;緯度: 24.867762&lt;br&gt;閥栓種類: 地下式消防栓&lt;br&gt;remark: </ns0:description>
+      <ns0:styleUrl>#icon-1899-0288D1</ns0:styleUrl>
+      <ns0:ExtendedData>
+        <ns0:Data name="unific_id">
+          <ns0:value>0343006252075100340058</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="bury_loc">
+          <ns0:value>新竹縣湖口鄉光復東路352號前</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="coord_97x">
+          <ns0:value>252448.047</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="coord_97y">
+          <ns0:value>2751131.02</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="經度">
+          <ns0:value>121.024227</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="緯度">
+          <ns0:value>24.867762</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="閥栓種類">
+          <ns0:value>地下式消防栓</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="remark">
+          <ns0:value />
+        </ns0:Data>
+      </ns0:ExtendedData>
+      <ns0:Point>
+        <ns0:coordinates>
+          121.024227,24.867762,0
+        </ns0:coordinates>
+      </ns0:Point>
+    </ns0:Placemark>
+    <ns0:Placemark>
+      <ns0:name>H78</ns0:name>
+      <ns0:description>unific_id: 0343006252075100340023&lt;br&gt;bury_loc: 新竹縣湖口鄉新生3路33-1號前&lt;br&gt;coord_97x: 252,501.336&lt;br&gt;coord_97y: 2,751,017.693&lt;br&gt;經度: 121.024754&lt;br&gt;緯度: 24.866739&lt;br&gt;閥栓種類: 地下式消防栓&lt;br&gt;remark: </ns0:description>
+      <ns0:styleUrl>#icon-1899-0288D1</ns0:styleUrl>
+      <ns0:ExtendedData>
+        <ns0:Data name="unific_id">
+          <ns0:value>0343006252075100340023</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="bury_loc">
+          <ns0:value>新竹縣湖口鄉新生3路33-1號前</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="coord_97x">
+          <ns0:value>252501.336</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="coord_97y">
+          <ns0:value>2751017.693</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="經度">
+          <ns0:value>121.024754</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="緯度">
+          <ns0:value>24.866739</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="閥栓種類">
+          <ns0:value>地下式消防栓</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="remark">
+          <ns0:value />
+        </ns0:Data>
+      </ns0:ExtendedData>
+      <ns0:Point>
+        <ns0:coordinates>
+          121.024754,24.866739,0
+        </ns0:coordinates>
+      </ns0:Point>
+    </ns0:Placemark>
+    <ns0:Placemark>
+      <ns0:name>H1733</ns0:name>
+      <ns0:description>unific_id: 0343006247275640340007&lt;br&gt;bury_loc: 新竹縣新豐鄉新豐村12鄰287-1號&lt;br&gt;coord_97x: 247,341.324&lt;br&gt;coord_97y: 2,756,580.657&lt;br&gt;經度: 120.973678&lt;br&gt;緯度: 24.916964&lt;br&gt;閥栓種類: 地下式消防栓&lt;br&gt;remark: </ns0:description>
+      <ns0:styleUrl>#icon-1899-0288D1</ns0:styleUrl>
+      <ns0:ExtendedData>
+        <ns0:Data name="unific_id">
+          <ns0:value>0343006247275640340007</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="bury_loc">
+          <ns0:value>新竹縣新豐鄉新豐村12鄰287-1號</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="coord_97x">
+          <ns0:value>247341.324</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="coord_97y">
+          <ns0:value>2756580.657</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="經度">
+          <ns0:value>120.973678</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="緯度">
+          <ns0:value>24.916964</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="閥栓種類">
+          <ns0:value>地下式消防栓</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="remark">
+          <ns0:value />
+        </ns0:Data>
+      </ns0:ExtendedData>
+      <ns0:Point>
+        <ns0:coordinates>
+          120.973678,24.916964,0
+        </ns0:coordinates>
+      </ns0:Point>
+    </ns0:Placemark>
+    <ns0:Placemark>
+      <ns0:name>H33</ns0:name>
+      <ns0:description>unific_id: 0343006249675160340002&lt;br&gt;bury_loc: 新竹縣新豐鄉信義街15號旁(信義街18巷口)&lt;br&gt;coord_97x: 249,843.821&lt;br&gt;coord_97y: 2,751,859.654&lt;br&gt;經度: 120.998454&lt;br&gt;緯度: 24.874343&lt;br&gt;閥栓種類: 地下式消防栓&lt;br&gt;remark: </ns0:description>
+      <ns0:styleUrl>#icon-1899-0288D1</ns0:styleUrl>
+      <ns0:ExtendedData>
+        <ns0:Data name="unific_id">
+          <ns0:value>0343006249675160340002</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="bury_loc">
+          <ns0:value>新竹縣新豐鄉信義街15號旁(信義街18巷口)</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="coord_97x">
+          <ns0:value>249843.821</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="coord_97y">
+          <ns0:value>2751859.654</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="經度">
+          <ns0:value>120.998454</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="緯度">
+          <ns0:value>24.874343</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="閥栓種類">
+          <ns0:value>地下式消防栓</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="remark">
+          <ns0:value />
+        </ns0:Data>
+      </ns0:ExtendedData>
+      <ns0:Point>
+        <ns0:coordinates>
+          120.998454,24.874343,0
+        </ns0:coordinates>
+      </ns0:Point>
+    </ns0:Placemark>
+    <ns0:Placemark>
+      <ns0:name>H72</ns0:name>
+      <ns0:description>unific_id: 0343006252075040340023&lt;br&gt;bury_loc: 竹縣湖口鄉新生2路36號前&lt;br&gt;coord_97x: 252,533.5&lt;br&gt;coord_97y: 2,750,948.2&lt;br&gt;經度: 121.025072&lt;br&gt;緯度: 24.866112&lt;br&gt;閥栓種類: 地下式消防栓&lt;br&gt;remark: </ns0:description>
+      <ns0:styleUrl>#icon-1899-0288D1</ns0:styleUrl>
+      <ns0:ExtendedData>
+        <ns0:Data name="unific_id">
+          <ns0:value>0343006252075040340023</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="bury_loc">
+          <ns0:value>竹縣湖口鄉新生2路36號前</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="coord_97x">
+          <ns0:value>252533.5</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="coord_97y">
+          <ns0:value>2750948.2</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="經度">
+          <ns0:value>121.025072</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="緯度">
+          <ns0:value>24.866112</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="閥栓種類">
+          <ns0:value>地下式消防栓</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="remark">
+          <ns0:value />
+        </ns0:Data>
+      </ns0:ExtendedData>
+      <ns0:Point>
+        <ns0:coordinates>
+          121.025072,24.866112,0
+        </ns0:coordinates>
+      </ns0:Point>
+    </ns0:Placemark>
+    <ns0:Placemark>
+      <ns0:name>H76</ns0:name>
+      <ns0:description>unific_id: 0343006252075040340021&lt;br&gt;bury_loc: 新竹縣湖口鄉新生3路27號前&lt;br&gt;coord_97x: 252,486.8&lt;br&gt;coord_97y: 2,750,950.7&lt;br&gt;經度: 121.02461&lt;br&gt;緯度: 24.866134&lt;br&gt;閥栓種類: 地下式消防栓&lt;br&gt;remark: </ns0:description>
+      <ns0:styleUrl>#icon-1899-0288D1</ns0:styleUrl>
+      <ns0:ExtendedData>
+        <ns0:Data name="unific_id">
+          <ns0:value>0343006252075040340021</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="bury_loc">
+          <ns0:value>新竹縣湖口鄉新生3路27號前</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="coord_97x">
+          <ns0:value>252486.8</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="coord_97y">
+          <ns0:value>2750950.7</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="經度">
+          <ns0:value>121.02461</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="緯度">
+          <ns0:value>24.866134</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="閥栓種類">
+          <ns0:value>地下式消防栓</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="remark">
+          <ns0:value />
+        </ns0:Data>
+      </ns0:ExtendedData>
+      <ns0:Point>
+        <ns0:coordinates>
+          121.02461,24.866134,0
+        </ns0:coordinates>
+      </ns0:Point>
+    </ns0:Placemark>
+    <ns0:Placemark>
+      <ns0:name>H77</ns0:name>
+      <ns0:description>unific_id: 0343006252075100340030&lt;br&gt;bury_loc: 新竹縣湖口鄉新生3路47號前&lt;br&gt;coord_97x: 252,562.8&lt;br&gt;coord_97y: 2,751,020.5&lt;br&gt;經度: 121.025362&lt;br&gt;緯度: 24.866764&lt;br&gt;閥栓種類: 地下式消防栓&lt;br&gt;remark: </ns0:description>
+      <ns0:styleUrl>#icon-1899-0288D1</ns0:styleUrl>
+      <ns0:ExtendedData>
+        <ns0:Data name="unific_id">
+          <ns0:value>0343006252075100340030</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="bury_loc">
+          <ns0:value>新竹縣湖口鄉新生3路47號前</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="coord_97x">
+          <ns0:value>252562.8</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="coord_97y">
+          <ns0:value>2751020.5</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="經度">
+          <ns0:value>121.025362</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="緯度">
+          <ns0:value>24.866764</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="閥栓種類">
+          <ns0:value>地下式消防栓</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="remark">
+          <ns0:value />
+        </ns0:Data>
+      </ns0:ExtendedData>
+      <ns0:Point>
+        <ns0:coordinates>
+          121.025362,24.866764,0
+        </ns0:coordinates>
+      </ns0:Point>
+    </ns0:Placemark>
+    <ns0:Placemark>
+      <ns0:name>H80</ns0:name>
+      <ns0:description>unific_id: 0343006252075040340014&lt;br&gt;bury_loc: 新竹縣湖口鄉天津2街11號前&lt;br&gt;coord_97x: 252,396.218&lt;br&gt;coord_97y: 2,750,954.451&lt;br&gt;經度: 121.023713&lt;br&gt;緯度: 24.866168&lt;br&gt;閥栓種類: 地下式消防栓&lt;br&gt;remark: </ns0:description>
+      <ns0:styleUrl>#icon-1899-0288D1</ns0:styleUrl>
+      <ns0:ExtendedData>
+        <ns0:Data name="unific_id">
+          <ns0:value>0343006252075040340014</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="bury_loc">
+          <ns0:value>新竹縣湖口鄉天津2街11號前</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="coord_97x">
+          <ns0:value>252396.218</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="coord_97y">
+          <ns0:value>2750954.451</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="經度">
+          <ns0:value>121.023713</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="緯度">
+          <ns0:value>24.866168</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="閥栓種類">
+          <ns0:value>地下式消防栓</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="remark">
+          <ns0:value />
+        </ns0:Data>
+      </ns0:ExtendedData>
+      <ns0:Point>
+        <ns0:coordinates>
+          121.023713,24.866168,0
+        </ns0:coordinates>
+      </ns0:Point>
+    </ns0:Placemark>
+    <ns0:Placemark>
+      <ns0:name>H73</ns0:name>
+      <ns0:description>unific_id: 0343006252075040340025&lt;br&gt;bury_loc: 新竹縣湖口鄉新生一路50號前&lt;br&gt;coord_97x: 252,618.65&lt;br&gt;coord_97y: 2,750,948.62&lt;br&gt;經度: 121.025915&lt;br&gt;緯度: 24.866115&lt;br&gt;閥栓種類: 地下式消防栓&lt;br&gt;remark: </ns0:description>
+      <ns0:styleUrl>#icon-1899-0288D1</ns0:styleUrl>
+      <ns0:ExtendedData>
+        <ns0:Data name="unific_id">
+          <ns0:value>0343006252075040340025</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="bury_loc">
+          <ns0:value>新竹縣湖口鄉新生一路50號前</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="coord_97x">
+          <ns0:value>252618.65</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="coord_97y">
+          <ns0:value>2750948.62</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="經度">
+          <ns0:value>121.025915</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="緯度">
+          <ns0:value>24.866115</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="閥栓種類">
+          <ns0:value>地下式消防栓</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="remark">
+          <ns0:value />
+        </ns0:Data>
+      </ns0:ExtendedData>
+      <ns0:Point>
+        <ns0:coordinates>
+          121.025915,24.866115,0
+        </ns0:coordinates>
+      </ns0:Point>
+    </ns0:Placemark>
+    <ns0:Placemark>
+      <ns0:name>H74</ns0:name>
+      <ns0:description>unific_id: 0343006252075040340024&lt;br&gt;bury_loc: 竹縣湖口鄉新生一路21號前&lt;br&gt;coord_97x: 252,551.4&lt;br&gt;coord_97y: 2,750,897.7&lt;br&gt;經度: 121.025249&lt;br&gt;緯度: 24.865656&lt;br&gt;閥栓種類: 地下式消防栓&lt;br&gt;remark: </ns0:description>
+      <ns0:styleUrl>#icon-1899-0288D1</ns0:styleUrl>
+      <ns0:ExtendedData>
+        <ns0:Data name="unific_id">
+          <ns0:value>0343006252075040340024</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="bury_loc">
+          <ns0:value>竹縣湖口鄉新生一路21號前</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="coord_97x">
+          <ns0:value>252551.4</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="coord_97y">
+          <ns0:value>2750897.7</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="經度">
+          <ns0:value>121.025249</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="緯度">
+          <ns0:value>24.865656</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="閥栓種類">
+          <ns0:value>地下式消防栓</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="remark">
+          <ns0:value />
+        </ns0:Data>
+      </ns0:ExtendedData>
+      <ns0:Point>
+        <ns0:coordinates>
+          121.025249,24.865656,0
+        </ns0:coordinates>
+      </ns0:Point>
+    </ns0:Placemark>
+    <ns0:Placemark>
+      <ns0:name>H67</ns0:name>
+      <ns0:description>unific_id: 0343006248075280340003&lt;br&gt;bury_loc: 新豐鄉茄苳路三陽安駕中心入口旁&lt;br&gt;coord_97x: 248,696.19&lt;br&gt;coord_97y: 2,753,136.812&lt;br&gt;經度: 120.987095&lt;br&gt;緯度: 24.885873&lt;br&gt;閥栓種類: 地下式消防栓&lt;br&gt;remark: </ns0:description>
+      <ns0:styleUrl>#icon-1899-0288D1</ns0:styleUrl>
+      <ns0:ExtendedData>
+        <ns0:Data name="unific_id">
+          <ns0:value>0343006248075280340003</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="bury_loc">
+          <ns0:value>新豐鄉茄苳路三陽安駕中心入口旁</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="coord_97x">
+          <ns0:value>248696.19</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="coord_97y">
+          <ns0:value>2753136.812</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="經度">
+          <ns0:value>120.987095</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="緯度">
+          <ns0:value>24.885873</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="閥栓種類">
+          <ns0:value>地下式消防栓</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="remark">
+          <ns0:value />
+        </ns0:Data>
+      </ns0:ExtendedData>
+      <ns0:Point>
+        <ns0:coordinates>
+          120.987095,24.885873,0
+        </ns0:coordinates>
+      </ns0:Point>
+    </ns0:Placemark>
+    <ns0:Placemark>
+      <ns0:name>H75</ns0:name>
+      <ns0:description>unific_id: 0343006252075040340026&lt;br&gt;bury_loc: 新竹縣湖口鄉新生2路82號前&lt;br&gt;coord_97x: 252,658.5&lt;br&gt;coord_97y: 2,750,999.6&lt;br&gt;經度: 121.026309&lt;br&gt;緯度: 24.866575&lt;br&gt;閥栓種類: 地下式消防栓&lt;br&gt;remark: </ns0:description>
+      <ns0:styleUrl>#icon-1899-0288D1</ns0:styleUrl>
+      <ns0:ExtendedData>
+        <ns0:Data name="unific_id">
+          <ns0:value>0343006252075040340026</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="bury_loc">
+          <ns0:value>新竹縣湖口鄉新生2路82號前</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="coord_97x">
+          <ns0:value>252658.5</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="coord_97y">
+          <ns0:value>2750999.6</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="經度">
+          <ns0:value>121.026309</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="緯度">
+          <ns0:value>24.866575</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="閥栓種類">
+          <ns0:value>地下式消防栓</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="remark">
+          <ns0:value />
+        </ns0:Data>
+      </ns0:ExtendedData>
+      <ns0:Point>
+        <ns0:coordinates>
+          121.026309,24.866575,0
+        </ns0:coordinates>
+      </ns0:Point>
+    </ns0:Placemark>
+    <ns0:Placemark>
+      <ns0:name>H154</ns0:name>
+      <ns0:description>unific_id: 0343006248075820340002&lt;br&gt;bury_loc: 新豐鄉坡頭村10鄰189號前&lt;br&gt;coord_97x: 248,694.5&lt;br&gt;coord_97y: 2,758,353.2&lt;br&gt;經度: 120.987074&lt;br&gt;緯度: 24.932969&lt;br&gt;閥栓種類: 地下式消防栓&lt;br&gt;remark: </ns0:description>
+      <ns0:styleUrl>#icon-1899-0288D1</ns0:styleUrl>
+      <ns0:ExtendedData>
+        <ns0:Data name="unific_id">
+          <ns0:value>0343006248075820340002</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="bury_loc">
+          <ns0:value>新豐鄉坡頭村10鄰189號前</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="coord_97x">
+          <ns0:value>248694.5</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="coord_97y">
+          <ns0:value>2758353.2</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="經度">
+          <ns0:value>120.987074</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="緯度">
+          <ns0:value>24.932969</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="閥栓種類">
+          <ns0:value>地下式消防栓</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="remark">
+          <ns0:value />
+        </ns0:Data>
+      </ns0:ExtendedData>
+      <ns0:Point>
+        <ns0:coordinates>
+          120.987074,24.932969,0
+        </ns0:coordinates>
+      </ns0:Point>
+    </ns0:Placemark>
+    <ns0:Placemark>
+      <ns0:name>H150</ns0:name>
+      <ns0:description>unific_id: 0343006248075760340001&lt;br&gt;bury_loc: 新豐鄉坡頭村8鄰&lt;br&gt;coord_97x: 248,062.229&lt;br&gt;coord_97y: 2,758,058.244&lt;br&gt;經度: 120.980814&lt;br&gt;緯度: 24.930305&lt;br&gt;閥栓種類: 地下式消防栓&lt;br&gt;remark: </ns0:description>
+      <ns0:styleUrl>#icon-1899-0288D1</ns0:styleUrl>
+      <ns0:ExtendedData>
+        <ns0:Data name="unific_id">
+          <ns0:value>0343006248075760340001</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="bury_loc">
+          <ns0:value>新豐鄉坡頭村8鄰</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="coord_97x">
+          <ns0:value>248062.229</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="coord_97y">
+          <ns0:value>2758058.244</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="經度">
+          <ns0:value>120.980814</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="緯度">
+          <ns0:value>24.930305</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="閥栓種類">
+          <ns0:value>地下式消防栓</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="remark">
+          <ns0:value />
+        </ns0:Data>
+      </ns0:ExtendedData>
+      <ns0:Point>
+        <ns0:coordinates>
+          120.980814,24.930305,0
+        </ns0:coordinates>
+      </ns0:Point>
+    </ns0:Placemark>
+    <ns0:Placemark>
+      <ns0:name>H134</ns0:name>
+      <ns0:description>unific_id: 0343006248075580340004&lt;br&gt;bury_loc: 新竹縣新豐鄉重興村 新和路 102巷&lt;br&gt;coord_97x: 248,171.215&lt;br&gt;coord_97y: 2,756,312.192&lt;br&gt;經度: 120.981895&lt;br&gt;緯度: 24.914541&lt;br&gt;閥栓種類: 地下式消防栓&lt;br&gt;remark: </ns0:description>
+      <ns0:styleUrl>#icon-1899-0288D1</ns0:styleUrl>
+      <ns0:ExtendedData>
+        <ns0:Data name="unific_id">
+          <ns0:value>0343006248075580340004</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="bury_loc">
+          <ns0:value>新竹縣新豐鄉重興村 新和路 102巷</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="coord_97x">
+          <ns0:value>248171.215</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="coord_97y">
+          <ns0:value>2756312.192</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="經度">
+          <ns0:value>120.981895</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="緯度">
+          <ns0:value>24.914541</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="閥栓種類">
+          <ns0:value>地下式消防栓</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="remark">
+          <ns0:value />
+        </ns0:Data>
+      </ns0:ExtendedData>
+      <ns0:Point>
+        <ns0:coordinates>
+          120.981895,24.914541,0
+        </ns0:coordinates>
+      </ns0:Point>
+    </ns0:Placemark>
+    <ns0:Placemark>
+      <ns0:name>H152</ns0:name>
+      <ns0:description>unific_id: 0343006248075820340001&lt;br&gt;bury_loc: 新竹縣新豐鄉坡頭村176-1號&lt;br&gt;&lt;br&gt;coord_97x: 248,552.311&lt;br&gt;coord_97y: 2,758,232.265&lt;br&gt;經度: 120.985666&lt;br&gt;緯度: 24.931877&lt;br&gt;閥栓種類: 地下式消防栓&lt;br&gt;remark: </ns0:description>
+      <ns0:styleUrl>#icon-1899-0288D1</ns0:styleUrl>
+      <ns0:ExtendedData>
+        <ns0:Data name="unific_id">
+          <ns0:value>0343006248075820340001</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="bury_loc">
+          <ns0:value>新竹縣新豐鄉坡頭村176-1號
+</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="coord_97x">
+          <ns0:value>248552.311</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="coord_97y">
+          <ns0:value>2758232.265</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="經度">
+          <ns0:value>120.985666</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="緯度">
+          <ns0:value>24.931877</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="閥栓種類">
+          <ns0:value>地下式消防栓</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="remark">
+          <ns0:value />
+        </ns0:Data>
+      </ns0:ExtendedData>
+      <ns0:Point>
+        <ns0:coordinates>
+          120.985666,24.931877,0
+        </ns0:coordinates>
+      </ns0:Point>
+    </ns0:Placemark>
+    <ns0:Placemark>
+      <ns0:name>H1734</ns0:name>
+      <ns0:description>unific_id: 0343006254475640340002&lt;br&gt;bury_loc: 新竹縣湖口鄉東興村德和路5-1號前&lt;br&gt;coord_97x: 255,080.835&lt;br&gt;coord_97y: 2,756,501.38&lt;br&gt;經度: 121.050301&lt;br&gt;緯度: 24.916242&lt;br&gt;閥栓種類: 地下式消防栓&lt;br&gt;remark: </ns0:description>
+      <ns0:styleUrl>#icon-1899-0288D1</ns0:styleUrl>
+      <ns0:ExtendedData>
+        <ns0:Data name="unific_id">
+          <ns0:value>0343006254475640340002</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="bury_loc">
+          <ns0:value>新竹縣湖口鄉東興村德和路5-1號前</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="coord_97x">
+          <ns0:value>255080.835</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="coord_97y">
+          <ns0:value>2756501.38</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="經度">
+          <ns0:value>121.050301</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="緯度">
+          <ns0:value>24.916242</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="閥栓種類">
+          <ns0:value>地下式消防栓</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="remark">
+          <ns0:value />
+        </ns0:Data>
+      </ns0:ExtendedData>
+      <ns0:Point>
+        <ns0:coordinates>
+          121.050301,24.916242,0
+        </ns0:coordinates>
+      </ns0:Point>
+    </ns0:Placemark>
+    <ns0:Placemark>
+      <ns0:name>H211</ns0:name>
+      <ns0:description>unific_id: 0343006252075100340006&lt;br&gt;bury_loc: 竹縣湖口鄉天津五街48號前&lt;br&gt;coord_97x: 252,244.16&lt;br&gt;coord_97y: 2,751,025.56&lt;br&gt;經度: 121.022209&lt;br&gt;緯度: 24.86681&lt;br&gt;閥栓種類: 地下式消防栓&lt;br&gt;remark: </ns0:description>
+      <ns0:styleUrl>#icon-1899-0288D1</ns0:styleUrl>
+      <ns0:ExtendedData>
+        <ns0:Data name="unific_id">
+          <ns0:value>0343006252075100340006</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="bury_loc">
+          <ns0:value>竹縣湖口鄉天津五街48號前</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="coord_97x">
+          <ns0:value>252244.16</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="coord_97y">
+          <ns0:value>2751025.56</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="經度">
+          <ns0:value>121.022209</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="緯度">
+          <ns0:value>24.86681</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="閥栓種類">
+          <ns0:value>地下式消防栓</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="remark">
+          <ns0:value />
+        </ns0:Data>
+      </ns0:ExtendedData>
+      <ns0:Point>
+        <ns0:coordinates>
+          121.022209,24.86681,0
+        </ns0:coordinates>
+      </ns0:Point>
+    </ns0:Placemark>
+    <ns0:Placemark>
+      <ns0:name>H157</ns0:name>
+      <ns0:description>unific_id: 0343006248875280340007&lt;br&gt;bury_loc: 新竹縣新豐鄉榮華街88巷3弄38號前&lt;br&gt;coord_97x: 249,071.44&lt;br&gt;coord_97y: 2,752,875.14&lt;br&gt;經度: 120.99081&lt;br&gt;緯度: 24.883511&lt;br&gt;閥栓種類: 地下式消防栓&lt;br&gt;remark: </ns0:description>
+      <ns0:styleUrl>#icon-1899-0288D1</ns0:styleUrl>
+      <ns0:ExtendedData>
+        <ns0:Data name="unific_id">
+          <ns0:value>0343006248875280340007</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="bury_loc">
+          <ns0:value>新竹縣新豐鄉榮華街88巷3弄38號前</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="coord_97x">
+          <ns0:value>249071.44</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="coord_97y">
+          <ns0:value>2752875.14</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="經度">
+          <ns0:value>120.99081</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="緯度">
+          <ns0:value>24.883511</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="閥栓種類">
+          <ns0:value>地下式消防栓</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="remark">
+          <ns0:value />
+        </ns0:Data>
+      </ns0:ExtendedData>
+      <ns0:Point>
+        <ns0:coordinates>
+          120.99081,24.883511,0
+        </ns0:coordinates>
+      </ns0:Point>
+    </ns0:Placemark>
+    <ns0:Placemark>
+      <ns0:name>H201</ns0:name>
+      <ns0:description>unific_id: 0343006248075580340003&lt;br&gt;bury_loc: 新竹縣新豐鄉新和路怡邦公司前&lt;br&gt;coord_97x: 248152&lt;br&gt;coord_97y: 2,756,277.9&lt;br&gt;經度: 120.981705&lt;br&gt;緯度: 24.914232&lt;br&gt;閥栓種類: 地下式消防栓&lt;br&gt;remark: </ns0:description>
+      <ns0:styleUrl>#icon-1899-0288D1</ns0:styleUrl>
+      <ns0:ExtendedData>
+        <ns0:Data name="unific_id">
+          <ns0:value>0343006248075580340003</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="bury_loc">
+          <ns0:value>新竹縣新豐鄉新和路怡邦公司前</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="coord_97x">
+          <ns0:value>248152.0</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="coord_97y">
+          <ns0:value>2756277.9</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="經度">
+          <ns0:value>120.981705</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="緯度">
+          <ns0:value>24.914232</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="閥栓種類">
+          <ns0:value>地下式消防栓</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="remark">
+          <ns0:value />
+        </ns0:Data>
+      </ns0:ExtendedData>
+      <ns0:Point>
+        <ns0:coordinates>
+          120.981705,24.914232,0
+        </ns0:coordinates>
+      </ns0:Point>
+    </ns0:Placemark>
+    <ns0:Placemark>
+      <ns0:name>H194</ns0:name>
+      <ns0:description>unific_id: 0343006248075580340001&lt;br&gt;bury_loc: 新竹縣新豐鄉池府路3巷6號前&lt;br&gt;coord_97x: 248,003.54&lt;br&gt;coord_97y: 2,755,877.02&lt;br&gt;經度: 120.980236&lt;br&gt;緯度: 24.910612&lt;br&gt;閥栓種類: 地下式消防栓&lt;br&gt;remark: </ns0:description>
+      <ns0:styleUrl>#icon-1899-0288D1</ns0:styleUrl>
+      <ns0:ExtendedData>
+        <ns0:Data name="unific_id">
+          <ns0:value>0343006248075580340001</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="bury_loc">
+          <ns0:value>新竹縣新豐鄉池府路3巷6號前</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="coord_97x">
+          <ns0:value>248003.54</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="coord_97y">
+          <ns0:value>2755877.02</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="經度">
+          <ns0:value>120.980236</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="緯度">
+          <ns0:value>24.910612</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="閥栓種類">
+          <ns0:value>地下式消防栓</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="remark">
+          <ns0:value />
+        </ns0:Data>
+      </ns0:ExtendedData>
+      <ns0:Point>
+        <ns0:coordinates>
+          120.980236,24.910612,0
+        </ns0:coordinates>
+      </ns0:Point>
+    </ns0:Placemark>
+    <ns0:Placemark>
+      <ns0:name>H262</ns0:name>
+      <ns0:description>unific_id: 0343006252075100340036&lt;br&gt;bury_loc: 新竹縣湖口鄉蘭州街1街27號前&lt;br&gt;coord_97x: 252,600.04&lt;br&gt;coord_97y: 2,751,227.28&lt;br&gt;經度: 121.025731&lt;br&gt;緯度: 24.868631&lt;br&gt;閥栓種類: 地下式消防栓&lt;br&gt;remark: </ns0:description>
+      <ns0:styleUrl>#icon-1899-0288D1</ns0:styleUrl>
+      <ns0:ExtendedData>
+        <ns0:Data name="unific_id">
+          <ns0:value>0343006252075100340036</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="bury_loc">
+          <ns0:value>新竹縣湖口鄉蘭州街1街27號前</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="coord_97x">
+          <ns0:value>252600.04</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="coord_97y">
+          <ns0:value>2751227.28</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="經度">
+          <ns0:value>121.025731</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="緯度">
+          <ns0:value>24.868631</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="閥栓種類">
+          <ns0:value>地下式消防栓</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="remark">
+          <ns0:value />
+        </ns0:Data>
+      </ns0:ExtendedData>
+      <ns0:Point>
+        <ns0:coordinates>
+          121.025731,24.868631,0
+        </ns0:coordinates>
+      </ns0:Point>
+    </ns0:Placemark>
+    <ns0:Placemark>
+      <ns0:name>H210</ns0:name>
+      <ns0:description>unific_id: 0343006252075100340008&lt;br&gt;bury_loc: 新竹縣湖口鄉天津四街30號前&lt;br&gt;coord_97x: 252,302.49&lt;br&gt;coord_97y: 2,751,044.3&lt;br&gt;經度: 121.022786&lt;br&gt;緯度: 24.86698&lt;br&gt;閥栓種類: 地下式消防栓&lt;br&gt;remark: </ns0:description>
+      <ns0:styleUrl>#icon-1899-0288D1</ns0:styleUrl>
+      <ns0:ExtendedData>
+        <ns0:Data name="unific_id">
+          <ns0:value>0343006252075100340008</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="bury_loc">
+          <ns0:value>新竹縣湖口鄉天津四街30號前</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="coord_97x">
+          <ns0:value>252302.49</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="coord_97y">
+          <ns0:value>2751044.3</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="經度">
+          <ns0:value>121.022786</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="緯度">
+          <ns0:value>24.86698</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="閥栓種類">
+          <ns0:value>地下式消防栓</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="remark">
+          <ns0:value />
+        </ns0:Data>
+      </ns0:ExtendedData>
+      <ns0:Point>
+        <ns0:coordinates>
+          121.022786,24.86698,0
+        </ns0:coordinates>
+      </ns0:Point>
+    </ns0:Placemark>
+    <ns0:Placemark>
+      <ns0:name>H251</ns0:name>
+      <ns0:description>unific_id: 0343006252075100340014&lt;br&gt;bury_loc: 新竹縣湖口鄉光復東路362號前&lt;br&gt;coord_97x: 252,404.005&lt;br&gt;coord_97y: 2,751,053.919&lt;br&gt;經度: 121.023791&lt;br&gt;緯度: 24.867066&lt;br&gt;閥栓種類: 地下式消防栓&lt;br&gt;remark: </ns0:description>
+      <ns0:styleUrl>#icon-1899-0288D1</ns0:styleUrl>
+      <ns0:ExtendedData>
+        <ns0:Data name="unific_id">
+          <ns0:value>0343006252075100340014</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="bury_loc">
+          <ns0:value>新竹縣湖口鄉光復東路362號前</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="coord_97x">
+          <ns0:value>252404.005</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="coord_97y">
+          <ns0:value>2751053.919</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="經度">
+          <ns0:value>121.023791</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="緯度">
+          <ns0:value>24.867066</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="閥栓種類">
+          <ns0:value>地下式消防栓</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="remark">
+          <ns0:value />
+        </ns0:Data>
+      </ns0:ExtendedData>
+      <ns0:Point>
+        <ns0:coordinates>
+          121.023791,24.867066,0
+        </ns0:coordinates>
+      </ns0:Point>
+    </ns0:Placemark>
+    <ns0:Placemark>
+      <ns0:name>H264</ns0:name>
+      <ns0:description>unific_id: 0343006252075100340037&lt;br&gt;bury_loc: 新竹縣湖口鄉蘭州街259號前&lt;br&gt;coord_97x: 252,611.49&lt;br&gt;coord_97y: 2,751,188.08&lt;br&gt;經度: 121.025844&lt;br&gt;緯度: 24.868277&lt;br&gt;閥栓種類: 地下式消防栓&lt;br&gt;remark: </ns0:description>
+      <ns0:styleUrl>#icon-1899-0288D1</ns0:styleUrl>
+      <ns0:ExtendedData>
+        <ns0:Data name="unific_id">
+          <ns0:value>0343006252075100340037</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="bury_loc">
+          <ns0:value>新竹縣湖口鄉蘭州街259號前</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="coord_97x">
+          <ns0:value>252611.49</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="coord_97y">
+          <ns0:value>2751188.08</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="經度">
+          <ns0:value>121.025844</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="緯度">
+          <ns0:value>24.868277</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="閥栓種類">
+          <ns0:value>地下式消防栓</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="remark">
+          <ns0:value />
+        </ns0:Data>
+      </ns0:ExtendedData>
+      <ns0:Point>
+        <ns0:coordinates>
+          121.025844,24.868277,0
+        </ns0:coordinates>
+      </ns0:Point>
+    </ns0:Placemark>
+    <ns0:Placemark>
+      <ns0:name>H263</ns0:name>
+      <ns0:description>unific_id: 0343006252075100340041&lt;br&gt;bury_loc: 新竹縣湖口鄉蘭州街1街3號前&lt;br&gt;coord_97x: 252,658.39&lt;br&gt;coord_97y: 2,751,242.19&lt;br&gt;經度: 121.026308&lt;br&gt;緯度: 24.868766&lt;br&gt;閥栓種類: 地下式消防栓&lt;br&gt;remark: </ns0:description>
+      <ns0:styleUrl>#icon-1899-0288D1</ns0:styleUrl>
+      <ns0:ExtendedData>
+        <ns0:Data name="unific_id">
+          <ns0:value>0343006252075100340041</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="bury_loc">
+          <ns0:value>新竹縣湖口鄉蘭州街1街3號前</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="coord_97x">
+          <ns0:value>252658.39</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="coord_97y">
+          <ns0:value>2751242.19</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="經度">
+          <ns0:value>121.026308</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="緯度">
+          <ns0:value>24.868766</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="閥栓種類">
+          <ns0:value>地下式消防栓</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="remark">
+          <ns0:value />
+        </ns0:Data>
+      </ns0:ExtendedData>
+      <ns0:Point>
+        <ns0:coordinates>
+          121.026308,24.868766,0
+        </ns0:coordinates>
+      </ns0:Point>
+    </ns0:Placemark>
+    <ns0:Placemark>
+      <ns0:name>H273</ns0:name>
+      <ns0:description>unific_id: 0343006252075100340056&lt;br&gt;bury_loc: 新竹縣湖口鄉汀州街96號前&lt;br&gt;coord_97x: 252,782.56&lt;br&gt;coord_97y: 2,751,190.92&lt;br&gt;經度: 121.027537&lt;br&gt;緯度: 24.868302&lt;br&gt;閥栓種類: 地下式消防栓&lt;br&gt;remark: </ns0:description>
+      <ns0:styleUrl>#icon-1899-0288D1</ns0:styleUrl>
+      <ns0:ExtendedData>
+        <ns0:Data name="unific_id">
+          <ns0:value>0343006252075100340056</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="bury_loc">
+          <ns0:value>新竹縣湖口鄉汀州街96號前</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="coord_97x">
+          <ns0:value>252782.56</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="coord_97y">
+          <ns0:value>2751190.92</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="經度">
+          <ns0:value>121.027537</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="緯度">
+          <ns0:value>24.868302</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="閥栓種類">
+          <ns0:value>地下式消防栓</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="remark">
+          <ns0:value />
+        </ns0:Data>
+      </ns0:ExtendedData>
+      <ns0:Point>
+        <ns0:coordinates>
+          121.027537,24.868302,0
+        </ns0:coordinates>
+      </ns0:Point>
+    </ns0:Placemark>
+    <ns0:Placemark>
+      <ns0:name>H271</ns0:name>
+      <ns0:description>unific_id: 0343006252875100340007&lt;br&gt;bury_loc: 新竹縣湖口鄉錦州二街46號前&lt;br&gt;&lt;br&gt;coord_97x: 252,846.93&lt;br&gt;coord_97y: 2,751,386.893&lt;br&gt;經度: 121.028175&lt;br&gt;緯度: 24.870072&lt;br&gt;閥栓種類: 地下式消防栓&lt;br&gt;remark: </ns0:description>
+      <ns0:styleUrl>#icon-1899-0288D1</ns0:styleUrl>
+      <ns0:ExtendedData>
+        <ns0:Data name="unific_id">
+          <ns0:value>0343006252875100340007</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="bury_loc">
+          <ns0:value>新竹縣湖口鄉錦州二街46號前
+</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="coord_97x">
+          <ns0:value>252846.93</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="coord_97y">
+          <ns0:value>2751386.893</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="經度">
+          <ns0:value>121.028175</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="緯度">
+          <ns0:value>24.870072</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="閥栓種類">
+          <ns0:value>地下式消防栓</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="remark">
+          <ns0:value />
+        </ns0:Data>
+      </ns0:ExtendedData>
+      <ns0:Point>
+        <ns0:coordinates>
+          121.028175,24.870072,0
+        </ns0:coordinates>
+      </ns0:Point>
+    </ns0:Placemark>
+    <ns0:Placemark>
+      <ns0:name>H259</ns0:name>
+      <ns0:description>unific_id: 0343006252075100340022&lt;br&gt;bury_loc: 新竹縣湖口鄉蘭州街2街42號前&lt;br&gt;coord_97x: 252,490.63&lt;br&gt;coord_97y: 2,751,282.336&lt;br&gt;經度: 121.024648&lt;br&gt;緯度: 24.869128&lt;br&gt;閥栓種類: 地下式消防栓&lt;br&gt;remark: </ns0:description>
+      <ns0:styleUrl>#icon-1899-0288D1</ns0:styleUrl>
+      <ns0:ExtendedData>
+        <ns0:Data name="unific_id">
+          <ns0:value>0343006252075100340022</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="bury_loc">
+          <ns0:value>新竹縣湖口鄉蘭州街2街42號前</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="coord_97x">
+          <ns0:value>252490.63</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="coord_97y">
+          <ns0:value>2751282.336</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="經度">
+          <ns0:value>121.024648</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="緯度">
+          <ns0:value>24.869128</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="閥栓種類">
+          <ns0:value>地下式消防栓</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="remark">
+          <ns0:value />
+        </ns0:Data>
+      </ns0:ExtendedData>
+      <ns0:Point>
+        <ns0:coordinates>
+          121.024648,24.869128,0
+        </ns0:coordinates>
+      </ns0:Point>
+    </ns0:Placemark>
+    <ns0:Placemark>
+      <ns0:name>H261</ns0:name>
+      <ns0:description>unific_id: 0343006252075100340039&lt;br&gt;bury_loc: 新竹縣湖口鄉蘭州街2街6號前&lt;br&gt;coord_97x: 252,630.05&lt;br&gt;coord_97y: 2,751,320.95&lt;br&gt;經度: 121.026028&lt;br&gt;緯度: 24.869477&lt;br&gt;閥栓種類: 地下式消防栓&lt;br&gt;remark: </ns0:description>
+      <ns0:styleUrl>#icon-1899-0288D1</ns0:styleUrl>
+      <ns0:ExtendedData>
+        <ns0:Data name="unific_id">
+          <ns0:value>0343006252075100340039</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="bury_loc">
+          <ns0:value>新竹縣湖口鄉蘭州街2街6號前</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="coord_97x">
+          <ns0:value>252630.05</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="coord_97y">
+          <ns0:value>2751320.95</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="經度">
+          <ns0:value>121.026028</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="緯度">
+          <ns0:value>24.869477</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="閥栓種類">
+          <ns0:value>地下式消防栓</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="remark">
+          <ns0:value />
+        </ns0:Data>
+      </ns0:ExtendedData>
+      <ns0:Point>
+        <ns0:coordinates>
+          121.026028,24.869477,0
+        </ns0:coordinates>
+      </ns0:Point>
+    </ns0:Placemark>
+    <ns0:Placemark>
+      <ns0:name>H260</ns0:name>
+      <ns0:description>unific_id: 0343006252075100340031&lt;br&gt;bury_loc: 新竹縣湖口鄉蘭州街2街23號前&lt;br&gt;coord_97x: 252,563.04&lt;br&gt;coord_97y: 2,751,304.96&lt;br&gt;經度: 121.025365&lt;br&gt;緯度: 24.869332&lt;br&gt;閥栓種類: 地下式消防栓&lt;br&gt;remark: </ns0:description>
+      <ns0:styleUrl>#icon-1899-0288D1</ns0:styleUrl>
+      <ns0:ExtendedData>
+        <ns0:Data name="unific_id">
+          <ns0:value>0343006252075100340031</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="bury_loc">
+          <ns0:value>新竹縣湖口鄉蘭州街2街23號前</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="coord_97x">
+          <ns0:value>252563.04</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="coord_97y">
+          <ns0:value>2751304.96</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="經度">
+          <ns0:value>121.025365</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="緯度">
+          <ns0:value>24.869332</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="閥栓種類">
+          <ns0:value>地下式消防栓</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="remark">
+          <ns0:value />
+        </ns0:Data>
+      </ns0:ExtendedData>
+      <ns0:Point>
+        <ns0:coordinates>
+          121.025365,24.869332,0
+        </ns0:coordinates>
+      </ns0:Point>
+    </ns0:Placemark>
+    <ns0:Placemark>
+      <ns0:name>H274</ns0:name>
+      <ns0:description>unific_id: 0343006252875100340016&lt;br&gt;bury_loc: 新竹縣湖口鄉蘭州街153號前&lt;br&gt;coord_97x: 252,927.49&lt;br&gt;coord_97y: 2,751,272.8&lt;br&gt;經度: 121.028972&lt;br&gt;緯度: 24.869041&lt;br&gt;閥栓種類: 地下式消防栓&lt;br&gt;remark: </ns0:description>
+      <ns0:styleUrl>#icon-1899-0288D1</ns0:styleUrl>
+      <ns0:ExtendedData>
+        <ns0:Data name="unific_id">
+          <ns0:value>0343006252875100340016</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="bury_loc">
+          <ns0:value>新竹縣湖口鄉蘭州街153號前</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="coord_97x">
+          <ns0:value>252927.49</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="coord_97y">
+          <ns0:value>2751272.8</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="經度">
+          <ns0:value>121.028972</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="緯度">
+          <ns0:value>24.869041</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="閥栓種類">
+          <ns0:value>地下式消防栓</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="remark">
+          <ns0:value />
+        </ns0:Data>
+      </ns0:ExtendedData>
+      <ns0:Point>
+        <ns0:coordinates>
+          121.028972,24.869041,0
+        </ns0:coordinates>
+      </ns0:Point>
+    </ns0:Placemark>
+    <ns0:Placemark>
+      <ns0:name>H1735</ns0:name>
+      <ns0:description>unific_id: 0343006249675400340003&lt;br&gt;bury_loc: 新竹縣新豐鄉中崙村３鄰中崙１００號後面&lt;br&gt;coord_97x: 249,931.237&lt;br&gt;coord_97y: 2,754,570.158&lt;br&gt;經度: 120.999319&lt;br&gt;緯度: 24.898815&lt;br&gt;閥栓種類: 地下式消防栓&lt;br&gt;remark: </ns0:description>
+      <ns0:styleUrl>#icon-1899-0288D1</ns0:styleUrl>
+      <ns0:ExtendedData>
+        <ns0:Data name="unific_id">
+          <ns0:value>0343006249675400340003</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="bury_loc">
+          <ns0:value>新竹縣新豐鄉中崙村３鄰中崙１００號後面</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="coord_97x">
+          <ns0:value>249931.237</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="coord_97y">
+          <ns0:value>2754570.158</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="經度">
+          <ns0:value>120.999319</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="緯度">
+          <ns0:value>24.898815</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="閥栓種類">
+          <ns0:value>地下式消防栓</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="remark">
+          <ns0:value />
+        </ns0:Data>
+      </ns0:ExtendedData>
+      <ns0:Point>
+        <ns0:coordinates>
+          120.999319,24.898815,0
+        </ns0:coordinates>
+      </ns0:Point>
+    </ns0:Placemark>
+    <ns0:Placemark>
+      <ns0:name>H296</ns0:name>
+      <ns0:description>unific_id: 0343006252875100340012&lt;br&gt;bury_loc: 新竹縣湖口鄉汀州街&lt;br&gt;coord_97x: 252,890.9&lt;br&gt;coord_97y: 2,751,218.52&lt;br&gt;經度: 121.028609&lt;br&gt;緯度: 24.868551&lt;br&gt;閥栓種類: 地下式消防栓&lt;br&gt;remark: </ns0:description>
+      <ns0:styleUrl>#icon-1899-0288D1</ns0:styleUrl>
+      <ns0:ExtendedData>
+        <ns0:Data name="unific_id">
+          <ns0:value>0343006252875100340012</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="bury_loc">
+          <ns0:value>新竹縣湖口鄉汀州街</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="coord_97x">
+          <ns0:value>252890.9</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="coord_97y">
+          <ns0:value>2751218.52</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="經度">
+          <ns0:value>121.028609</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="緯度">
+          <ns0:value>24.868551</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="閥栓種類">
+          <ns0:value>地下式消防栓</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="remark">
+          <ns0:value />
+        </ns0:Data>
+      </ns0:ExtendedData>
+      <ns0:Point>
+        <ns0:coordinates>
+          121.028609,24.868551,0
+        </ns0:coordinates>
+      </ns0:Point>
+    </ns0:Placemark>
+    <ns0:Placemark>
+      <ns0:name>H279</ns0:name>
+      <ns0:description>unific_id: 0343006252875100340011&lt;br&gt;bury_loc: 新竹縣湖口鄉錦州一街與安宅六街口&lt;br&gt;&lt;br&gt;coord_97x: 252,882.096&lt;br&gt;coord_97y: 2,751,298.708&lt;br&gt;經度: 121.028522&lt;br&gt;緯度: 24.869275&lt;br&gt;閥栓種類: 地下式消防栓&lt;br&gt;remark: </ns0:description>
+      <ns0:styleUrl>#icon-1899-0288D1</ns0:styleUrl>
+      <ns0:ExtendedData>
+        <ns0:Data name="unific_id">
+          <ns0:value>0343006252875100340011</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="bury_loc">
+          <ns0:value>新竹縣湖口鄉錦州一街與安宅六街口
+</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="coord_97x">
+          <ns0:value>252882.096</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="coord_97y">
+          <ns0:value>2751298.708</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="經度">
+          <ns0:value>121.028522</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="緯度">
+          <ns0:value>24.869275</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="閥栓種類">
+          <ns0:value>地下式消防栓</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="remark">
+          <ns0:value />
+        </ns0:Data>
+      </ns0:ExtendedData>
+      <ns0:Point>
+        <ns0:coordinates>
+          121.028522,24.869275,0
+        </ns0:coordinates>
+      </ns0:Point>
+    </ns0:Placemark>
+    <ns0:Placemark>
+      <ns0:name>H290</ns0:name>
+      <ns0:description>unific_id: 0343006252875100340015&lt;br&gt;bury_loc: 新竹縣湖口鄉錦州二街22號前&lt;br&gt;&lt;br&gt;coord_97x: 252,909.819&lt;br&gt;coord_97y: 2,751,403.497&lt;br&gt;經度: 121.028797&lt;br&gt;緯度: 24.870222&lt;br&gt;閥栓種類: 地下式消防栓&lt;br&gt;remark: </ns0:description>
+      <ns0:styleUrl>#icon-1899-0288D1</ns0:styleUrl>
+      <ns0:ExtendedData>
+        <ns0:Data name="unific_id">
+          <ns0:value>0343006252875100340015</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="bury_loc">
+          <ns0:value>新竹縣湖口鄉錦州二街22號前
+</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="coord_97x">
+          <ns0:value>252909.819</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="coord_97y">
+          <ns0:value>2751403.497</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="經度">
+          <ns0:value>121.028797</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="緯度">
+          <ns0:value>24.870222</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="閥栓種類">
+          <ns0:value>地下式消防栓</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="remark">
+          <ns0:value />
+        </ns0:Data>
+      </ns0:ExtendedData>
+      <ns0:Point>
+        <ns0:coordinates>
+          121.028797,24.870222,0
+        </ns0:coordinates>
+      </ns0:Point>
+    </ns0:Placemark>
+    <ns0:Placemark>
+      <ns0:name>H293</ns0:name>
+      <ns0:description>unific_id: 0343006252075100340032&lt;br&gt;bury_loc: 新竹縣湖口鄉光復東路278號前&lt;br&gt;coord_97x: 252,577.46&lt;br&gt;coord_97y: 2,751,266.42&lt;br&gt;經度: 121.025508&lt;br&gt;緯度: 24.868985&lt;br&gt;閥栓種類: 地下式消防栓&lt;br&gt;remark: </ns0:description>
+      <ns0:styleUrl>#icon-1899-0288D1</ns0:styleUrl>
+      <ns0:ExtendedData>
+        <ns0:Data name="unific_id">
+          <ns0:value>0343006252075100340032</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="bury_loc">
+          <ns0:value>新竹縣湖口鄉光復東路278號前</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="coord_97x">
+          <ns0:value>252577.46</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="coord_97y">
+          <ns0:value>2751266.42</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="經度">
+          <ns0:value>121.025508</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="緯度">
+          <ns0:value>24.868985</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="閥栓種類">
+          <ns0:value>地下式消防栓</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="remark">
+          <ns0:value />
+        </ns0:Data>
+      </ns0:ExtendedData>
+      <ns0:Point>
+        <ns0:coordinates>
+          121.025508,24.868985,0
+        </ns0:coordinates>
+      </ns0:Point>
+    </ns0:Placemark>
+    <ns0:Placemark>
+      <ns0:name>H287</ns0:name>
+      <ns0:description>unific_id: 0343006252875100340001&lt;br&gt;bury_loc: 新竹縣湖口鄉工業一路與安宅五街岔口(土地公廟前)&lt;br&gt;coord_97x: 252,810.221&lt;br&gt;coord_97y: 2,751,108.51&lt;br&gt;經度: 121.027811&lt;br&gt;緯度: 24.867558&lt;br&gt;閥栓種類: 地下式消防栓&lt;br&gt;remark: </ns0:description>
+      <ns0:styleUrl>#icon-1899-0288D1</ns0:styleUrl>
+      <ns0:ExtendedData>
+        <ns0:Data name="unific_id">
+          <ns0:value>0343006252875100340001</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="bury_loc">
+          <ns0:value>新竹縣湖口鄉工業一路與安宅五街岔口(土地公廟前)</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="coord_97x">
+          <ns0:value>252810.221</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="coord_97y">
+          <ns0:value>2751108.51</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="經度">
+          <ns0:value>121.027811</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="緯度">
+          <ns0:value>24.867558</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="閥栓種類">
+          <ns0:value>地下式消防栓</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="remark">
+          <ns0:value />
+        </ns0:Data>
+      </ns0:ExtendedData>
+      <ns0:Point>
+        <ns0:coordinates>
+          121.027811,24.867558,0
+        </ns0:coordinates>
+      </ns0:Point>
+    </ns0:Placemark>
+    <ns0:Placemark>
+      <ns0:name>H297</ns0:name>
+      <ns0:description>unific_id: 0343006252075100340021&lt;br&gt;bury_loc: 新竹縣湖口鄉蘭州街1街88號前&lt;br&gt;coord_97x: 252,487.26&lt;br&gt;coord_97y: 2,751,115.28&lt;br&gt;經度: 121.024615&lt;br&gt;緯度: 24.86762&lt;br&gt;閥栓種類: 地下式消防栓&lt;br&gt;remark: </ns0:description>
+      <ns0:styleUrl>#icon-1899-0288D1</ns0:styleUrl>
+      <ns0:ExtendedData>
+        <ns0:Data name="unific_id">
+          <ns0:value>0343006252075100340021</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="bury_loc">
+          <ns0:value>新竹縣湖口鄉蘭州街1街88號前</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="coord_97x">
+          <ns0:value>252487.26</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="coord_97y">
+          <ns0:value>2751115.28</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="經度">
+          <ns0:value>121.024615</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="緯度">
+          <ns0:value>24.86762</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="閥栓種類">
+          <ns0:value>地下式消防栓</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="remark">
+          <ns0:value />
+        </ns0:Data>
+      </ns0:ExtendedData>
+      <ns0:Point>
+        <ns0:coordinates>
+          121.024615,24.86762,0
+        </ns0:coordinates>
+      </ns0:Point>
+    </ns0:Placemark>
+    <ns0:Placemark>
+      <ns0:name>H586</ns0:name>
+      <ns0:description>unific_id: 0343006252075100340025&lt;br&gt;bury_loc: 蘭州街4街46號前&lt;br&gt;coord_97x: 252,512.452&lt;br&gt;coord_97y: 2,751,334.879&lt;br&gt;經度: 121.024864&lt;br&gt;緯度: 24.869603&lt;br&gt;閥栓種類: 地下式消防栓&lt;br&gt;remark: </ns0:description>
+      <ns0:styleUrl>#icon-1899-0288D1</ns0:styleUrl>
+      <ns0:ExtendedData>
+        <ns0:Data name="unific_id">
+          <ns0:value>0343006252075100340025</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="bury_loc">
+          <ns0:value>蘭州街4街46號前</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="coord_97x">
+          <ns0:value>252512.452</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="coord_97y">
+          <ns0:value>2751334.879</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="經度">
+          <ns0:value>121.024864</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="緯度">
+          <ns0:value>24.869603</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="閥栓種類">
+          <ns0:value>地下式消防栓</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="remark">
+          <ns0:value />
+        </ns0:Data>
+      </ns0:ExtendedData>
+      <ns0:Point>
+        <ns0:coordinates>
+          121.024864,24.869603,0
+        </ns0:coordinates>
+      </ns0:Point>
+    </ns0:Placemark>
+    <ns0:Placemark>
+      <ns0:name>H752</ns0:name>
+      <ns0:description>unific_id: 0343006252875100300034&lt;br&gt;bury_loc: 新竹縣湖口鄉光復路&lt;br&gt;coord_97x: 253,114.742&lt;br&gt;coord_97y: 2,751,530.914&lt;br&gt;經度: 121.030825&lt;br&gt;緯度: 24.871372&lt;br&gt;閥栓種類: 地下式消防栓&lt;br&gt;remark: </ns0:description>
+      <ns0:styleUrl>#icon-1899-0288D1</ns0:styleUrl>
+      <ns0:ExtendedData>
+        <ns0:Data name="unific_id">
+          <ns0:value>0343006252875100300034</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="bury_loc">
+          <ns0:value>新竹縣湖口鄉光復路</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="coord_97x">
+          <ns0:value>253114.742</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="coord_97y">
+          <ns0:value>2751530.914</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="經度">
+          <ns0:value>121.030825</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="緯度">
+          <ns0:value>24.871372</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="閥栓種類">
+          <ns0:value>地下式消防栓</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="remark">
+          <ns0:value />
+        </ns0:Data>
+      </ns0:ExtendedData>
+      <ns0:Point>
+        <ns0:coordinates>
+          121.030825,24.871372,0
+        </ns0:coordinates>
+      </ns0:Point>
+    </ns0:Placemark>
+    <ns0:Placemark>
+      <ns0:name>H1468</ns0:name>
+      <ns0:description>unific_id: 0343006251275400340003&lt;br&gt;bury_loc: 新竹縣湖口鄉新義路416巷192號旁&lt;br&gt;coord_97x: 251,906.086&lt;br&gt;coord_97y: 2,754,427.193&lt;br&gt;經度: 121.018868&lt;br&gt;緯度: 24.897523&lt;br&gt;閥栓種類: 地下式消防栓&lt;br&gt;remark: </ns0:description>
+      <ns0:styleUrl>#icon-1899-0288D1</ns0:styleUrl>
+      <ns0:ExtendedData>
+        <ns0:Data name="unific_id">
+          <ns0:value>0343006251275400340003</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="bury_loc">
+          <ns0:value>新竹縣湖口鄉新義路416巷192號旁</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="coord_97x">
+          <ns0:value>251906.086</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="coord_97y">
+          <ns0:value>2754427.193</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="經度">
+          <ns0:value>121.018868</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="緯度">
+          <ns0:value>24.897523</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="閥栓種類">
+          <ns0:value>地下式消防栓</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="remark">
+          <ns0:value />
+        </ns0:Data>
+      </ns0:ExtendedData>
+      <ns0:Point>
+        <ns0:coordinates>
+          121.018868,24.897523,0
+        </ns0:coordinates>
+      </ns0:Point>
+    </ns0:Placemark>
+    <ns0:Placemark>
+      <ns0:name>H807</ns0:name>
+      <ns0:description>unific_id: 0343006251275460340002&lt;br&gt;bury_loc: 新竹縣新豐鄉瑞興村182-6號&lt;br&gt;&lt;br&gt;coord_97x: 251,799.957&lt;br&gt;coord_97y: 2,755,157.162&lt;br&gt;經度: 121.017818&lt;br&gt;緯度: 24.904113&lt;br&gt;閥栓種類: 地下式消防栓&lt;br&gt;remark: </ns0:description>
+      <ns0:styleUrl>#icon-1899-0288D1</ns0:styleUrl>
+      <ns0:ExtendedData>
+        <ns0:Data name="unific_id">
+          <ns0:value>0343006251275460340002</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="bury_loc">
+          <ns0:value>新竹縣新豐鄉瑞興村182-6號
+</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="coord_97x">
+          <ns0:value>251799.957</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="coord_97y">
+          <ns0:value>2755157.162</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="經度">
+          <ns0:value>121.017818</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="緯度">
+          <ns0:value>24.904113</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="閥栓種類">
+          <ns0:value>地下式消防栓</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="remark">
+          <ns0:value />
+        </ns0:Data>
+      </ns0:ExtendedData>
+      <ns0:Point>
+        <ns0:coordinates>
+          121.017818,24.904113,0
+        </ns0:coordinates>
+      </ns0:Point>
+    </ns0:Placemark>
+    <ns0:Placemark>
+      <ns0:name>H1477</ns0:name>
+      <ns0:description>unific_id: 0343006248875700340007&lt;br&gt;bury_loc: 新竹縣新豐鄉埔和村14鄰368之1號建物前&lt;br&gt;coord_97x: 248,851.679&lt;br&gt;coord_97y: 2,757,331.533&lt;br&gt;經度: 120.988631&lt;br&gt;緯度: 24.923745&lt;br&gt;閥栓種類: 地下式消防栓&lt;br&gt;remark: </ns0:description>
+      <ns0:styleUrl>#icon-1899-0288D1</ns0:styleUrl>
+      <ns0:ExtendedData>
+        <ns0:Data name="unific_id">
+          <ns0:value>0343006248875700340007</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="bury_loc">
+          <ns0:value>新竹縣新豐鄉埔和村14鄰368之1號建物前</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="coord_97x">
+          <ns0:value>248851.679</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="coord_97y">
+          <ns0:value>2757331.533</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="經度">
+          <ns0:value>120.988631</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="緯度">
+          <ns0:value>24.923745</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="閥栓種類">
+          <ns0:value>地下式消防栓</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="remark">
+          <ns0:value />
+        </ns0:Data>
+      </ns0:ExtendedData>
+      <ns0:Point>
+        <ns0:coordinates>
+          120.988631,24.923745,0
+        </ns0:coordinates>
+      </ns0:Point>
+    </ns0:Placemark>
+    <ns0:Placemark>
+      <ns0:name>H1497</ns0:name>
+      <ns0:description>unific_id: 0343006255275460340004&lt;br&gt;bury_loc: 新竹縣湖口鄉信昌街133巷2號附近&lt;br&gt;coord_97x: 255,717.042&lt;br&gt;coord_97y: 2,754,795.249&lt;br&gt;經度: 121.056593&lt;br&gt;緯度: 24.900836&lt;br&gt;閥栓種類: 地下式消防栓&lt;br&gt;remark: </ns0:description>
+      <ns0:styleUrl>#icon-1899-0288D1</ns0:styleUrl>
+      <ns0:ExtendedData>
+        <ns0:Data name="unific_id">
+          <ns0:value>0343006255275460340004</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="bury_loc">
+          <ns0:value>新竹縣湖口鄉信昌街133巷2號附近</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="coord_97x">
+          <ns0:value>255717.042</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="coord_97y">
+          <ns0:value>2754795.249</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="經度">
+          <ns0:value>121.056593</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="緯度">
+          <ns0:value>24.900836</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="閥栓種類">
+          <ns0:value>地下式消防栓</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="remark">
+          <ns0:value />
+        </ns0:Data>
+      </ns0:ExtendedData>
+      <ns0:Point>
+        <ns0:coordinates>
+          121.056593,24.900836,0
+        </ns0:coordinates>
+      </ns0:Point>
+    </ns0:Placemark>
+    <ns0:Placemark>
+      <ns0:name>H1478</ns0:name>
+      <ns0:description>unific_id: 0343006252875340340004&lt;br&gt;bury_loc: 新竹縣湖口鄉信義村19鄰中美西路210巷5弄供水延管工程&lt;br&gt;coord_97x: 253,305.12&lt;br&gt;coord_97y: 2,753,809.299&lt;br&gt;經度: 121.032715&lt;br&gt;緯度: 24.891942&lt;br&gt;閥栓種類: 地下式消防栓&lt;br&gt;remark: 此地下消為管尾排水用途</ns0:description>
+      <ns0:styleUrl>#icon-1899-0288D1</ns0:styleUrl>
+      <ns0:ExtendedData>
+        <ns0:Data name="unific_id">
+          <ns0:value>0343006252875340340004</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="bury_loc">
+          <ns0:value>新竹縣湖口鄉信義村19鄰中美西路210巷5弄供水延管工程</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="coord_97x">
+          <ns0:value>253305.12</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="coord_97y">
+          <ns0:value>2753809.299</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="經度">
+          <ns0:value>121.032715</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="緯度">
+          <ns0:value>24.891942</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="閥栓種類">
+          <ns0:value>地下式消防栓</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="remark">
+          <ns0:value>此地下消為管尾排水用途</ns0:value>
+        </ns0:Data>
+      </ns0:ExtendedData>
+      <ns0:Point>
+        <ns0:coordinates>
+          121.032715,24.891942,0
+        </ns0:coordinates>
+      </ns0:Point>
+    </ns0:Placemark>
+    <ns0:Placemark>
+      <ns0:name>H1479</ns0:name>
+      <ns0:description>unific_id: 0343006252075340340007&lt;br&gt;bury_loc: 新竹縣湖口鄉成功路928巷1號建物旁&lt;br&gt;coord_97x: 252,384.22&lt;br&gt;coord_97y: 2,753,887.263&lt;br&gt;經度: 121.0236&lt;br&gt;緯度: 24.892647&lt;br&gt;閥栓種類: 地下式消防栓&lt;br&gt;remark: </ns0:description>
+      <ns0:styleUrl>#icon-1899-0288D1</ns0:styleUrl>
+      <ns0:ExtendedData>
+        <ns0:Data name="unific_id">
+          <ns0:value>0343006252075340340007</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="bury_loc">
+          <ns0:value>新竹縣湖口鄉成功路928巷1號建物旁</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="coord_97x">
+          <ns0:value>252384.22</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="coord_97y">
+          <ns0:value>2753887.263</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="經度">
+          <ns0:value>121.0236</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="緯度">
+          <ns0:value>24.892647</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="閥栓種類">
+          <ns0:value>地下式消防栓</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="remark">
+          <ns0:value />
+        </ns0:Data>
+      </ns0:ExtendedData>
+      <ns0:Point>
+        <ns0:coordinates>
+          121.0236,24.892647,0
+        </ns0:coordinates>
+      </ns0:Point>
+    </ns0:Placemark>
+    <ns0:Placemark>
+      <ns0:name>H1498</ns0:name>
+      <ns0:description>unific_id: 0343006256075460340001&lt;br&gt;bury_loc: 新竹縣湖口鄉信昌九街50號附近&lt;br&gt;coord_97x: 256,007.903&lt;br&gt;coord_97y: 2,754,864.017&lt;br&gt;經度: 121.059472&lt;br&gt;緯度: 24.901456&lt;br&gt;閥栓種類: 地下式消防栓&lt;br&gt;remark: </ns0:description>
+      <ns0:styleUrl>#icon-1899-0288D1</ns0:styleUrl>
+      <ns0:ExtendedData>
+        <ns0:Data name="unific_id">
+          <ns0:value>0343006256075460340001</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="bury_loc">
+          <ns0:value>新竹縣湖口鄉信昌九街50號附近</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="coord_97x">
+          <ns0:value>256007.903</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="coord_97y">
+          <ns0:value>2754864.017</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="經度">
+          <ns0:value>121.059472</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="緯度">
+          <ns0:value>24.901456</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="閥栓種類">
+          <ns0:value>地下式消防栓</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="remark">
+          <ns0:value />
+        </ns0:Data>
+      </ns0:ExtendedData>
+      <ns0:Point>
+        <ns0:coordinates>
+          121.059472,24.901456,0
+        </ns0:coordinates>
+      </ns0:Point>
+    </ns0:Placemark>
+    <ns0:Placemark>
+      <ns0:name>H1611</ns0:name>
+      <ns0:description>unific_id: 0343006255275640340006&lt;br&gt;bury_loc: 新竹縣湖口鄉東楊路321巷社區門口&lt;br&gt;coord_97x: 256,028.078&lt;br&gt;coord_97y: 2,756,660.497&lt;br&gt;經度: 121.05968&lt;br&gt;緯度: 24.917675&lt;br&gt;閥栓種類: 地下式消防栓&lt;br&gt;remark: </ns0:description>
+      <ns0:styleUrl>#icon-1899-0288D1</ns0:styleUrl>
+      <ns0:ExtendedData>
+        <ns0:Data name="unific_id">
+          <ns0:value>0343006255275640340006</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="bury_loc">
+          <ns0:value>新竹縣湖口鄉東楊路321巷社區門口</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="coord_97x">
+          <ns0:value>256028.078</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="coord_97y">
+          <ns0:value>2756660.497</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="經度">
+          <ns0:value>121.05968</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="緯度">
+          <ns0:value>24.917675</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="閥栓種類">
+          <ns0:value>地下式消防栓</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="remark">
+          <ns0:value />
+        </ns0:Data>
+      </ns0:ExtendedData>
+      <ns0:Point>
+        <ns0:coordinates>
+          121.05968,24.917675,0
+        </ns0:coordinates>
+      </ns0:Point>
+    </ns0:Placemark>
+    <ns0:Placemark>
+      <ns0:name>H1499</ns0:name>
+      <ns0:description>unific_id: 0343006256075460340002&lt;br&gt;bury_loc: 新竹縣湖口鄉信昌六街231號附近&lt;br&gt;coord_97x: 256,045.901&lt;br&gt;coord_97y: 2,755,009.882&lt;br&gt;經度: 121.059849&lt;br&gt;緯度: 24.902773&lt;br&gt;閥栓種類: 地下式消防栓&lt;br&gt;remark: </ns0:description>
+      <ns0:styleUrl>#icon-1899-0288D1</ns0:styleUrl>
+      <ns0:ExtendedData>
+        <ns0:Data name="unific_id">
+          <ns0:value>0343006256075460340002</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="bury_loc">
+          <ns0:value>新竹縣湖口鄉信昌六街231號附近</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="coord_97x">
+          <ns0:value>256045.901</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="coord_97y">
+          <ns0:value>2755009.882</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="經度">
+          <ns0:value>121.059849</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="緯度">
+          <ns0:value>24.902773</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="閥栓種類">
+          <ns0:value>地下式消防栓</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="remark">
+          <ns0:value />
+        </ns0:Data>
+      </ns0:ExtendedData>
+      <ns0:Point>
+        <ns0:coordinates>
+          121.059849,24.902773,0
+        </ns0:coordinates>
+      </ns0:Point>
+    </ns0:Placemark>
+    <ns0:Placemark>
+      <ns0:name>H1501</ns0:name>
+      <ns0:description>unific_id: 0343006255275460340006&lt;br&gt;bury_loc: 新竹縣湖口鄉信昌五街81號附近&lt;br&gt;coord_97x: 255,831.921&lt;br&gt;coord_97y: 2,754,734.49&lt;br&gt;經度: 121.05773&lt;br&gt;緯度: 24.900287&lt;br&gt;閥栓種類: 地下式消防栓&lt;br&gt;remark: </ns0:description>
+      <ns0:styleUrl>#icon-1899-0288D1</ns0:styleUrl>
+      <ns0:ExtendedData>
+        <ns0:Data name="unific_id">
+          <ns0:value>0343006255275460340006</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="bury_loc">
+          <ns0:value>新竹縣湖口鄉信昌五街81號附近</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="coord_97x">
+          <ns0:value>255831.921</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="coord_97y">
+          <ns0:value>2754734.49</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="經度">
+          <ns0:value>121.05773</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="緯度">
+          <ns0:value>24.900287</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="閥栓種類">
+          <ns0:value>地下式消防栓</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="remark">
+          <ns0:value />
+        </ns0:Data>
+      </ns0:ExtendedData>
+      <ns0:Point>
+        <ns0:coordinates>
+          121.05773,24.900287,0
+        </ns0:coordinates>
+      </ns0:Point>
+    </ns0:Placemark>
+    <ns0:Placemark>
+      <ns0:name>H1502</ns0:name>
+      <ns0:description>unific_id: 0343006255275460340007&lt;br&gt;bury_loc: 新竹縣湖口鄉信昌二街72號附近&lt;br&gt;coord_97x: 255,817.331&lt;br&gt;coord_97y: 2,755,000.756&lt;br&gt;經度: 121.057586&lt;br&gt;緯度: 24.902691&lt;br&gt;閥栓種類: 地下式消防栓&lt;br&gt;remark: </ns0:description>
+      <ns0:styleUrl>#icon-1899-0288D1</ns0:styleUrl>
+      <ns0:ExtendedData>
+        <ns0:Data name="unific_id">
+          <ns0:value>0343006255275460340007</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="bury_loc">
+          <ns0:value>新竹縣湖口鄉信昌二街72號附近</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="coord_97x">
+          <ns0:value>255817.331</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="coord_97y">
+          <ns0:value>2755000.756</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="經度">
+          <ns0:value>121.057586</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="緯度">
+          <ns0:value>24.902691</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="閥栓種類">
+          <ns0:value>地下式消防栓</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="remark">
+          <ns0:value />
+        </ns0:Data>
+      </ns0:ExtendedData>
+      <ns0:Point>
+        <ns0:coordinates>
+          121.057586,24.902691,0
+        </ns0:coordinates>
+      </ns0:Point>
+    </ns0:Placemark>
+    <ns0:Placemark>
+      <ns0:name>H1608</ns0:name>
+      <ns0:description>unific_id: 0343006250475280340004&lt;br&gt;bury_loc: 新竹縣新豐鄉&lt;br&gt;coord_97x: 250,478.746&lt;br&gt;coord_97y: 2,752,958.308&lt;br&gt;經度: 121.004738&lt;br&gt;緯度: 24.884262&lt;br&gt;閥栓種類: 地下式消防栓&lt;br&gt;remark: </ns0:description>
+      <ns0:styleUrl>#icon-1899-0288D1</ns0:styleUrl>
+      <ns0:ExtendedData>
+        <ns0:Data name="unific_id">
+          <ns0:value>0343006250475280340004</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="bury_loc">
+          <ns0:value>新竹縣新豐鄉</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="coord_97x">
+          <ns0:value>250478.746</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="coord_97y">
+          <ns0:value>2752958.308</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="經度">
+          <ns0:value>121.004738</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="緯度">
+          <ns0:value>24.884262</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="閥栓種類">
+          <ns0:value>地下式消防栓</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="remark">
+          <ns0:value />
+        </ns0:Data>
+      </ns0:ExtendedData>
+      <ns0:Point>
+        <ns0:coordinates>
+          121.004738,24.884262,0
+        </ns0:coordinates>
+      </ns0:Point>
+    </ns0:Placemark>
+    <ns0:Placemark>
+      <ns0:name>H1607</ns0:name>
+      <ns0:description>unific_id: 0343006250475280340003&lt;br&gt;bury_loc: 新竹縣新豐鄉&lt;br&gt;coord_97x: 250,456.654&lt;br&gt;coord_97y: 2,752,930.798&lt;br&gt;經度: 121.00452&lt;br&gt;緯度: 24.884014&lt;br&gt;閥栓種類: 地下式消防栓&lt;br&gt;remark: </ns0:description>
+      <ns0:styleUrl>#icon-1899-0288D1</ns0:styleUrl>
+      <ns0:ExtendedData>
+        <ns0:Data name="unific_id">
+          <ns0:value>0343006250475280340003</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="bury_loc">
+          <ns0:value>新竹縣新豐鄉</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="coord_97x">
+          <ns0:value>250456.654</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="coord_97y">
+          <ns0:value>2752930.798</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="經度">
+          <ns0:value>121.00452</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="緯度">
+          <ns0:value>24.884014</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="閥栓種類">
+          <ns0:value>地下式消防栓</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="remark">
+          <ns0:value />
+        </ns0:Data>
+      </ns0:ExtendedData>
+      <ns0:Point>
+        <ns0:coordinates>
+          121.00452,24.884014,0
+        </ns0:coordinates>
+      </ns0:Point>
+    </ns0:Placemark>
+    <ns0:Placemark>
+      <ns0:name>H1609</ns0:name>
+      <ns0:description>unific_id: 0343006250475280340005&lt;br&gt;bury_loc: 新竹縣新豐鄉&lt;br&gt;coord_97x: 250,444.365&lt;br&gt;coord_97y: 2,753,091.815&lt;br&gt;經度: 121.004398&lt;br&gt;緯度: 24.885467&lt;br&gt;閥栓種類: 地下式消防栓&lt;br&gt;remark: </ns0:description>
+      <ns0:styleUrl>#icon-1899-0288D1</ns0:styleUrl>
+      <ns0:ExtendedData>
+        <ns0:Data name="unific_id">
+          <ns0:value>0343006250475280340005</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="bury_loc">
+          <ns0:value>新竹縣新豐鄉</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="coord_97x">
+          <ns0:value>250444.365</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="coord_97y">
+          <ns0:value>2753091.815</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="經度">
+          <ns0:value>121.004398</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="緯度">
+          <ns0:value>24.885467</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="閥栓種類">
+          <ns0:value>地下式消防栓</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="remark">
+          <ns0:value />
+        </ns0:Data>
+      </ns0:ExtendedData>
+      <ns0:Point>
+        <ns0:coordinates>
+          121.004398,24.885467,0
+        </ns0:coordinates>
+      </ns0:Point>
+    </ns0:Placemark>
+    <ns0:Placemark>
+      <ns0:name>H1610</ns0:name>
+      <ns0:description>unific_id: 0343006253675640340001&lt;br&gt;bury_loc: 新竹縣湖口鄉&lt;br&gt;coord_97x: 254,117.888&lt;br&gt;coord_97y: 2,756,476.935&lt;br&gt;經度: 121.040768&lt;br&gt;緯度: 24.916024&lt;br&gt;閥栓種類: 地下式消防栓&lt;br&gt;remark: </ns0:description>
+      <ns0:styleUrl>#icon-1899-0288D1</ns0:styleUrl>
+      <ns0:ExtendedData>
+        <ns0:Data name="unific_id">
+          <ns0:value>0343006253675640340001</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="bury_loc">
+          <ns0:value>新竹縣湖口鄉</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="coord_97x">
+          <ns0:value>254117.888</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="coord_97y">
+          <ns0:value>2756476.935</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="經度">
+          <ns0:value>121.040768</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="緯度">
+          <ns0:value>24.916024</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="閥栓種類">
+          <ns0:value>地下式消防栓</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="remark">
+          <ns0:value />
+        </ns0:Data>
+      </ns0:ExtendedData>
+      <ns0:Point>
+        <ns0:coordinates>
+          121.040768,24.916024,0
+        </ns0:coordinates>
+      </ns0:Point>
+    </ns0:Placemark>
+    <ns0:Placemark>
+      <ns0:name>H1616</ns0:name>
+      <ns0:description>unific_id: 0343006252075460340003&lt;br&gt;bury_loc: 新竹縣新豐鄉瑞興村10鄰崁頭190-1號(極景社區前)&lt;br&gt;coord_97x: 252,007.283&lt;br&gt;coord_97y: 2,754,610.766&lt;br&gt;經度: 121.01987&lt;br&gt;緯度: 24.89918&lt;br&gt;閥栓種類: 地下式消防栓&lt;br&gt;remark: </ns0:description>
+      <ns0:styleUrl>#icon-1899-0288D1</ns0:styleUrl>
+      <ns0:ExtendedData>
+        <ns0:Data name="unific_id">
+          <ns0:value>0343006252075460340003</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="bury_loc">
+          <ns0:value>新竹縣新豐鄉瑞興村10鄰崁頭190-1號(極景社區前)</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="coord_97x">
+          <ns0:value>252007.283</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="coord_97y">
+          <ns0:value>2754610.766</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="經度">
+          <ns0:value>121.01987</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="緯度">
+          <ns0:value>24.89918</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="閥栓種類">
+          <ns0:value>地下式消防栓</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="remark">
+          <ns0:value />
+        </ns0:Data>
+      </ns0:ExtendedData>
+      <ns0:Point>
+        <ns0:coordinates>
+          121.01987,24.89918,0
+        </ns0:coordinates>
+      </ns0:Point>
+    </ns0:Placemark>
+    <ns0:Placemark>
+      <ns0:name>H1648</ns0:name>
+      <ns0:description>unific_id: 0343006254475520340032&lt;br&gt;bury_loc: 新竹縣湖口鄉中山路三段11巷40號前&lt;br&gt;coord_97x: 254,819.563&lt;br&gt;coord_97y: 2,755,667.886&lt;br&gt;經度: 121.047712&lt;br&gt;緯度: 24.908718&lt;br&gt;閥栓種類: 地下式消防栓&lt;br&gt;remark: 排水排氣使用</ns0:description>
+      <ns0:styleUrl>#icon-1899-0288D1</ns0:styleUrl>
+      <ns0:ExtendedData>
+        <ns0:Data name="unific_id">
+          <ns0:value>0343006254475520340032</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="bury_loc">
+          <ns0:value>新竹縣湖口鄉中山路三段11巷40號前</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="coord_97x">
+          <ns0:value>254819.563</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="coord_97y">
+          <ns0:value>2755667.886</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="經度">
+          <ns0:value>121.047712</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="緯度">
+          <ns0:value>24.908718</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="閥栓種類">
+          <ns0:value>地下式消防栓</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="remark">
+          <ns0:value>排水排氣使用</ns0:value>
+        </ns0:Data>
+      </ns0:ExtendedData>
+      <ns0:Point>
+        <ns0:coordinates>
+          121.047712,24.908718,0
+        </ns0:coordinates>
+      </ns0:Point>
+    </ns0:Placemark>
+    <ns0:Placemark>
+      <ns0:name>H549</ns0:name>
+      <ns0:description>unific_id: 0343006250475160300010&lt;br&gt;bury_loc: 新竹縣湖口鄉仁樂路 135號前機車行號&lt;br&gt;&lt;br&gt;coord_97x: 251,187.407&lt;br&gt;coord_97y: 2,751,661.535&lt;br&gt;經度: 121.011751&lt;br&gt;緯度: 24.872554&lt;br&gt;閥栓種類: 地下式消防栓&lt;br&gt;remark: </ns0:description>
+      <ns0:styleUrl>#icon-1899-0288D1</ns0:styleUrl>
+      <ns0:ExtendedData>
+        <ns0:Data name="unific_id">
+          <ns0:value>0343006250475160300010</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="bury_loc">
+          <ns0:value>新竹縣湖口鄉仁樂路 135號前機車行號
+</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="coord_97x">
+          <ns0:value>251187.407</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="coord_97y">
+          <ns0:value>2751661.535</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="經度">
+          <ns0:value>121.011751</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="緯度">
+          <ns0:value>24.872554</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="閥栓種類">
+          <ns0:value>地下式消防栓</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="remark">
+          <ns0:value />
+        </ns0:Data>
+      </ns0:ExtendedData>
+      <ns0:Point>
+        <ns0:coordinates>
+          121.011751,24.872554,0
+        </ns0:coordinates>
+      </ns0:Point>
+    </ns0:Placemark>
+    <ns0:Placemark>
+      <ns0:name>H1380</ns0:name>
+      <ns0:description>unific_id: 0343006250475220340017&lt;br&gt;bury_loc: 新豐鄉員山村員山117之1號旁路口&lt;br&gt;coord_97x: 250,786.583&lt;br&gt;coord_97y: 2,752,736.302&lt;br&gt;經度: 121.007785&lt;br&gt;緯度: 24.882257&lt;br&gt;閥栓種類: 地下式消防栓&lt;br&gt;remark: </ns0:description>
+      <ns0:styleUrl>#icon-1899-0288D1</ns0:styleUrl>
+      <ns0:ExtendedData>
+        <ns0:Data name="unific_id">
+          <ns0:value>0343006250475220340017</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="bury_loc">
+          <ns0:value>新豐鄉員山村員山117之1號旁路口</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="coord_97x">
+          <ns0:value>250786.583</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="coord_97y">
+          <ns0:value>2752736.302</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="經度">
+          <ns0:value>121.007785</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="緯度">
+          <ns0:value>24.882257</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="閥栓種類">
+          <ns0:value>地下式消防栓</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="remark">
+          <ns0:value />
+        </ns0:Data>
+      </ns0:ExtendedData>
+      <ns0:Point>
+        <ns0:coordinates>
+          121.007785,24.882257,0
+        </ns0:coordinates>
+      </ns0:Point>
+    </ns0:Placemark>
+    <ns0:Placemark>
+      <ns0:name>H1569</ns0:name>
+      <ns0:description>unific_id: 0343006250475400340004&lt;br&gt;bury_loc: 新竹縣新豐鄉中崙村 8鄰267-9 新竹勞工第一期土地廟前&lt;br&gt;coord_97x: 250,532.073&lt;br&gt;coord_97y: 2,754,036.6&lt;br&gt;經度: 121.005267&lt;br&gt;緯度: 24.893997&lt;br&gt;閥栓種類: 地下式消防栓&lt;br&gt;remark: </ns0:description>
+      <ns0:styleUrl>#icon-1899-0288D1</ns0:styleUrl>
+      <ns0:ExtendedData>
+        <ns0:Data name="unific_id">
+          <ns0:value>0343006250475400340004</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="bury_loc">
+          <ns0:value>新竹縣新豐鄉中崙村 8鄰267-9 新竹勞工第一期土地廟前</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="coord_97x">
+          <ns0:value>250532.073</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="coord_97y">
+          <ns0:value>2754036.6</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="經度">
+          <ns0:value>121.005267</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="緯度">
+          <ns0:value>24.893997</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="閥栓種類">
+          <ns0:value>地下式消防栓</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="remark">
+          <ns0:value />
+        </ns0:Data>
+      </ns0:ExtendedData>
+      <ns0:Point>
+        <ns0:coordinates>
+          121.005267,24.893997,0
+        </ns0:coordinates>
+      </ns0:Point>
+    </ns0:Placemark>
+    <ns0:Placemark>
+      <ns0:name>H1265</ns0:name>
+      <ns0:description>unific_id: 0343006251275100340015&lt;br&gt;bury_loc: 湖口鄉華興街與仁和路交岔口&lt;br&gt;coord_97x: 251,747.144&lt;br&gt;coord_97y: 2,751,484.748&lt;br&gt;經度: 121.017291&lt;br&gt;緯度: 24.870957&lt;br&gt;閥栓種類: 地下式消防栓&lt;br&gt;remark: </ns0:description>
+      <ns0:styleUrl>#icon-1899-0288D1</ns0:styleUrl>
+      <ns0:ExtendedData>
+        <ns0:Data name="unific_id">
+          <ns0:value>0343006251275100340015</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="bury_loc">
+          <ns0:value>湖口鄉華興街與仁和路交岔口</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="coord_97x">
+          <ns0:value>251747.144</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="coord_97y">
+          <ns0:value>2751484.748</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="經度">
+          <ns0:value>121.017291</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="緯度">
+          <ns0:value>24.870957</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="閥栓種類">
+          <ns0:value>地下式消防栓</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="remark">
+          <ns0:value />
+        </ns0:Data>
+      </ns0:ExtendedData>
+      <ns0:Point>
+        <ns0:coordinates>
+          121.017291,24.870957,0
+        </ns0:coordinates>
+      </ns0:Point>
+    </ns0:Placemark>
+    <ns0:Placemark>
+      <ns0:name>H1381</ns0:name>
+      <ns0:description>unific_id: 0343006253675760340002&lt;br&gt;bury_loc: 德興路958巷13弄10號旁&lt;br&gt;coord_97x: 253,854.73&lt;br&gt;coord_97y: 2,757,834.539&lt;br&gt;經度: 121.038166&lt;br&gt;緯度: 24.928282&lt;br&gt;閥栓種類: 地下式消防栓&lt;br&gt;remark: </ns0:description>
+      <ns0:styleUrl>#icon-1899-0288D1</ns0:styleUrl>
+      <ns0:ExtendedData>
+        <ns0:Data name="unific_id">
+          <ns0:value>0343006253675760340002</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="bury_loc">
+          <ns0:value>德興路958巷13弄10號旁</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="coord_97x">
+          <ns0:value>253854.73</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="coord_97y">
+          <ns0:value>2757834.539</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="經度">
+          <ns0:value>121.038166</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="緯度">
+          <ns0:value>24.928282</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="閥栓種類">
+          <ns0:value>地下式消防栓</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="remark">
+          <ns0:value />
+        </ns0:Data>
+      </ns0:ExtendedData>
+      <ns0:Point>
+        <ns0:coordinates>
+          121.038166,24.928282,0
+        </ns0:coordinates>
+      </ns0:Point>
+    </ns0:Placemark>
+    <ns0:Placemark>
+      <ns0:name>H1386</ns0:name>
+      <ns0:description>unific_id: 0343006249675340340003&lt;br&gt;bury_loc: 新豐鄉員山村2鄰23號前&lt;br&gt;coord_97x: 249,749.512&lt;br&gt;coord_97y: 2,753,661.226&lt;br&gt;經度: 120.997521&lt;br&gt;緯度: 24.890608&lt;br&gt;閥栓種類: 地下式消防栓&lt;br&gt;remark: </ns0:description>
+      <ns0:styleUrl>#icon-1899-0288D1</ns0:styleUrl>
+      <ns0:ExtendedData>
+        <ns0:Data name="unific_id">
+          <ns0:value>0343006249675340340003</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="bury_loc">
+          <ns0:value>新豐鄉員山村2鄰23號前</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="coord_97x">
+          <ns0:value>249749.512</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="coord_97y">
+          <ns0:value>2753661.226</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="經度">
+          <ns0:value>120.997521</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="緯度">
+          <ns0:value>24.890608</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="閥栓種類">
+          <ns0:value>地下式消防栓</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="remark">
+          <ns0:value />
+        </ns0:Data>
+      </ns0:ExtendedData>
+      <ns0:Point>
+        <ns0:coordinates>
+          120.997521,24.890608,0
+        </ns0:coordinates>
+      </ns0:Point>
+    </ns0:Placemark>
+    <ns0:Placemark>
+      <ns0:name>H1384</ns0:name>
+      <ns0:description>unific_id: 0343006249675340340001&lt;br&gt;bury_loc: 新豐鄉員山村2鄰28之16號對面&lt;br&gt;coord_97x: 250,134.611&lt;br&gt;coord_97y: 2,753,537.011&lt;br&gt;經度: 121.001332&lt;br&gt;緯度: 24.889487&lt;br&gt;閥栓種類: 地下式消防栓&lt;br&gt;remark: </ns0:description>
+      <ns0:styleUrl>#icon-1899-0288D1</ns0:styleUrl>
+      <ns0:ExtendedData>
+        <ns0:Data name="unific_id">
+          <ns0:value>0343006249675340340001</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="bury_loc">
+          <ns0:value>新豐鄉員山村2鄰28之16號對面</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="coord_97x">
+          <ns0:value>250134.611</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="coord_97y">
+          <ns0:value>2753537.011</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="經度">
+          <ns0:value>121.001332</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="緯度">
+          <ns0:value>24.889487</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="閥栓種類">
+          <ns0:value>地下式消防栓</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="remark">
+          <ns0:value />
+        </ns0:Data>
+      </ns0:ExtendedData>
+      <ns0:Point>
+        <ns0:coordinates>
+          121.001332,24.889487,0
+        </ns0:coordinates>
+      </ns0:Point>
+    </ns0:Placemark>
+    <ns0:Placemark>
+      <ns0:name>H1532</ns0:name>
+      <ns0:description>unific_id: 0343006248875700340008&lt;br&gt;bury_loc: 新竹縣新豐鄉&lt;br&gt;coord_97x: 248,924.766&lt;br&gt;coord_97y: 2,757,118.786&lt;br&gt;經度: 120.989355&lt;br&gt;緯度: 24.921824&lt;br&gt;閥栓種類: 地下式消防栓&lt;br&gt;remark: 用戶社區內消防栓</ns0:description>
+      <ns0:styleUrl>#icon-1899-0288D1</ns0:styleUrl>
+      <ns0:ExtendedData>
+        <ns0:Data name="unific_id">
+          <ns0:value>0343006248875700340008</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="bury_loc">
+          <ns0:value>新竹縣新豐鄉</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="coord_97x">
+          <ns0:value>248924.766</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="coord_97y">
+          <ns0:value>2757118.786</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="經度">
+          <ns0:value>120.989355</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="緯度">
+          <ns0:value>24.921824</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="閥栓種類">
+          <ns0:value>地下式消防栓</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="remark">
+          <ns0:value>用戶社區內消防栓</ns0:value>
+        </ns0:Data>
+      </ns0:ExtendedData>
+      <ns0:Point>
+        <ns0:coordinates>
+          120.989355,24.921824,0
+        </ns0:coordinates>
+      </ns0:Point>
+    </ns0:Placemark>
+    <ns0:Placemark>
+      <ns0:name>H1551</ns0:name>
+      <ns0:description>unific_id: 0343006252875100340089&lt;br&gt;bury_loc: 新竹縣湖口鄉蘭州街40號前&lt;br&gt;coord_97x: 253,246.945&lt;br&gt;coord_97y: 2,751,355.674&lt;br&gt;經度: 121.032133&lt;br&gt;緯度: 24.869789&lt;br&gt;閥栓種類: 地下式消防栓&lt;br&gt;remark: </ns0:description>
+      <ns0:styleUrl>#icon-1899-0288D1</ns0:styleUrl>
+      <ns0:ExtendedData>
+        <ns0:Data name="unific_id">
+          <ns0:value>0343006252875100340089</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="bury_loc">
+          <ns0:value>新竹縣湖口鄉蘭州街40號前</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="coord_97x">
+          <ns0:value>253246.945</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="coord_97y">
+          <ns0:value>2751355.674</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="經度">
+          <ns0:value>121.032133</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="緯度">
+          <ns0:value>24.869789</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="閥栓種類">
+          <ns0:value>地下式消防栓</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="remark">
+          <ns0:value />
+        </ns0:Data>
+      </ns0:ExtendedData>
+      <ns0:Point>
+        <ns0:coordinates>
+          121.032133,24.869789,0
+        </ns0:coordinates>
+      </ns0:Point>
+    </ns0:Placemark>
+    <ns0:Placemark>
+      <ns0:name>H1574</ns0:name>
+      <ns0:description>unific_id: 0343006248875460340010&lt;br&gt;bury_loc: 新竹縣新豐鄉重興村 鄰 新民巷63弄13號&lt;br&gt;&lt;br&gt;coord_97x: 248,941.844&lt;br&gt;coord_97y: 2,754,859.949&lt;br&gt;經度: 120.989525&lt;br&gt;緯度: 24.901431&lt;br&gt;閥栓種類: 地下式消防栓&lt;br&gt;remark: </ns0:description>
+      <ns0:styleUrl>#icon-1899-0288D1</ns0:styleUrl>
+      <ns0:ExtendedData>
+        <ns0:Data name="unific_id">
+          <ns0:value>0343006248875460340010</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="bury_loc">
+          <ns0:value>新竹縣新豐鄉重興村 鄰 新民巷63弄13號
+</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="coord_97x">
+          <ns0:value>248941.844</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="coord_97y">
+          <ns0:value>2754859.949</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="經度">
+          <ns0:value>120.989525</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="緯度">
+          <ns0:value>24.901431</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="閥栓種類">
+          <ns0:value>地下式消防栓</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="remark">
+          <ns0:value />
+        </ns0:Data>
+      </ns0:ExtendedData>
+      <ns0:Point>
+        <ns0:coordinates>
+          120.989525,24.901431,0
+        </ns0:coordinates>
+      </ns0:Point>
+    </ns0:Placemark>
+    <ns0:Placemark>
+      <ns0:name>H1550</ns0:name>
+      <ns0:description>unific_id: 0343006252875100340088&lt;br&gt;bury_loc: 新竹縣湖口鄉蘭州街122號前&lt;br&gt;coord_97x: 253,007.647&lt;br&gt;coord_97y: 2,751,292.791&lt;br&gt;經度: 121.029765&lt;br&gt;緯度: 24.869222&lt;br&gt;閥栓種類: 地下式消防栓&lt;br&gt;remark: </ns0:description>
+      <ns0:styleUrl>#icon-1899-0288D1</ns0:styleUrl>
+      <ns0:ExtendedData>
+        <ns0:Data name="unific_id">
+          <ns0:value>0343006252875100340088</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="bury_loc">
+          <ns0:value>新竹縣湖口鄉蘭州街122號前</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="coord_97x">
+          <ns0:value>253007.647</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="coord_97y">
+          <ns0:value>2751292.791</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="經度">
+          <ns0:value>121.029765</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="緯度">
+          <ns0:value>24.869222</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="閥栓種類">
+          <ns0:value>地下式消防栓</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="remark">
+          <ns0:value />
+        </ns0:Data>
+      </ns0:ExtendedData>
+      <ns0:Point>
+        <ns0:coordinates>
+          121.029765,24.869222,0
+        </ns0:coordinates>
+      </ns0:Point>
+    </ns0:Placemark>
+    <ns0:Placemark>
+      <ns0:name>H1583</ns0:name>
+      <ns0:description>unific_id: 0343006252875100340091&lt;br&gt;bury_loc: 新竹縣湖口鄉光復東路190號&lt;br&gt;&lt;br&gt;coord_97x: 252,854.535&lt;br&gt;coord_97y: 2,751,339.311&lt;br&gt;經度: 121.02825&lt;br&gt;緯度: 24.869642&lt;br&gt;閥栓種類: 地下式消防栓&lt;br&gt;remark: </ns0:description>
+      <ns0:styleUrl>#icon-1899-0288D1</ns0:styleUrl>
+      <ns0:ExtendedData>
+        <ns0:Data name="unific_id">
+          <ns0:value>0343006252875100340091</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="bury_loc">
+          <ns0:value>新竹縣湖口鄉光復東路190號
+</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="coord_97x">
+          <ns0:value>252854.535</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="coord_97y">
+          <ns0:value>2751339.311</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="經度">
+          <ns0:value>121.02825</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="緯度">
+          <ns0:value>24.869642</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="閥栓種類">
+          <ns0:value>地下式消防栓</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="remark">
+          <ns0:value />
+        </ns0:Data>
+      </ns0:ExtendedData>
+      <ns0:Point>
+        <ns0:coordinates>
+          121.02825,24.869642,0
+        </ns0:coordinates>
+      </ns0:Point>
+    </ns0:Placemark>
+    <ns0:Placemark>
+      <ns0:name>H1582</ns0:name>
+      <ns0:description>unific_id: 0343006252875100340090&lt;br&gt;bury_loc: 新竹縣湖口鄉光復東路136號前&lt;br&gt;&lt;br&gt;coord_97x: 252,936.06&lt;br&gt;coord_97y: 2,751,360.987&lt;br&gt;經度: 121.029057&lt;br&gt;緯度: 24.869838&lt;br&gt;閥栓種類: 地下式消防栓&lt;br&gt;remark: </ns0:description>
+      <ns0:styleUrl>#icon-1899-0288D1</ns0:styleUrl>
+      <ns0:ExtendedData>
+        <ns0:Data name="unific_id">
+          <ns0:value>0343006252875100340090</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="bury_loc">
+          <ns0:value>新竹縣湖口鄉光復東路136號前
+</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="coord_97x">
+          <ns0:value>252936.06</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="coord_97y">
+          <ns0:value>2751360.987</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="經度">
+          <ns0:value>121.029057</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="緯度">
+          <ns0:value>24.869838</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="閥栓種類">
+          <ns0:value>地下式消防栓</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="remark">
+          <ns0:value />
+        </ns0:Data>
+      </ns0:ExtendedData>
+      <ns0:Point>
+        <ns0:coordinates>
+          121.029057,24.869838,0
+        </ns0:coordinates>
+      </ns0:Point>
+    </ns0:Placemark>
+    <ns0:Placemark>
+      <ns0:name>H239</ns0:name>
+      <ns0:description>unific_id: 0343006252075100340009&lt;br&gt;bury_loc: 新竹縣湖口鄉天津3街24-3號前&lt;br&gt;coord_97x: 252,341.64&lt;br&gt;coord_97y: 2,751,031.01&lt;br&gt;經度: 121.023173&lt;br&gt;緯度: 24.866859&lt;br&gt;閥栓種類: 地下式消防栓&lt;br&gt;remark: </ns0:description>
+      <ns0:styleUrl>#icon-1899-0288D1</ns0:styleUrl>
+      <ns0:ExtendedData>
+        <ns0:Data name="unific_id">
+          <ns0:value>0343006252075100340009</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="bury_loc">
+          <ns0:value>新竹縣湖口鄉天津3街24-3號前</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="coord_97x">
+          <ns0:value>252341.64</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="coord_97y">
+          <ns0:value>2751031.01</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="經度">
+          <ns0:value>121.023173</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="緯度">
+          <ns0:value>24.866859</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="閥栓種類">
+          <ns0:value>地下式消防栓</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="remark">
+          <ns0:value />
+        </ns0:Data>
+      </ns0:ExtendedData>
+      <ns0:Point>
+        <ns0:coordinates>
+          121.023173,24.866859,0
+        </ns0:coordinates>
+      </ns0:Point>
+    </ns0:Placemark>
+    <ns0:Placemark>
+      <ns0:name>H1602</ns0:name>
+      <ns0:description>unific_id: 0343006248875100340035&lt;br&gt;bury_loc: 新竹縣新豐鄉松林村泰安街33巷46號前&lt;br&gt;coord_97x: 249,315.999&lt;br&gt;coord_97y: 2,751,248.346&lt;br&gt;經度: 120.993231&lt;br&gt;緯度: 24.868823&lt;br&gt;閥栓種類: 地下式消防栓&lt;br&gt;remark: </ns0:description>
+      <ns0:styleUrl>#icon-1899-0288D1</ns0:styleUrl>
+      <ns0:ExtendedData>
+        <ns0:Data name="unific_id">
+          <ns0:value>0343006248875100340035</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="bury_loc">
+          <ns0:value>新竹縣新豐鄉松林村泰安街33巷46號前</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="coord_97x">
+          <ns0:value>249315.999</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="coord_97y">
+          <ns0:value>2751248.346</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="經度">
+          <ns0:value>120.993231</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="緯度">
+          <ns0:value>24.868823</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="閥栓種類">
+          <ns0:value>地下式消防栓</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="remark">
+          <ns0:value />
+        </ns0:Data>
+      </ns0:ExtendedData>
+      <ns0:Point>
+        <ns0:coordinates>
+          120.993231,24.868823,0
+        </ns0:coordinates>
+      </ns0:Point>
+    </ns0:Placemark>
+    <ns0:Placemark>
+      <ns0:name>H276</ns0:name>
+      <ns0:description>unific_id: 0343006252075100340053&lt;br&gt;bury_loc: 新竹縣湖口鄉錦州一街&lt;br&gt;coord_97x: 252,761.98&lt;br&gt;coord_97y: 2,751,266.94&lt;br&gt;經度: 121.027334&lt;br&gt;緯度: 24.868989&lt;br&gt;閥栓種類: 地下式消防栓&lt;br&gt;remark: </ns0:description>
+      <ns0:styleUrl>#icon-1899-0288D1</ns0:styleUrl>
+      <ns0:ExtendedData>
+        <ns0:Data name="unific_id">
+          <ns0:value>0343006252075100340053</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="bury_loc">
+          <ns0:value>新竹縣湖口鄉錦州一街</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="coord_97x">
+          <ns0:value>252761.98</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="coord_97y">
+          <ns0:value>2751266.94</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="經度">
+          <ns0:value>121.027334</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="緯度">
+          <ns0:value>24.868989</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="閥栓種類">
+          <ns0:value>地下式消防栓</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="remark">
+          <ns0:value />
+        </ns0:Data>
+      </ns0:ExtendedData>
+      <ns0:Point>
+        <ns0:coordinates>
+          121.027334,24.868989,0
+        </ns0:coordinates>
+      </ns0:Point>
+    </ns0:Placemark>
+    <ns0:Placemark>
+      <ns0:name>H45</ns0:name>
+      <ns0:description>unific_id: 0343006252075040340019&lt;br&gt;bury_loc: 新竹縣湖口鄉天津一街19號&lt;br&gt;&lt;br&gt;coord_97x: 252,455.273&lt;br&gt;coord_97y: 2,750,969.883&lt;br&gt;經度: 121.024298&lt;br&gt;緯度: 24.866307&lt;br&gt;閥栓種類: 地下式消防栓&lt;br&gt;remark: </ns0:description>
+      <ns0:styleUrl>#icon-1899-0288D1</ns0:styleUrl>
+      <ns0:ExtendedData>
+        <ns0:Data name="unific_id">
+          <ns0:value>0343006252075040340019</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="bury_loc">
+          <ns0:value>新竹縣湖口鄉天津一街19號
+</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="coord_97x">
+          <ns0:value>252455.273</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="coord_97y">
+          <ns0:value>2750969.883</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="經度">
+          <ns0:value>121.024298</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="緯度">
+          <ns0:value>24.866307</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="閥栓種類">
+          <ns0:value>地下式消防栓</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="remark">
+          <ns0:value />
+        </ns0:Data>
+      </ns0:ExtendedData>
+      <ns0:Point>
+        <ns0:coordinates>
+          121.024298,24.866307,0
+        </ns0:coordinates>
+      </ns0:Point>
+    </ns0:Placemark>
+    <ns0:Placemark>
+      <ns0:name>H1720</ns0:name>
+      <ns0:description>unific_id: 0343006256875340340001&lt;br&gt;bury_loc: 新竹縣湖口鄉中平路2段267巷36號附近&lt;br&gt;coord_97x: 257,566.744&lt;br&gt;coord_97y: 2,753,827.293&lt;br&gt;經度: 121.074897&lt;br&gt;緯度: 24.892089&lt;br&gt;閥栓種類: 地下式消防栓&lt;br&gt;remark: </ns0:description>
+      <ns0:styleUrl>#icon-1899-0288D1</ns0:styleUrl>
+      <ns0:ExtendedData>
+        <ns0:Data name="unific_id">
+          <ns0:value>0343006256875340340001</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="bury_loc">
+          <ns0:value>新竹縣湖口鄉中平路2段267巷36號附近</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="coord_97x">
+          <ns0:value>257566.744</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="coord_97y">
+          <ns0:value>2753827.293</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="經度">
+          <ns0:value>121.074897</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="緯度">
+          <ns0:value>24.892089</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="閥栓種類">
+          <ns0:value>地下式消防栓</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="remark">
+          <ns0:value />
+        </ns0:Data>
+      </ns0:ExtendedData>
+      <ns0:Point>
+        <ns0:coordinates>
+          121.074897,24.892089,0
+        </ns0:coordinates>
+      </ns0:Point>
+    </ns0:Placemark>
+    <ns0:Placemark>
+      <ns0:name>H1708</ns0:name>
+      <ns0:description>unific_id: 0343006248075340340001&lt;br&gt;bury_loc: 新竹縣新豐鄉&lt;br&gt;coord_97x: 248,072.058&lt;br&gt;coord_97y: 2,753,880.823&lt;br&gt;經度: 120.980917&lt;br&gt;緯度: 24.89259&lt;br&gt;閥栓種類: 地下式消防栓&lt;br&gt;remark: </ns0:description>
+      <ns0:styleUrl>#icon-1899-0288D1</ns0:styleUrl>
+      <ns0:ExtendedData>
+        <ns0:Data name="unific_id">
+          <ns0:value>0343006248075340340001</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="bury_loc">
+          <ns0:value>新竹縣新豐鄉</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="coord_97x">
+          <ns0:value>248072.058</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="coord_97y">
+          <ns0:value>2753880.823</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="經度">
+          <ns0:value>120.980917</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="緯度">
+          <ns0:value>24.89259</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="閥栓種類">
+          <ns0:value>地下式消防栓</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="remark">
+          <ns0:value />
+        </ns0:Data>
+      </ns0:ExtendedData>
+      <ns0:Point>
+        <ns0:coordinates>
+          120.980917,24.89259,0
+        </ns0:coordinates>
+      </ns0:Point>
+    </ns0:Placemark>
+    <ns0:Placemark>
+      <ns0:name>H1713</ns0:name>
+      <ns0:description>unific_id: 0343006256075280340002&lt;br&gt;bury_loc: 新竹縣湖口鄉長富路1段151巷5弄18號後方工地&lt;br&gt;coord_97x: 256,330.021&lt;br&gt;coord_97y: 2,752,948.151&lt;br&gt;經度: 121.062652&lt;br&gt;緯度: 24.884157&lt;br&gt;閥栓種類: 地下式消防栓&lt;br&gt;remark: </ns0:description>
+      <ns0:styleUrl>#icon-1899-0288D1</ns0:styleUrl>
+      <ns0:ExtendedData>
+        <ns0:Data name="unific_id">
+          <ns0:value>0343006256075280340002</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="bury_loc">
+          <ns0:value>新竹縣湖口鄉長富路1段151巷5弄18號後方工地</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="coord_97x">
+          <ns0:value>256330.021</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="coord_97y">
+          <ns0:value>2752948.151</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="經度">
+          <ns0:value>121.062652</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="緯度">
+          <ns0:value>24.884157</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="閥栓種類">
+          <ns0:value>地下式消防栓</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="remark">
+          <ns0:value />
+        </ns0:Data>
+      </ns0:ExtendedData>
+      <ns0:Point>
+        <ns0:coordinates>
+          121.062652,24.884157,0
+        </ns0:coordinates>
+      </ns0:Point>
+    </ns0:Placemark>
+    <ns0:Placemark>
+      <ns0:name>H615</ns0:name>
+      <ns0:description>unific_id: 0343006251275100300012&lt;br&gt;bury_loc: 新竹縣湖口鄉仁樂路與大勇路口&lt;br&gt;&lt;br&gt;coord_97x: 251,463.103&lt;br&gt;coord_97y: 2,751,482.59&lt;br&gt;經度: 121.01448&lt;br&gt;緯度: 24.870938&lt;br&gt;閥栓種類: 地下式消防栓&lt;br&gt;remark: </ns0:description>
+      <ns0:styleUrl>#icon-1899-0288D1</ns0:styleUrl>
+      <ns0:ExtendedData>
+        <ns0:Data name="unific_id">
+          <ns0:value>0343006251275100300012</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="bury_loc">
+          <ns0:value>新竹縣湖口鄉仁樂路與大勇路口
+</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="coord_97x">
+          <ns0:value>251463.103</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="coord_97y">
+          <ns0:value>2751482.59</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="經度">
+          <ns0:value>121.01448</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="緯度">
+          <ns0:value>24.870938</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="閥栓種類">
+          <ns0:value>地下式消防栓</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="remark">
+          <ns0:value />
+        </ns0:Data>
+      </ns0:ExtendedData>
+      <ns0:Point>
+        <ns0:coordinates>
+          121.01448,24.870938,0
+        </ns0:coordinates>
+      </ns0:Point>
+    </ns0:Placemark>
+    <ns0:Placemark>
+      <ns0:name>H1726</ns0:name>
+      <ns0:description>unific_id: 0343006248875400300003&lt;br&gt;bury_loc: 新竹縣新豐鄉&lt;br&gt;coord_97x: 249,372.798&lt;br&gt;coord_97y: 2,754,087.444&lt;br&gt;經度: 120.993792&lt;br&gt;緯度: 24.894456&lt;br&gt;閥栓種類: 地下式消防栓&lt;br&gt;remark: </ns0:description>
+      <ns0:styleUrl>#icon-1899-0288D1</ns0:styleUrl>
+      <ns0:ExtendedData>
+        <ns0:Data name="unific_id">
+          <ns0:value>0343006248875400300003</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="bury_loc">
+          <ns0:value>新竹縣新豐鄉</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="coord_97x">
+          <ns0:value>249372.798</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="coord_97y">
+          <ns0:value>2754087.444</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="經度">
+          <ns0:value>120.993792</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="緯度">
+          <ns0:value>24.894456</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="閥栓種類">
+          <ns0:value>地下式消防栓</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="remark">
+          <ns0:value />
+        </ns0:Data>
+      </ns0:ExtendedData>
+      <ns0:Point>
+        <ns0:coordinates>
+          120.993792,24.894456,0
+        </ns0:coordinates>
+      </ns0:Point>
+    </ns0:Placemark>
+    <ns0:Placemark>
+      <ns0:name>H1500</ns0:name>
+      <ns0:description>unific_id: 0343006255275460340005&lt;br&gt;bury_loc: 新竹縣湖口鄉信昌五街22號&lt;br&gt;coord_97x: 255,836.702&lt;br&gt;coord_97y: 2,754,927.789&lt;br&gt;經度: 121.057778&lt;br&gt;緯度: 24.902032&lt;br&gt;閥栓種類: 地下式消防栓&lt;br&gt;remark: </ns0:description>
+      <ns0:styleUrl>#icon-1899-0288D1</ns0:styleUrl>
+      <ns0:ExtendedData>
+        <ns0:Data name="unific_id">
+          <ns0:value>0343006255275460340005</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="bury_loc">
+          <ns0:value>新竹縣湖口鄉信昌五街22號</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="coord_97x">
+          <ns0:value>255836.702</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="coord_97y">
+          <ns0:value>2754927.789</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="經度">
+          <ns0:value>121.057778</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="緯度">
+          <ns0:value>24.902032</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="閥栓種類">
+          <ns0:value>地下式消防栓</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="remark">
+          <ns0:value />
+        </ns0:Data>
+      </ns0:ExtendedData>
+      <ns0:Point>
+        <ns0:coordinates>
+          121.057778,24.902032,0
+        </ns0:coordinates>
+      </ns0:Point>
+    </ns0:Placemark>
+    <ns0:Placemark>
+      <ns0:name>H292</ns0:name>
+      <ns0:description>unific_id: 0343006252075100340029&lt;br&gt;bury_loc: 新竹縣湖口鄉蘭州南街48號前&lt;br&gt;coord_97x: 252,558.8&lt;br&gt;coord_97y: 2,751,126.26&lt;br&gt;經度: 121.025323&lt;br&gt;緯度: 24.867719&lt;br&gt;閥栓種類: 地下式消防栓&lt;br&gt;remark: </ns0:description>
+      <ns0:styleUrl>#icon-1899-0288D1</ns0:styleUrl>
+      <ns0:ExtendedData>
+        <ns0:Data name="unific_id">
+          <ns0:value>0343006252075100340029</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="bury_loc">
+          <ns0:value>新竹縣湖口鄉蘭州南街48號前</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="coord_97x">
+          <ns0:value>252558.8</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="coord_97y">
+          <ns0:value>2751126.26</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="經度">
+          <ns0:value>121.025323</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="緯度">
+          <ns0:value>24.867719</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="閥栓種類">
+          <ns0:value>地下式消防栓</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="remark">
+          <ns0:value />
+        </ns0:Data>
+      </ns0:ExtendedData>
+      <ns0:Point>
+        <ns0:coordinates>
+          121.025323,24.867719,0
+        </ns0:coordinates>
+      </ns0:Point>
+    </ns0:Placemark>
+    <ns0:Placemark>
+      <ns0:name>H257</ns0:name>
+      <ns0:description>unific_id: 0343006252075100340035&lt;br&gt;bury_loc: 新竹縣湖口鄉蘭州街4街7號前&lt;br&gt;coord_97x: 252,587.92&lt;br&gt;coord_97y: 2,751,354.73&lt;br&gt;經度: 121.025611&lt;br&gt;緯度: 24.869782&lt;br&gt;閥栓種類: 地下式消防栓&lt;br&gt;remark: </ns0:description>
+      <ns0:styleUrl>#icon-1899-0288D1</ns0:styleUrl>
+      <ns0:ExtendedData>
+        <ns0:Data name="unific_id">
+          <ns0:value>0343006252075100340035</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="bury_loc">
+          <ns0:value>新竹縣湖口鄉蘭州街4街7號前</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="coord_97x">
+          <ns0:value>252587.92</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="coord_97y">
+          <ns0:value>2751354.73</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="經度">
+          <ns0:value>121.025611</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="緯度">
+          <ns0:value>24.869782</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="閥栓種類">
+          <ns0:value>地下式消防栓</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="remark">
+          <ns0:value />
+        </ns0:Data>
+      </ns0:ExtendedData>
+      <ns0:Point>
+        <ns0:coordinates>
+          121.025611,24.869782,0
+        </ns0:coordinates>
+      </ns0:Point>
+    </ns0:Placemark>
+    <ns0:Placemark>
+      <ns0:name>H1663</ns0:name>
+      <ns0:description>unific_id: 0349008248075100340001&lt;br&gt;bury_loc: 新竹縣湖口鄉松柏街與德昌街岔口處(169號建物旁)&lt;br&gt;coord_97x: 248,492.221&lt;br&gt;coord_97y: 2,751,056.02&lt;br&gt;經度: 120.985079&lt;br&gt;緯度: 24.867086&lt;br&gt;閥栓種類: 地下式消防栓&lt;br&gt;remark: </ns0:description>
+      <ns0:styleUrl>#icon-1899-0288D1</ns0:styleUrl>
+      <ns0:ExtendedData>
+        <ns0:Data name="unific_id">
+          <ns0:value>0349008248075100340001</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="bury_loc">
+          <ns0:value>新竹縣湖口鄉松柏街與德昌街岔口處(169號建物旁)</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="coord_97x">
+          <ns0:value>248492.221</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="coord_97y">
+          <ns0:value>2751056.02</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="經度">
+          <ns0:value>120.985079</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="緯度">
+          <ns0:value>24.867086</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="閥栓種類">
+          <ns0:value>地下式消防栓</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="remark">
+          <ns0:value />
+        </ns0:Data>
+      </ns0:ExtendedData>
+      <ns0:Point>
+        <ns0:coordinates>
+          120.985079,24.867086,0
+        </ns0:coordinates>
+      </ns0:Point>
+    </ns0:Placemark>
+  </ns0:Document>
+</ns0:kml>

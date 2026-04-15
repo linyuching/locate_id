@@ -1,0 +1,2307 @@
+<?xml version='1.0' encoding='utf-8'?>
+<kml xmlns="http://www.opengis.net/kml/2.2"><Document><name>湖口所_僅測三支距_窨井</name>
+    <Style id="icon-1899-FFEA00-normal">
+      <IconStyle>
+        <color>ff00eaff</color>
+        <scale>1</scale>
+        <Icon>
+          <href>https://www.gstatic.com/mapspro/images/stock/503-wht-blank_maps.png</href>
+        </Icon>
+        <hotSpot x="32" xunits="pixels" y="64" yunits="insetPixels" />
+      </IconStyle>
+      <LabelStyle>
+        <scale>0</scale>
+      </LabelStyle>
+    </Style>
+    <Style id="icon-1899-FFEA00-highlight">
+      <IconStyle>
+        <color>ff00eaff</color>
+        <scale>1</scale>
+        <Icon>
+          <href>https://www.gstatic.com/mapspro/images/stock/503-wht-blank_maps.png</href>
+        </Icon>
+        <hotSpot x="32" xunits="pixels" y="64" yunits="insetPixels" />
+      </IconStyle>
+      <LabelStyle>
+        <scale>1</scale>
+      </LabelStyle>
+    </Style>
+    <StyleMap id="icon-1899-FFEA00">
+      <Pair>
+        <key>normal</key>
+        <styleUrl>#icon-1899-FFEA00-normal</styleUrl>
+      </Pair>
+      <Pair>
+        <key>highlight</key>
+        <styleUrl>#icon-1899-FFEA00-highlight</styleUrl>
+      </Pair>
+    </StyleMap>
+    <Placemark>
+      <name>M7</name>
+      <description>識別碼: 0343006248875220200001&lt;br&gt;地址: 建興路一段196之5號旁(節點20-1)&lt;br&gt;備註: &lt;br&gt;coord_97x: 249,370.855&lt;br&gt;coord_97y: 2,752,208.725&lt;br&gt;緯度: 24.877494&lt;br&gt;經度: 120.993773&lt;br&gt;閥栓種類: 窨井</description>
+      <styleUrl>#icon-1899-FFEA00</styleUrl>
+      <ExtendedData>
+        <Data name="識別碼">
+          <value>0343006248875220200001</value>
+        </Data>
+        <Data name="地址">
+          <value>建興路一段196之5號旁(節點20-1)</value>
+        </Data>
+        <Data name="備註">
+          <value />
+        </Data>
+        <Data name="coord_97x">
+          <value>249370.855</value>
+        </Data>
+        <Data name="coord_97y">
+          <value>2752208.725</value>
+        </Data>
+        <Data name="緯度">
+          <value>24.877494</value>
+        </Data>
+        <Data name="經度">
+          <value>120.993773</value>
+        </Data>
+        <Data name="閥栓種類">
+          <value>窨井</value>
+        </Data>
+      </ExtendedData>
+      <Point>
+        <coordinates>
+          120.993773,24.877494,0
+        </coordinates>
+      </Point>
+    </Placemark>
+    <Placemark>
+      <name>M8</name>
+      <description>識別碼: 0343006248875220200002&lt;br&gt;地址: 建興路一段196之7號前(節點21-2)&lt;br&gt;備註: &lt;br&gt;coord_97x: 249,372.283&lt;br&gt;coord_97y: 2,752,222.25&lt;br&gt;緯度: 24.877616&lt;br&gt;經度: 120.993787&lt;br&gt;閥栓種類: 窨井</description>
+      <styleUrl>#icon-1899-FFEA00</styleUrl>
+      <ExtendedData>
+        <Data name="識別碼">
+          <value>0343006248875220200002</value>
+        </Data>
+        <Data name="地址">
+          <value>建興路一段196之7號前(節點21-2)</value>
+        </Data>
+        <Data name="備註">
+          <value />
+        </Data>
+        <Data name="coord_97x">
+          <value>249372.283</value>
+        </Data>
+        <Data name="coord_97y">
+          <value>2752222.25</value>
+        </Data>
+        <Data name="緯度">
+          <value>24.877616</value>
+        </Data>
+        <Data name="經度">
+          <value>120.993787</value>
+        </Data>
+        <Data name="閥栓種類">
+          <value>窨井</value>
+        </Data>
+      </ExtendedData>
+      <Point>
+        <coordinates>
+          120.993787,24.877616,0
+        </coordinates>
+      </Point>
+    </Placemark>
+    <Placemark>
+      <name>M9</name>
+      <description>識別碼: 0343006248875220200003&lt;br&gt;地址: 建興路一段202號旁(節點42)&lt;br&gt;備註: &lt;br&gt;coord_97x: 249,401.809&lt;br&gt;coord_97y: 2,752,776.41&lt;br&gt;緯度: 24.88262&lt;br&gt;經度: 120.994079&lt;br&gt;閥栓種類: 窨井</description>
+      <styleUrl>#icon-1899-FFEA00</styleUrl>
+      <ExtendedData>
+        <Data name="識別碼">
+          <value>0343006248875220200003</value>
+        </Data>
+        <Data name="地址">
+          <value>建興路一段202號旁(節點42)</value>
+        </Data>
+        <Data name="備註">
+          <value />
+        </Data>
+        <Data name="coord_97x">
+          <value>249401.809</value>
+        </Data>
+        <Data name="coord_97y">
+          <value>2752776.41</value>
+        </Data>
+        <Data name="緯度">
+          <value>24.88262</value>
+        </Data>
+        <Data name="經度">
+          <value>120.994079</value>
+        </Data>
+        <Data name="閥栓種類">
+          <value>窨井</value>
+        </Data>
+      </ExtendedData>
+      <Point>
+        <coordinates>
+          120.994079,24.88262,0
+        </coordinates>
+      </Point>
+    </Placemark>
+    <Placemark>
+      <name>M10</name>
+      <description>識別碼: 0343006249675160200002&lt;br&gt;地址: 中興路115號對面(節點29)&lt;br&gt;備註: &lt;br&gt;coord_97x: 249,821.869&lt;br&gt;coord_97y: 2,751,970.281&lt;br&gt;緯度: 24.875342&lt;br&gt;經度: 120.998237&lt;br&gt;閥栓種類: 窨井</description>
+      <styleUrl>#icon-1899-FFEA00</styleUrl>
+      <ExtendedData>
+        <Data name="識別碼">
+          <value>0343006249675160200002</value>
+        </Data>
+        <Data name="地址">
+          <value>中興路115號對面(節點29)</value>
+        </Data>
+        <Data name="備註">
+          <value />
+        </Data>
+        <Data name="coord_97x">
+          <value>249821.869</value>
+        </Data>
+        <Data name="coord_97y">
+          <value>2751970.281</value>
+        </Data>
+        <Data name="緯度">
+          <value>24.875342</value>
+        </Data>
+        <Data name="經度">
+          <value>120.998237</value>
+        </Data>
+        <Data name="閥栓種類">
+          <value>窨井</value>
+        </Data>
+      </ExtendedData>
+      <Point>
+        <coordinates>
+          120.998237,24.875342,0
+        </coordinates>
+      </Point>
+    </Placemark>
+    <Placemark>
+      <name>M11</name>
+      <description>識別碼: 0343006248875160200002&lt;br&gt;地址: 中興路255號旁(節點58)&lt;br&gt;備註: &lt;br&gt;coord_97x: 249,439.911&lt;br&gt;coord_97y: 2,751,991.812&lt;br&gt;緯度: 24.875536&lt;br&gt;經度: 120.994457&lt;br&gt;閥栓種類: 窨井</description>
+      <styleUrl>#icon-1899-FFEA00</styleUrl>
+      <ExtendedData>
+        <Data name="識別碼">
+          <value>0343006248875160200002</value>
+        </Data>
+        <Data name="地址">
+          <value>中興路255號旁(節點58)</value>
+        </Data>
+        <Data name="備註">
+          <value />
+        </Data>
+        <Data name="coord_97x">
+          <value>249439.911</value>
+        </Data>
+        <Data name="coord_97y">
+          <value>2751991.812</value>
+        </Data>
+        <Data name="緯度">
+          <value>24.875536</value>
+        </Data>
+        <Data name="經度">
+          <value>120.994457</value>
+        </Data>
+        <Data name="閥栓種類">
+          <value>窨井</value>
+        </Data>
+      </ExtendedData>
+      <Point>
+        <coordinates>
+          120.994457,24.875536,0
+        </coordinates>
+      </Point>
+    </Placemark>
+    <Placemark>
+      <name>M13</name>
+      <description>識別碼: 0343006248075160200001&lt;br&gt;地址: 新豐鄉康和路42之1號&lt;br&gt;備註: &lt;br&gt;coord_97x: 248,370.371&lt;br&gt;coord_97y: 2,751,692.592&lt;br&gt;緯度: 24.872834&lt;br&gt;經度: 120.983872&lt;br&gt;閥栓種類: 窨井</description>
+      <styleUrl>#icon-1899-FFEA00</styleUrl>
+      <ExtendedData>
+        <Data name="識別碼">
+          <value>0343006248075160200001</value>
+        </Data>
+        <Data name="地址">
+          <value>新豐鄉康和路42之1號</value>
+        </Data>
+        <Data name="備註">
+          <value />
+        </Data>
+        <Data name="coord_97x">
+          <value>248370.371</value>
+        </Data>
+        <Data name="coord_97y">
+          <value>2751692.592</value>
+        </Data>
+        <Data name="緯度">
+          <value>24.872834</value>
+        </Data>
+        <Data name="經度">
+          <value>120.983872</value>
+        </Data>
+        <Data name="閥栓種類">
+          <value>窨井</value>
+        </Data>
+      </ExtendedData>
+      <Point>
+        <coordinates>
+          120.983872,24.872834,0
+        </coordinates>
+      </Point>
+    </Placemark>
+    <Placemark>
+      <name>M15</name>
+      <description>識別碼: 0343006247275400200001&lt;br&gt;地址: 新豐鄉上坑村538號旁&lt;br&gt;備註: &lt;br&gt;coord_97x: 247,959.313&lt;br&gt;coord_97y: 2,754,507.494&lt;br&gt;緯度: 24.898247&lt;br&gt;經度: 120.9798&lt;br&gt;閥栓種類: 窨井</description>
+      <styleUrl>#icon-1899-FFEA00</styleUrl>
+      <ExtendedData>
+        <Data name="識別碼">
+          <value>0343006247275400200001</value>
+        </Data>
+        <Data name="地址">
+          <value>新豐鄉上坑村538號旁</value>
+        </Data>
+        <Data name="備註">
+          <value />
+        </Data>
+        <Data name="coord_97x">
+          <value>247959.313</value>
+        </Data>
+        <Data name="coord_97y">
+          <value>2754507.494</value>
+        </Data>
+        <Data name="緯度">
+          <value>24.898247</value>
+        </Data>
+        <Data name="經度">
+          <value>120.9798</value>
+        </Data>
+        <Data name="閥栓種類">
+          <value>窨井</value>
+        </Data>
+      </ExtendedData>
+      <Point>
+        <coordinates>
+          120.9798,24.898247,0
+        </coordinates>
+      </Point>
+    </Placemark>
+    <Placemark>
+      <name>M17</name>
+      <description>識別碼: 0343006254475460200002&lt;br&gt;地址: 湖口鄉戶政事務所前&lt;br&gt;備註: &lt;br&gt;coord_97x: 254,439.797&lt;br&gt;coord_97y: 2,755,179.896&lt;br&gt;緯度: 24.904313&lt;br&gt;經度: 121.043951&lt;br&gt;閥栓種類: 窨井</description>
+      <styleUrl>#icon-1899-FFEA00</styleUrl>
+      <ExtendedData>
+        <Data name="識別碼">
+          <value>0343006254475460200002</value>
+        </Data>
+        <Data name="地址">
+          <value>湖口鄉戶政事務所前</value>
+        </Data>
+        <Data name="備註">
+          <value />
+        </Data>
+        <Data name="coord_97x">
+          <value>254439.797</value>
+        </Data>
+        <Data name="coord_97y">
+          <value>2755179.896</value>
+        </Data>
+        <Data name="緯度">
+          <value>24.904313</value>
+        </Data>
+        <Data name="經度">
+          <value>121.043951</value>
+        </Data>
+        <Data name="閥栓種類">
+          <value>窨井</value>
+        </Data>
+      </ExtendedData>
+      <Point>
+        <coordinates>
+          121.043951,24.904313,0
+        </coordinates>
+      </Point>
+    </Placemark>
+    <Placemark>
+      <name>M18</name>
+      <description>識別碼: 0343006254475460200003&lt;br&gt;地址: 湖口鄉戶政事務所前&lt;br&gt;備註: &lt;br&gt;coord_97x: 254,432.42&lt;br&gt;coord_97y: 2,755,183.736&lt;br&gt;緯度: 24.904348&lt;br&gt;經度: 121.043878&lt;br&gt;閥栓種類: 窨井</description>
+      <styleUrl>#icon-1899-FFEA00</styleUrl>
+      <ExtendedData>
+        <Data name="識別碼">
+          <value>0343006254475460200003</value>
+        </Data>
+        <Data name="地址">
+          <value>湖口鄉戶政事務所前</value>
+        </Data>
+        <Data name="備註">
+          <value />
+        </Data>
+        <Data name="coord_97x">
+          <value>254432.42</value>
+        </Data>
+        <Data name="coord_97y">
+          <value>2755183.736</value>
+        </Data>
+        <Data name="緯度">
+          <value>24.904348</value>
+        </Data>
+        <Data name="經度">
+          <value>121.043878</value>
+        </Data>
+        <Data name="閥栓種類">
+          <value>窨井</value>
+        </Data>
+      </ExtendedData>
+      <Point>
+        <coordinates>
+          121.043878,24.904348,0
+        </coordinates>
+      </Point>
+    </Placemark>
+    <Placemark>
+      <name>M26</name>
+      <description>識別碼: 0343006248875160200001&lt;br&gt;地址: &lt;br&gt;備註: &lt;br&gt;coord_97x: 249,582.462&lt;br&gt;coord_97y: 2,752,172.134&lt;br&gt;緯度: 24.877164&lt;br&gt;經度: 120.995868&lt;br&gt;閥栓種類: 窨井</description>
+      <styleUrl>#icon-1899-FFEA00</styleUrl>
+      <ExtendedData>
+        <Data name="識別碼">
+          <value>0343006248875160200001</value>
+        </Data>
+        <Data name="地址">
+          <value />
+        </Data>
+        <Data name="備註">
+          <value />
+        </Data>
+        <Data name="coord_97x">
+          <value>249582.462</value>
+        </Data>
+        <Data name="coord_97y">
+          <value>2752172.134</value>
+        </Data>
+        <Data name="緯度">
+          <value>24.877164</value>
+        </Data>
+        <Data name="經度">
+          <value>120.995868</value>
+        </Data>
+        <Data name="閥栓種類">
+          <value>窨井</value>
+        </Data>
+      </ExtendedData>
+      <Point>
+        <coordinates>
+          120.995868,24.877164,0
+        </coordinates>
+      </Point>
+    </Placemark>
+    <Placemark>
+      <name>M39</name>
+      <description>識別碼: 0343006247275340200001&lt;br&gt;地址: 新豐鄉上坑村坑子口420號旁&lt;br&gt;備註: &lt;br&gt;coord_97x: 247,653.151&lt;br&gt;coord_97y: 2,753,998.393&lt;br&gt;緯度: 24.893651&lt;br&gt;經度: 120.97677&lt;br&gt;閥栓種類: 窨井</description>
+      <styleUrl>#icon-1899-FFEA00</styleUrl>
+      <ExtendedData>
+        <Data name="識別碼">
+          <value>0343006247275340200001</value>
+        </Data>
+        <Data name="地址">
+          <value>新豐鄉上坑村坑子口420號旁</value>
+        </Data>
+        <Data name="備註">
+          <value />
+        </Data>
+        <Data name="coord_97x">
+          <value>247653.151</value>
+        </Data>
+        <Data name="coord_97y">
+          <value>2753998.393</value>
+        </Data>
+        <Data name="緯度">
+          <value>24.893651</value>
+        </Data>
+        <Data name="經度">
+          <value>120.97677</value>
+        </Data>
+        <Data name="閥栓種類">
+          <value>窨井</value>
+        </Data>
+      </ExtendedData>
+      <Point>
+        <coordinates>
+          120.97677,24.893651,0
+        </coordinates>
+      </Point>
+    </Placemark>
+    <Placemark>
+      <name>M51</name>
+      <description>識別碼: 0343006251275100210001&lt;br&gt;地址: 新竹縣華興公園旁&lt;br&gt;備註: &lt;br&gt;coord_97x: 251,814.77&lt;br&gt;coord_97y: 2,751,538.516&lt;br&gt;緯度: 24.871442&lt;br&gt;經度: 121.01796&lt;br&gt;閥栓種類: 窨井</description>
+      <styleUrl>#icon-1899-FFEA00</styleUrl>
+      <ExtendedData>
+        <Data name="識別碼">
+          <value>0343006251275100210001</value>
+        </Data>
+        <Data name="地址">
+          <value>新竹縣華興公園旁</value>
+        </Data>
+        <Data name="備註">
+          <value />
+        </Data>
+        <Data name="coord_97x">
+          <value>251814.77</value>
+        </Data>
+        <Data name="coord_97y">
+          <value>2751538.516</value>
+        </Data>
+        <Data name="緯度">
+          <value>24.871442</value>
+        </Data>
+        <Data name="經度">
+          <value>121.01796</value>
+        </Data>
+        <Data name="閥栓種類">
+          <value>窨井</value>
+        </Data>
+      </ExtendedData>
+      <Point>
+        <coordinates>
+          121.01796,24.871442,0
+        </coordinates>
+      </Point>
+    </Placemark>
+    <Placemark>
+      <name>M52</name>
+      <description>識別碼: 0343006250475100210002&lt;br&gt;地址: &lt;br&gt;備註: &lt;br&gt;coord_97x: 250,671.45&lt;br&gt;coord_97y: 2,751,154.36&lt;br&gt;緯度: 24.867975&lt;br&gt;經度: 121.006645&lt;br&gt;閥栓種類: 窨井</description>
+      <styleUrl>#icon-1899-FFEA00</styleUrl>
+      <ExtendedData>
+        <Data name="識別碼">
+          <value>0343006250475100210002</value>
+        </Data>
+        <Data name="地址">
+          <value />
+        </Data>
+        <Data name="備註">
+          <value />
+        </Data>
+        <Data name="coord_97x">
+          <value>250671.45</value>
+        </Data>
+        <Data name="coord_97y">
+          <value>2751154.36</value>
+        </Data>
+        <Data name="緯度">
+          <value>24.867975</value>
+        </Data>
+        <Data name="經度">
+          <value>121.006645</value>
+        </Data>
+        <Data name="閥栓種類">
+          <value>窨井</value>
+        </Data>
+      </ExtendedData>
+      <Point>
+        <coordinates>
+          121.006645,24.867975,0
+        </coordinates>
+      </Point>
+    </Placemark>
+    <Placemark>
+      <name>M103</name>
+      <description>識別碼: 0343006250475040210003&lt;br&gt;地址: &lt;br&gt;備註: &lt;br&gt;coord_97x: 250,473.43&lt;br&gt;coord_97y: 2,750,477.034&lt;br&gt;緯度: 24.86186&lt;br&gt;經度: 121.004685&lt;br&gt;閥栓種類: 窨井</description>
+      <styleUrl>#icon-1899-FFEA00</styleUrl>
+      <ExtendedData>
+        <Data name="識別碼">
+          <value>0343006250475040210003</value>
+        </Data>
+        <Data name="地址">
+          <value />
+        </Data>
+        <Data name="備註">
+          <value />
+        </Data>
+        <Data name="coord_97x">
+          <value>250473.43</value>
+        </Data>
+        <Data name="coord_97y">
+          <value>2750477.034</value>
+        </Data>
+        <Data name="緯度">
+          <value>24.86186</value>
+        </Data>
+        <Data name="經度">
+          <value>121.004685</value>
+        </Data>
+        <Data name="閥栓種類">
+          <value>窨井</value>
+        </Data>
+      </ExtendedData>
+      <Point>
+        <coordinates>
+          121.004685,24.86186,0
+        </coordinates>
+      </Point>
+    </Placemark>
+    <Placemark>
+      <name>M109</name>
+      <description>識別碼: 0343006248875100210004&lt;br&gt;地址: &lt;br&gt;備註: &lt;br&gt;coord_97x: 249,579.02&lt;br&gt;coord_97y: 2,751,179.39&lt;br&gt;緯度: 24.868201&lt;br&gt;經度: 120.995834&lt;br&gt;閥栓種類: 窨井</description>
+      <styleUrl>#icon-1899-FFEA00</styleUrl>
+      <ExtendedData>
+        <Data name="識別碼">
+          <value>0343006248875100210004</value>
+        </Data>
+        <Data name="地址">
+          <value />
+        </Data>
+        <Data name="備註">
+          <value />
+        </Data>
+        <Data name="coord_97x">
+          <value>249579.02</value>
+        </Data>
+        <Data name="coord_97y">
+          <value>2751179.39</value>
+        </Data>
+        <Data name="緯度">
+          <value>24.868201</value>
+        </Data>
+        <Data name="經度">
+          <value>120.995834</value>
+        </Data>
+        <Data name="閥栓種類">
+          <value>窨井</value>
+        </Data>
+      </ExtendedData>
+      <Point>
+        <coordinates>
+          120.995834,24.868201,0
+        </coordinates>
+      </Point>
+    </Placemark>
+    <Placemark>
+      <name>M62</name>
+      <description>識別碼: 0343006252875160200001&lt;br&gt;地址: &lt;br&gt;備註: &lt;br&gt;coord_97x: 252,900.94&lt;br&gt;coord_97y: 2,751,829.03&lt;br&gt;緯度: 24.874063&lt;br&gt;經度: 121.02871&lt;br&gt;閥栓種類: 窨井</description>
+      <styleUrl>#icon-1899-FFEA00</styleUrl>
+      <ExtendedData>
+        <Data name="識別碼">
+          <value>0343006252875160200001</value>
+        </Data>
+        <Data name="地址">
+          <value />
+        </Data>
+        <Data name="備註">
+          <value />
+        </Data>
+        <Data name="coord_97x">
+          <value>252900.94</value>
+        </Data>
+        <Data name="coord_97y">
+          <value>2751829.03</value>
+        </Data>
+        <Data name="緯度">
+          <value>24.874063</value>
+        </Data>
+        <Data name="經度">
+          <value>121.02871</value>
+        </Data>
+        <Data name="閥栓種類">
+          <value>窨井</value>
+        </Data>
+      </ExtendedData>
+      <Point>
+        <coordinates>
+          121.02871,24.874063,0
+        </coordinates>
+      </Point>
+    </Placemark>
+    <Placemark>
+      <name>M4306</name>
+      <description>識別碼: 0343006249675100200087&lt;br&gt;地址: 新興路縱貫公路236號&lt;br&gt;備註: 人孔 窨井&lt;br&gt;coord_97x: 249,845.613&lt;br&gt;coord_97y: 2,751,532.232&lt;br&gt;緯度: 24.871387&lt;br&gt;經度: 120.998472&lt;br&gt;閥栓種類: 窨井</description>
+      <styleUrl>#icon-1899-FFEA00</styleUrl>
+      <ExtendedData>
+        <Data name="識別碼">
+          <value>0343006249675100200087</value>
+        </Data>
+        <Data name="地址">
+          <value>新興路縱貫公路236號</value>
+        </Data>
+        <Data name="備註">
+          <value>人孔 窨井</value>
+        </Data>
+        <Data name="coord_97x">
+          <value>249845.613</value>
+        </Data>
+        <Data name="coord_97y">
+          <value>2751532.232</value>
+        </Data>
+        <Data name="緯度">
+          <value>24.871387</value>
+        </Data>
+        <Data name="經度">
+          <value>120.998472</value>
+        </Data>
+        <Data name="閥栓種類">
+          <value>窨井</value>
+        </Data>
+      </ExtendedData>
+      <Point>
+        <coordinates>
+          120.998472,24.871387,0
+        </coordinates>
+      </Point>
+    </Placemark>
+    <Placemark>
+      <name>M4307</name>
+      <description>識別碼: 0343006249675100200088&lt;br&gt;地址: 新興路縱貫公路236號&lt;br&gt;備註: 人孔 窨井&lt;br&gt;coord_97x: 249,823.425&lt;br&gt;coord_97y: 2,751,511.595&lt;br&gt;緯度: 24.8712&lt;br&gt;經度: 120.998253&lt;br&gt;閥栓種類: 窨井</description>
+      <styleUrl>#icon-1899-FFEA00</styleUrl>
+      <ExtendedData>
+        <Data name="識別碼">
+          <value>0343006249675100200088</value>
+        </Data>
+        <Data name="地址">
+          <value>新興路縱貫公路236號</value>
+        </Data>
+        <Data name="備註">
+          <value>人孔 窨井</value>
+        </Data>
+        <Data name="coord_97x">
+          <value>249823.425</value>
+        </Data>
+        <Data name="coord_97y">
+          <value>2751511.595</value>
+        </Data>
+        <Data name="緯度">
+          <value>24.8712</value>
+        </Data>
+        <Data name="經度">
+          <value>120.998253</value>
+        </Data>
+        <Data name="閥栓種類">
+          <value>窨井</value>
+        </Data>
+      </ExtendedData>
+      <Point>
+        <coordinates>
+          120.998253,24.8712,0
+        </coordinates>
+      </Point>
+    </Placemark>
+    <Placemark>
+      <name>M4308</name>
+      <description>識別碼: 0343006249675100200089&lt;br&gt;地址: 新興路縱貫公路232號&lt;br&gt;備註: 人孔 窨井&lt;br&gt;coord_97x: 249,772.171&lt;br&gt;coord_97y: 2,751,469.404&lt;br&gt;緯度: 24.870819&lt;br&gt;經度: 120.997745&lt;br&gt;閥栓種類: 窨井</description>
+      <styleUrl>#icon-1899-FFEA00</styleUrl>
+      <ExtendedData>
+        <Data name="識別碼">
+          <value>0343006249675100200089</value>
+        </Data>
+        <Data name="地址">
+          <value>新興路縱貫公路232號</value>
+        </Data>
+        <Data name="備註">
+          <value>人孔 窨井</value>
+        </Data>
+        <Data name="coord_97x">
+          <value>249772.171</value>
+        </Data>
+        <Data name="coord_97y">
+          <value>2751469.404</value>
+        </Data>
+        <Data name="緯度">
+          <value>24.870819</value>
+        </Data>
+        <Data name="經度">
+          <value>120.997745</value>
+        </Data>
+        <Data name="閥栓種類">
+          <value>窨井</value>
+        </Data>
+      </ExtendedData>
+      <Point>
+        <coordinates>
+          120.997745,24.870819,0
+        </coordinates>
+      </Point>
+    </Placemark>
+    <Placemark>
+      <name>M4309</name>
+      <description>識別碼: 0343006249675100200090&lt;br&gt;地址: 新興路204號&lt;br&gt;備註: 人孔 窨井&lt;br&gt;coord_97x: 249,675.692&lt;br&gt;coord_97y: 2,751,386.45&lt;br&gt;緯度: 24.87007&lt;br&gt;經度: 120.99679&lt;br&gt;閥栓種類: 窨井</description>
+      <styleUrl>#icon-1899-FFEA00</styleUrl>
+      <ExtendedData>
+        <Data name="識別碼">
+          <value>0343006249675100200090</value>
+        </Data>
+        <Data name="地址">
+          <value>新興路204號</value>
+        </Data>
+        <Data name="備註">
+          <value>人孔 窨井</value>
+        </Data>
+        <Data name="coord_97x">
+          <value>249675.692</value>
+        </Data>
+        <Data name="coord_97y">
+          <value>2751386.45</value>
+        </Data>
+        <Data name="緯度">
+          <value>24.87007</value>
+        </Data>
+        <Data name="經度">
+          <value>120.99679</value>
+        </Data>
+        <Data name="閥栓種類">
+          <value>窨井</value>
+        </Data>
+      </ExtendedData>
+      <Point>
+        <coordinates>
+          120.99679,24.87007,0
+        </coordinates>
+      </Point>
+    </Placemark>
+    <Placemark>
+      <name>M4310</name>
+      <description>識別碼: 0343006248875100200163&lt;br&gt;地址: 新興路縱貫公路188號&lt;br&gt;備註: 人孔 窨井&lt;br&gt;coord_97x: 249,519.899&lt;br&gt;coord_97y: 2,751,252.549&lt;br&gt;緯度: 24.868861&lt;br&gt;經度: 120.995249&lt;br&gt;閥栓種類: 窨井</description>
+      <styleUrl>#icon-1899-FFEA00</styleUrl>
+      <ExtendedData>
+        <Data name="識別碼">
+          <value>0343006248875100200163</value>
+        </Data>
+        <Data name="地址">
+          <value>新興路縱貫公路188號</value>
+        </Data>
+        <Data name="備註">
+          <value>人孔 窨井</value>
+        </Data>
+        <Data name="coord_97x">
+          <value>249519.899</value>
+        </Data>
+        <Data name="coord_97y">
+          <value>2751252.549</value>
+        </Data>
+        <Data name="緯度">
+          <value>24.868861</value>
+        </Data>
+        <Data name="經度">
+          <value>120.995249</value>
+        </Data>
+        <Data name="閥栓種類">
+          <value>窨井</value>
+        </Data>
+      </ExtendedData>
+      <Point>
+        <coordinates>
+          120.995249,24.868861,0
+        </coordinates>
+      </Point>
+    </Placemark>
+    <Placemark>
+      <name>M4311</name>
+      <description>識別碼: 0343006248875100200164&lt;br&gt;地址: 新興路縱貫公路146之8號&lt;br&gt;備註: 人孔 窨井&lt;br&gt;coord_97x: 249,367.94&lt;br&gt;coord_97y: 2,751,120.968&lt;br&gt;緯度: 24.867673&lt;br&gt;經度: 120.993745&lt;br&gt;閥栓種類: 窨井</description>
+      <styleUrl>#icon-1899-FFEA00</styleUrl>
+      <ExtendedData>
+        <Data name="識別碼">
+          <value>0343006248875100200164</value>
+        </Data>
+        <Data name="地址">
+          <value>新興路縱貫公路146之8號</value>
+        </Data>
+        <Data name="備註">
+          <value>人孔 窨井</value>
+        </Data>
+        <Data name="coord_97x">
+          <value>249367.94</value>
+        </Data>
+        <Data name="coord_97y">
+          <value>2751120.968</value>
+        </Data>
+        <Data name="緯度">
+          <value>24.867673</value>
+        </Data>
+        <Data name="經度">
+          <value>120.993745</value>
+        </Data>
+        <Data name="閥栓種類">
+          <value>窨井</value>
+        </Data>
+      </ExtendedData>
+      <Point>
+        <coordinates>
+          120.993745,24.867673,0
+        </coordinates>
+      </Point>
+    </Placemark>
+    <Placemark>
+      <name>M4316</name>
+      <description>識別碼: 0343006248875040200009&lt;br&gt;地址: 新興路縱貫公路26-7號&lt;br&gt;備註: 人孔 窨井&lt;br&gt;coord_97x: 249,188.705&lt;br&gt;coord_97y: 2,750,805.41&lt;br&gt;緯度: 24.864824&lt;br&gt;經度: 120.991971&lt;br&gt;閥栓種類: 窨井</description>
+      <styleUrl>#icon-1899-FFEA00</styleUrl>
+      <ExtendedData>
+        <Data name="識別碼">
+          <value>0343006248875040200009</value>
+        </Data>
+        <Data name="地址">
+          <value>新興路縱貫公路26-7號</value>
+        </Data>
+        <Data name="備註">
+          <value>人孔 窨井</value>
+        </Data>
+        <Data name="coord_97x">
+          <value>249188.705</value>
+        </Data>
+        <Data name="coord_97y">
+          <value>2750805.41</value>
+        </Data>
+        <Data name="緯度">
+          <value>24.864824</value>
+        </Data>
+        <Data name="經度">
+          <value>120.991971</value>
+        </Data>
+        <Data name="閥栓種類">
+          <value>窨井</value>
+        </Data>
+      </ExtendedData>
+      <Point>
+        <coordinates>
+          120.991971,24.864824,0
+        </coordinates>
+      </Point>
+    </Placemark>
+    <Placemark>
+      <name>M4317</name>
+      <description>識別碼: 0343006248875040200010&lt;br&gt;地址: 新竹縣竹北市中華路1432號之1&lt;br&gt;備註: 人孔 窨井&lt;br&gt;coord_97x: 249,133.745&lt;br&gt;coord_97y: 2,750,431.561&lt;br&gt;緯度: 24.861449&lt;br&gt;經度: 120.991428&lt;br&gt;閥栓種類: 窨井</description>
+      <styleUrl>#icon-1899-FFEA00</styleUrl>
+      <ExtendedData>
+        <Data name="識別碼">
+          <value>0343006248875040200010</value>
+        </Data>
+        <Data name="地址">
+          <value>新竹縣竹北市中華路1432號之1</value>
+        </Data>
+        <Data name="備註">
+          <value>人孔 窨井</value>
+        </Data>
+        <Data name="coord_97x">
+          <value>249133.745</value>
+        </Data>
+        <Data name="coord_97y">
+          <value>2750431.561</value>
+        </Data>
+        <Data name="緯度">
+          <value>24.861449</value>
+        </Data>
+        <Data name="經度">
+          <value>120.991428</value>
+        </Data>
+        <Data name="閥栓種類">
+          <value>窨井</value>
+        </Data>
+      </ExtendedData>
+      <Point>
+        <coordinates>
+          120.991428,24.861449,0
+        </coordinates>
+      </Point>
+    </Placemark>
+    <Placemark>
+      <name>M4318</name>
+      <description>識別碼: 0343006248874980200003&lt;br&gt;地址: 新竹縣竹北市中華路1372號臨&lt;br&gt;備註: 人孔&lt;br&gt;coord_97x: 249,247.964&lt;br&gt;coord_97y: 2,750,164.785&lt;br&gt;緯度: 24.85904&lt;br&gt;經度: 120.992558&lt;br&gt;閥栓種類: 窨井</description>
+      <styleUrl>#icon-1899-FFEA00</styleUrl>
+      <ExtendedData>
+        <Data name="識別碼">
+          <value>0343006248874980200003</value>
+        </Data>
+        <Data name="地址">
+          <value>新竹縣竹北市中華路1372號臨</value>
+        </Data>
+        <Data name="備註">
+          <value>人孔</value>
+        </Data>
+        <Data name="coord_97x">
+          <value>249247.964</value>
+        </Data>
+        <Data name="coord_97y">
+          <value>2750164.785</value>
+        </Data>
+        <Data name="緯度">
+          <value>24.85904</value>
+        </Data>
+        <Data name="經度">
+          <value>120.992558</value>
+        </Data>
+        <Data name="閥栓種類">
+          <value>窨井</value>
+        </Data>
+      </ExtendedData>
+      <Point>
+        <coordinates>
+          120.992558,24.85904,0
+        </coordinates>
+      </Point>
+    </Placemark>
+    <Placemark>
+      <name>M4320</name>
+      <description>識別碼: 0343006248874980200005&lt;br&gt;地址: 中華路縱貫公路與中華路1483巷口&lt;br&gt;備註: 人孔 窨井&lt;br&gt;coord_97x: 249,425.775&lt;br&gt;coord_97y: 2,750,136.697&lt;br&gt;緯度: 24.858787&lt;br&gt;經度: 120.994318&lt;br&gt;閥栓種類: 窨井</description>
+      <styleUrl>#icon-1899-FFEA00</styleUrl>
+      <ExtendedData>
+        <Data name="識別碼">
+          <value>0343006248874980200005</value>
+        </Data>
+        <Data name="地址">
+          <value>中華路縱貫公路與中華路1483巷口</value>
+        </Data>
+        <Data name="備註">
+          <value>人孔 窨井</value>
+        </Data>
+        <Data name="coord_97x">
+          <value>249425.775</value>
+        </Data>
+        <Data name="coord_97y">
+          <value>2750136.697</value>
+        </Data>
+        <Data name="緯度">
+          <value>24.858787</value>
+        </Data>
+        <Data name="經度">
+          <value>120.994318</value>
+        </Data>
+        <Data name="閥栓種類">
+          <value>窨井</value>
+        </Data>
+      </ExtendedData>
+      <Point>
+        <coordinates>
+          120.994318,24.858787,0
+        </coordinates>
+      </Point>
+    </Placemark>
+    <Placemark>
+      <name>M4279</name>
+      <description>識別碼: 0343006251275280200031&lt;br&gt;地址: 新竹縣湖口鄉八德路一段山崎陸橋與縱貫鐵路口&lt;br&gt;備註: 人孔&lt;br&gt;coord_97x: 251,855.682&lt;br&gt;coord_97y: 2,753,213.949&lt;br&gt;緯度: 24.886569&lt;br&gt;經度: 121.018367&lt;br&gt;閥栓種類: 窨井</description>
+      <styleUrl>#icon-1899-FFEA00</styleUrl>
+      <ExtendedData>
+        <Data name="識別碼">
+          <value>0343006251275280200031</value>
+        </Data>
+        <Data name="地址">
+          <value>新竹縣湖口鄉八德路一段山崎陸橋與縱貫鐵路口</value>
+        </Data>
+        <Data name="備註">
+          <value>人孔</value>
+        </Data>
+        <Data name="coord_97x">
+          <value>251855.682</value>
+        </Data>
+        <Data name="coord_97y">
+          <value>2753213.949</value>
+        </Data>
+        <Data name="緯度">
+          <value>24.886569</value>
+        </Data>
+        <Data name="經度">
+          <value>121.018367</value>
+        </Data>
+        <Data name="閥栓種類">
+          <value>窨井</value>
+        </Data>
+      </ExtendedData>
+      <Point>
+        <coordinates>
+          121.018367,24.886569,0
+        </coordinates>
+      </Point>
+    </Placemark>
+    <Placemark>
+      <name>M4361</name>
+      <description>識別碼: 0361008248075460200003&lt;br&gt;地址: 304新竹縣新豐鄉新庄路297號&lt;br&gt;備註: &lt;br&gt;coord_97x: 248,469.323&lt;br&gt;coord_97y: 2,755,170.903&lt;br&gt;緯度: 24.904238&lt;br&gt;經度: 120.984847&lt;br&gt;閥栓種類: 窨井</description>
+      <styleUrl>#icon-1899-FFEA00</styleUrl>
+      <ExtendedData>
+        <Data name="識別碼">
+          <value>0361008248075460200003</value>
+        </Data>
+        <Data name="地址">
+          <value>304新竹縣新豐鄉新庄路297號</value>
+        </Data>
+        <Data name="備註">
+          <value />
+        </Data>
+        <Data name="coord_97x">
+          <value>248469.323</value>
+        </Data>
+        <Data name="coord_97y">
+          <value>2755170.903</value>
+        </Data>
+        <Data name="緯度">
+          <value>24.904238</value>
+        </Data>
+        <Data name="經度">
+          <value>120.984847</value>
+        </Data>
+        <Data name="閥栓種類">
+          <value>窨井</value>
+        </Data>
+      </ExtendedData>
+      <Point>
+        <coordinates>
+          120.984847,24.904238,0
+        </coordinates>
+      </Point>
+    </Placemark>
+    <Placemark>
+      <name>M4398</name>
+      <description>識別碼: 0361008256875280200003&lt;br&gt;地址: 新竹縣湖口鄉湖中路479號&lt;br&gt;備註: &lt;br&gt;coord_97x: 256,937.748&lt;br&gt;coord_97y: 2,753,216.643&lt;br&gt;緯度: 24.886579&lt;br&gt;經度: 121.068668&lt;br&gt;閥栓種類: 窨井</description>
+      <styleUrl>#icon-1899-FFEA00</styleUrl>
+      <ExtendedData>
+        <Data name="識別碼">
+          <value>0361008256875280200003</value>
+        </Data>
+        <Data name="地址">
+          <value>新竹縣湖口鄉湖中路479號</value>
+        </Data>
+        <Data name="備註">
+          <value />
+        </Data>
+        <Data name="coord_97x">
+          <value>256937.748</value>
+        </Data>
+        <Data name="coord_97y">
+          <value>2753216.643</value>
+        </Data>
+        <Data name="緯度">
+          <value>24.886579</value>
+        </Data>
+        <Data name="經度">
+          <value>121.068668</value>
+        </Data>
+        <Data name="閥栓種類">
+          <value>窨井</value>
+        </Data>
+      </ExtendedData>
+      <Point>
+        <coordinates>
+          121.068668,24.886579,0
+        </coordinates>
+      </Point>
+    </Placemark>
+    <Placemark>
+      <name>M4407</name>
+      <description>識別碼: 0343006257675280200014&lt;br&gt;地址: 新竹縣湖口鄉八德路二段471號&lt;br&gt;備註: &lt;br&gt;coord_97x: 258,062.827&lt;br&gt;coord_97y: 2,753,108.069&lt;br&gt;緯度: 24.885593&lt;br&gt;經度: 121.079804&lt;br&gt;閥栓種類: 窨井</description>
+      <styleUrl>#icon-1899-FFEA00</styleUrl>
+      <ExtendedData>
+        <Data name="識別碼">
+          <value>0343006257675280200014</value>
+        </Data>
+        <Data name="地址">
+          <value>新竹縣湖口鄉八德路二段471號</value>
+        </Data>
+        <Data name="備註">
+          <value />
+        </Data>
+        <Data name="coord_97x">
+          <value>258062.827</value>
+        </Data>
+        <Data name="coord_97y">
+          <value>2753108.069</value>
+        </Data>
+        <Data name="緯度">
+          <value>24.885593</value>
+        </Data>
+        <Data name="經度">
+          <value>121.079804</value>
+        </Data>
+        <Data name="閥栓種類">
+          <value>窨井</value>
+        </Data>
+      </ExtendedData>
+      <Point>
+        <coordinates>
+          121.079804,24.885593,0
+        </coordinates>
+      </Point>
+    </Placemark>
+    <Placemark>
+      <name>M4403</name>
+      <description>識別碼: 0343006256875280200030&lt;br&gt;地址: 新竹縣湖口鄉八德路二段與祥喜路路口&lt;br&gt;備註: &lt;br&gt;coord_97x: 257,411.844&lt;br&gt;coord_97y: 2,752,864.898&lt;br&gt;緯度: 24.883401&lt;br&gt;經度: 121.073359&lt;br&gt;閥栓種類: 窨井</description>
+      <styleUrl>#icon-1899-FFEA00</styleUrl>
+      <ExtendedData>
+        <Data name="識別碼">
+          <value>0343006256875280200030</value>
+        </Data>
+        <Data name="地址">
+          <value>新竹縣湖口鄉八德路二段與祥喜路路口</value>
+        </Data>
+        <Data name="備註">
+          <value />
+        </Data>
+        <Data name="coord_97x">
+          <value>257411.844</value>
+        </Data>
+        <Data name="coord_97y">
+          <value>2752864.898</value>
+        </Data>
+        <Data name="緯度">
+          <value>24.883401</value>
+        </Data>
+        <Data name="經度">
+          <value>121.073359</value>
+        </Data>
+        <Data name="閥栓種類">
+          <value>窨井</value>
+        </Data>
+      </ExtendedData>
+      <Point>
+        <coordinates>
+          121.073359,24.883401,0
+        </coordinates>
+      </Point>
+    </Placemark>
+    <Placemark>
+      <name>M4419</name>
+      <description>識別碼: 0343006260075400200001&lt;br&gt;地址: 新竹縣湖口鄉八德路三段101號附近&lt;br&gt;備註: 窨井&lt;br&gt;coord_97x: 260,509.114&lt;br&gt;coord_97y: 2,754,010.846&lt;br&gt;緯度: 24.893729&lt;br&gt;經度: 121.104023&lt;br&gt;閥栓種類: 窨井</description>
+      <styleUrl>#icon-1899-FFEA00</styleUrl>
+      <ExtendedData>
+        <Data name="識別碼">
+          <value>0343006260075400200001</value>
+        </Data>
+        <Data name="地址">
+          <value>新竹縣湖口鄉八德路三段101號附近</value>
+        </Data>
+        <Data name="備註">
+          <value>窨井</value>
+        </Data>
+        <Data name="coord_97x">
+          <value>260509.114</value>
+        </Data>
+        <Data name="coord_97y">
+          <value>2754010.846</value>
+        </Data>
+        <Data name="緯度">
+          <value>24.893729</value>
+        </Data>
+        <Data name="經度">
+          <value>121.104023</value>
+        </Data>
+        <Data name="閥栓種類">
+          <value>窨井</value>
+        </Data>
+      </ExtendedData>
+      <Point>
+        <coordinates>
+          121.104023,24.893729,0
+        </coordinates>
+      </Point>
+    </Placemark>
+    <Placemark>
+      <name>M4421</name>
+      <description>識別碼: 0343006260075400200002&lt;br&gt;地址: 新竹縣湖口鄉八德路三段101號&lt;br&gt;備註: &lt;br&gt;coord_97x: 260,514.104&lt;br&gt;coord_97y: 2,754,013.105&lt;br&gt;緯度: 24.893749&lt;br&gt;經度: 121.104073&lt;br&gt;閥栓種類: 窨井</description>
+      <styleUrl>#icon-1899-FFEA00</styleUrl>
+      <ExtendedData>
+        <Data name="識別碼">
+          <value>0343006260075400200002</value>
+        </Data>
+        <Data name="地址">
+          <value>新竹縣湖口鄉八德路三段101號</value>
+        </Data>
+        <Data name="備註">
+          <value />
+        </Data>
+        <Data name="coord_97x">
+          <value>260514.104</value>
+        </Data>
+        <Data name="coord_97y">
+          <value>2754013.105</value>
+        </Data>
+        <Data name="緯度">
+          <value>24.893749</value>
+        </Data>
+        <Data name="經度">
+          <value>121.104073</value>
+        </Data>
+        <Data name="閥栓種類">
+          <value>窨井</value>
+        </Data>
+      </ExtendedData>
+      <Point>
+        <coordinates>
+          121.104073,24.893749,0
+        </coordinates>
+      </Point>
+    </Placemark>
+    <Placemark>
+      <name>M4433</name>
+      <description>識別碼: 0343006254475160200026&lt;br&gt;地址: 新竹縣湖口鄉八德路一段與鐵騎路口&lt;br&gt;備註: &lt;br&gt;coord_97x: 254,947.317&lt;br&gt;coord_97y: 2,752,177.88&lt;br&gt;緯度: 24.877208&lt;br&gt;經度: 121.048964&lt;br&gt;閥栓種類: 窨井</description>
+      <styleUrl>#icon-1899-FFEA00</styleUrl>
+      <ExtendedData>
+        <Data name="識別碼">
+          <value>0343006254475160200026</value>
+        </Data>
+        <Data name="地址">
+          <value>新竹縣湖口鄉八德路一段與鐵騎路口</value>
+        </Data>
+        <Data name="備註">
+          <value />
+        </Data>
+        <Data name="coord_97x">
+          <value>254947.317</value>
+        </Data>
+        <Data name="coord_97y">
+          <value>2752177.88</value>
+        </Data>
+        <Data name="緯度">
+          <value>24.877208</value>
+        </Data>
+        <Data name="經度">
+          <value>121.048964</value>
+        </Data>
+        <Data name="閥栓種類">
+          <value>窨井</value>
+        </Data>
+      </ExtendedData>
+      <Point>
+        <coordinates>
+          121.048964,24.877208,0
+        </coordinates>
+      </Point>
+    </Placemark>
+    <Placemark>
+      <name>M4434</name>
+      <description>識別碼: 0343006254475160200027&lt;br&gt;地址: 新竹縣湖口鄉八德路一段與鐵騎路口&lt;br&gt;備註: 窨井&lt;br&gt;coord_97x: 254,941.054&lt;br&gt;coord_97y: 2,752,176.445&lt;br&gt;緯度: 24.877195&lt;br&gt;經度: 121.048902&lt;br&gt;閥栓種類: 窨井</description>
+      <styleUrl>#icon-1899-FFEA00</styleUrl>
+      <ExtendedData>
+        <Data name="識別碼">
+          <value>0343006254475160200027</value>
+        </Data>
+        <Data name="地址">
+          <value>新竹縣湖口鄉八德路一段與鐵騎路口</value>
+        </Data>
+        <Data name="備註">
+          <value>窨井</value>
+        </Data>
+        <Data name="coord_97x">
+          <value>254941.054</value>
+        </Data>
+        <Data name="coord_97y">
+          <value>2752176.445</value>
+        </Data>
+        <Data name="緯度">
+          <value>24.877195</value>
+        </Data>
+        <Data name="經度">
+          <value>121.048902</value>
+        </Data>
+        <Data name="閥栓種類">
+          <value>窨井</value>
+        </Data>
+      </ExtendedData>
+      <Point>
+        <coordinates>
+          121.048902,24.877195,0
+        </coordinates>
+      </Point>
+    </Placemark>
+    <Placemark>
+      <name>M4408</name>
+      <description>識別碼: 0343006258475280200001&lt;br&gt;地址: 新竹縣湖口鄉八德路二段948號&lt;br&gt;備註: 窨井&lt;br&gt;coord_97x: 258,913.252&lt;br&gt;coord_97y: 2,753,387.66&lt;br&gt;緯度: 24.888112&lt;br&gt;經度: 121.088223&lt;br&gt;閥栓種類: 窨井</description>
+      <styleUrl>#icon-1899-FFEA00</styleUrl>
+      <ExtendedData>
+        <Data name="識別碼">
+          <value>0343006258475280200001</value>
+        </Data>
+        <Data name="地址">
+          <value>新竹縣湖口鄉八德路二段948號</value>
+        </Data>
+        <Data name="備註">
+          <value>窨井</value>
+        </Data>
+        <Data name="coord_97x">
+          <value>258913.252</value>
+        </Data>
+        <Data name="coord_97y">
+          <value>2753387.66</value>
+        </Data>
+        <Data name="緯度">
+          <value>24.888112</value>
+        </Data>
+        <Data name="經度">
+          <value>121.088223</value>
+        </Data>
+        <Data name="閥栓種類">
+          <value>窨井</value>
+        </Data>
+      </ExtendedData>
+      <Point>
+        <coordinates>
+          121.088223,24.888112,0
+        </coordinates>
+      </Point>
+    </Placemark>
+    <Placemark>
+      <name>M4489</name>
+      <description>識別碼: 0343006252875580200001&lt;br&gt;地址: 新竹縣湖口鄉德豐路415號&lt;br&gt;備註: 窨井&lt;br&gt;coord_97x: 252,931.378&lt;br&gt;coord_97y: 2,756,292.043&lt;br&gt;緯度: 24.914358&lt;br&gt;經度: 121.029021&lt;br&gt;閥栓種類: 窨井</description>
+      <styleUrl>#icon-1899-FFEA00</styleUrl>
+      <ExtendedData>
+        <Data name="識別碼">
+          <value>0343006252875580200001</value>
+        </Data>
+        <Data name="地址">
+          <value>新竹縣湖口鄉德豐路415號</value>
+        </Data>
+        <Data name="備註">
+          <value>窨井</value>
+        </Data>
+        <Data name="coord_97x">
+          <value>252931.378</value>
+        </Data>
+        <Data name="coord_97y">
+          <value>2756292.043</value>
+        </Data>
+        <Data name="緯度">
+          <value>24.914358</value>
+        </Data>
+        <Data name="經度">
+          <value>121.029021</value>
+        </Data>
+        <Data name="閥栓種類">
+          <value>窨井</value>
+        </Data>
+      </ExtendedData>
+      <Point>
+        <coordinates>
+          121.029021,24.914358,0
+        </coordinates>
+      </Point>
+    </Placemark>
+    <Placemark>
+      <name>M3</name>
+      <description>識別碼: 0343006252875460200001&lt;br&gt;地址: 湖口鄉新湖路301號旁&lt;br&gt;備註: &lt;br&gt;coord_97x: 253,388.33&lt;br&gt;coord_97y: 2,754,957.247&lt;br&gt;緯度: 24.902306&lt;br&gt;經度: 121.033541&lt;br&gt;閥栓種類: 窨井</description>
+      <styleUrl>#icon-1899-FFEA00</styleUrl>
+      <ExtendedData>
+        <Data name="識別碼">
+          <value>0343006252875460200001</value>
+        </Data>
+        <Data name="地址">
+          <value>湖口鄉新湖路301號旁</value>
+        </Data>
+        <Data name="備註">
+          <value />
+        </Data>
+        <Data name="coord_97x">
+          <value>253388.33</value>
+        </Data>
+        <Data name="coord_97y">
+          <value>2754957.247</value>
+        </Data>
+        <Data name="緯度">
+          <value>24.902306</value>
+        </Data>
+        <Data name="經度">
+          <value>121.033541</value>
+        </Data>
+        <Data name="閥栓種類">
+          <value>窨井</value>
+        </Data>
+      </ExtendedData>
+      <Point>
+        <coordinates>
+          121.033541,24.902306,0
+        </coordinates>
+      </Point>
+    </Placemark>
+    <Placemark>
+      <name>M2</name>
+      <description>識別碼: 0343006253675400200001&lt;br&gt;地址: 湖口鄉成功路482號前&lt;br&gt;備註: &lt;br&gt;coord_97x: 253,680.125&lt;br&gt;coord_97y: 2,754,339.584&lt;br&gt;緯度: 24.896728&lt;br&gt;經度: 121.036428&lt;br&gt;閥栓種類: 窨井</description>
+      <styleUrl>#icon-1899-FFEA00</styleUrl>
+      <ExtendedData>
+        <Data name="識別碼">
+          <value>0343006253675400200001</value>
+        </Data>
+        <Data name="地址">
+          <value>湖口鄉成功路482號前</value>
+        </Data>
+        <Data name="備註">
+          <value />
+        </Data>
+        <Data name="coord_97x">
+          <value>253680.125</value>
+        </Data>
+        <Data name="coord_97y">
+          <value>2754339.584</value>
+        </Data>
+        <Data name="緯度">
+          <value>24.896728</value>
+        </Data>
+        <Data name="經度">
+          <value>121.036428</value>
+        </Data>
+        <Data name="閥栓種類">
+          <value>窨井</value>
+        </Data>
+      </ExtendedData>
+      <Point>
+        <coordinates>
+          121.036428,24.896728,0
+        </coordinates>
+      </Point>
+    </Placemark>
+    <Placemark>
+      <name>M106</name>
+      <description>識別碼: 0343006250475040210004&lt;br&gt;地址: &lt;br&gt;備註: &lt;br&gt;coord_97x: 250,619.3&lt;br&gt;coord_97y: 2,750,568.31&lt;br&gt;緯度: 24.862684&lt;br&gt;經度: 121.006129&lt;br&gt;閥栓種類: 窨井</description>
+      <styleUrl>#icon-1899-FFEA00</styleUrl>
+      <ExtendedData>
+        <Data name="識別碼">
+          <value>0343006250475040210004</value>
+        </Data>
+        <Data name="地址">
+          <value />
+        </Data>
+        <Data name="備註">
+          <value />
+        </Data>
+        <Data name="coord_97x">
+          <value>250619.3</value>
+        </Data>
+        <Data name="coord_97y">
+          <value>2750568.31</value>
+        </Data>
+        <Data name="緯度">
+          <value>24.862684</value>
+        </Data>
+        <Data name="經度">
+          <value>121.006129</value>
+        </Data>
+        <Data name="閥栓種類">
+          <value>窨井</value>
+        </Data>
+      </ExtendedData>
+      <Point>
+        <coordinates>
+          121.006129,24.862684,0
+        </coordinates>
+      </Point>
+    </Placemark>
+    <Placemark>
+      <name>M5</name>
+      <description>識別碼: 0343006248074680200002&lt;br&gt;地址: 竹北市溪州路與新溪街交叉路口&lt;br&gt;備註: &lt;br&gt;coord_97x: 248,248.39&lt;br&gt;coord_97y: 2,747,174.524&lt;br&gt;緯度: 24.832042&lt;br&gt;經度: 120.982671&lt;br&gt;閥栓種類: 窨井</description>
+      <styleUrl>#icon-1899-FFEA00</styleUrl>
+      <ExtendedData>
+        <Data name="識別碼">
+          <value>0343006248074680200002</value>
+        </Data>
+        <Data name="地址">
+          <value>竹北市溪州路與新溪街交叉路口</value>
+        </Data>
+        <Data name="備註">
+          <value />
+        </Data>
+        <Data name="coord_97x">
+          <value>248248.39</value>
+        </Data>
+        <Data name="coord_97y">
+          <value>2747174.524</value>
+        </Data>
+        <Data name="緯度">
+          <value>24.832042</value>
+        </Data>
+        <Data name="經度">
+          <value>120.982671</value>
+        </Data>
+        <Data name="閥栓種類">
+          <value>窨井</value>
+        </Data>
+      </ExtendedData>
+      <Point>
+        <coordinates>
+          120.982671,24.832042,0
+        </coordinates>
+      </Point>
+    </Placemark>
+    <Placemark>
+      <name>M6</name>
+      <description>識別碼: 0343006253675760200001&lt;br&gt;地址: 新豐鄉福興村十一股90號旁&lt;br&gt;備註: &lt;br&gt;coord_97x: 253,794.823&lt;br&gt;coord_97y: 2,757,878.536&lt;br&gt;緯度: 24.928679&lt;br&gt;經度: 121.037573&lt;br&gt;閥栓種類: 窨井</description>
+      <styleUrl>#icon-1899-FFEA00</styleUrl>
+      <ExtendedData>
+        <Data name="識別碼">
+          <value>0343006253675760200001</value>
+        </Data>
+        <Data name="地址">
+          <value>新豐鄉福興村十一股90號旁</value>
+        </Data>
+        <Data name="備註">
+          <value />
+        </Data>
+        <Data name="coord_97x">
+          <value>253794.823</value>
+        </Data>
+        <Data name="coord_97y">
+          <value>2757878.536</value>
+        </Data>
+        <Data name="緯度">
+          <value>24.928679</value>
+        </Data>
+        <Data name="經度">
+          <value>121.037573</value>
+        </Data>
+        <Data name="閥栓種類">
+          <value>窨井</value>
+        </Data>
+      </ExtendedData>
+      <Point>
+        <coordinates>
+          121.037573,24.928679,0
+        </coordinates>
+      </Point>
+    </Placemark>
+    <Placemark>
+      <name>M4269</name>
+      <description>識別碼: 0343006254475220200001&lt;br&gt;地址: 新竹縣湖口鄉八德路一段621號西南側&lt;br&gt;備註: 人孔&lt;br&gt;coord_97x: 254,707.621&lt;br&gt;coord_97y: 2,752,213.155&lt;br&gt;緯度: 24.877527&lt;br&gt;經度: 121.046592&lt;br&gt;閥栓種類: 窨井</description>
+      <styleUrl>#icon-1899-FFEA00</styleUrl>
+      <ExtendedData>
+        <Data name="識別碼">
+          <value>0343006254475220200001</value>
+        </Data>
+        <Data name="地址">
+          <value>新竹縣湖口鄉八德路一段621號西南側</value>
+        </Data>
+        <Data name="備註">
+          <value>人孔</value>
+        </Data>
+        <Data name="coord_97x">
+          <value>254707.621</value>
+        </Data>
+        <Data name="coord_97y">
+          <value>2752213.155</value>
+        </Data>
+        <Data name="緯度">
+          <value>24.877527</value>
+        </Data>
+        <Data name="經度">
+          <value>121.046592</value>
+        </Data>
+        <Data name="閥栓種類">
+          <value>窨井</value>
+        </Data>
+      </ExtendedData>
+      <Point>
+        <coordinates>
+          121.046592,24.877527,0
+        </coordinates>
+      </Point>
+    </Placemark>
+    <Placemark>
+      <name>M4270</name>
+      <description>識別碼: 0343006254475220200002&lt;br&gt;地址: 新竹縣湖口鄉八德路一段621號西南側&lt;br&gt;備註: 人孔&lt;br&gt;coord_97x: 254,693.789&lt;br&gt;coord_97y: 2,752,214.279&lt;br&gt;緯度: 24.877537&lt;br&gt;經度: 121.046455&lt;br&gt;閥栓種類: 窨井</description>
+      <styleUrl>#icon-1899-FFEA00</styleUrl>
+      <ExtendedData>
+        <Data name="識別碼">
+          <value>0343006254475220200002</value>
+        </Data>
+        <Data name="地址">
+          <value>新竹縣湖口鄉八德路一段621號西南側</value>
+        </Data>
+        <Data name="備註">
+          <value>人孔</value>
+        </Data>
+        <Data name="coord_97x">
+          <value>254693.789</value>
+        </Data>
+        <Data name="coord_97y">
+          <value>2752214.279</value>
+        </Data>
+        <Data name="緯度">
+          <value>24.877537</value>
+        </Data>
+        <Data name="經度">
+          <value>121.046455</value>
+        </Data>
+        <Data name="閥栓種類">
+          <value>窨井</value>
+        </Data>
+      </ExtendedData>
+      <Point>
+        <coordinates>
+          121.046455,24.877537,0
+        </coordinates>
+      </Point>
+    </Placemark>
+    <Placemark>
+      <name>M4272</name>
+      <description>識別碼: 0343006253675220200002&lt;br&gt;地址: 新竹縣湖口鄉八德路一段與德美路口&lt;br&gt;備註: 人孔&lt;br&gt;coord_97x: 254,328.018&lt;br&gt;coord_97y: 2,752,293.467&lt;br&gt;緯度: 24.878253&lt;br&gt;經度: 121.042835&lt;br&gt;閥栓種類: 窨井</description>
+      <styleUrl>#icon-1899-FFEA00</styleUrl>
+      <ExtendedData>
+        <Data name="識別碼">
+          <value>0343006253675220200002</value>
+        </Data>
+        <Data name="地址">
+          <value>新竹縣湖口鄉八德路一段與德美路口</value>
+        </Data>
+        <Data name="備註">
+          <value>人孔</value>
+        </Data>
+        <Data name="coord_97x">
+          <value>254328.018</value>
+        </Data>
+        <Data name="coord_97y">
+          <value>2752293.467</value>
+        </Data>
+        <Data name="緯度">
+          <value>24.878253</value>
+        </Data>
+        <Data name="經度">
+          <value>121.042835</value>
+        </Data>
+        <Data name="閥栓種類">
+          <value>窨井</value>
+        </Data>
+      </ExtendedData>
+      <Point>
+        <coordinates>
+          121.042835,24.878253,0
+        </coordinates>
+      </Point>
+    </Placemark>
+    <Placemark>
+      <name>M4273</name>
+      <description>識別碼: 0343006252875220200001&lt;br&gt;地址: 新竹縣湖口鄉八德路一段與湖口台1線高架橋口&lt;br&gt;備註: 人孔&lt;br&gt;coord_97x: 253,575.081&lt;br&gt;coord_97y: 2,752,560.179&lt;br&gt;緯度: 24.880663&lt;br&gt;經度: 121.035384&lt;br&gt;閥栓種類: 窨井</description>
+      <styleUrl>#icon-1899-FFEA00</styleUrl>
+      <ExtendedData>
+        <Data name="識別碼">
+          <value>0343006252875220200001</value>
+        </Data>
+        <Data name="地址">
+          <value>新竹縣湖口鄉八德路一段與湖口台1線高架橋口</value>
+        </Data>
+        <Data name="備註">
+          <value>人孔</value>
+        </Data>
+        <Data name="coord_97x">
+          <value>253575.081</value>
+        </Data>
+        <Data name="coord_97y">
+          <value>2752560.179</value>
+        </Data>
+        <Data name="緯度">
+          <value>24.880663</value>
+        </Data>
+        <Data name="經度">
+          <value>121.035384</value>
+        </Data>
+        <Data name="閥栓種類">
+          <value>窨井</value>
+        </Data>
+      </ExtendedData>
+      <Point>
+        <coordinates>
+          121.035384,24.880663,0
+        </coordinates>
+      </Point>
+    </Placemark>
+    <Placemark>
+      <name>M4274</name>
+      <description>識別碼: 0343006252875220200002&lt;br&gt;地址: 新竹縣湖口鄉八德路一段235號&lt;br&gt;備註: 人孔&lt;br&gt;coord_97x: 253,195.3&lt;br&gt;coord_97y: 2,752,697.43&lt;br&gt;緯度: 24.881903&lt;br&gt;經度: 121.031625&lt;br&gt;閥栓種類: 窨井</description>
+      <styleUrl>#icon-1899-FFEA00</styleUrl>
+      <ExtendedData>
+        <Data name="識別碼">
+          <value>0343006252875220200002</value>
+        </Data>
+        <Data name="地址">
+          <value>新竹縣湖口鄉八德路一段235號</value>
+        </Data>
+        <Data name="備註">
+          <value>人孔</value>
+        </Data>
+        <Data name="coord_97x">
+          <value>253195.3</value>
+        </Data>
+        <Data name="coord_97y">
+          <value>2752697.43</value>
+        </Data>
+        <Data name="緯度">
+          <value>24.881903</value>
+        </Data>
+        <Data name="經度">
+          <value>121.031625</value>
+        </Data>
+        <Data name="閥栓種類">
+          <value>窨井</value>
+        </Data>
+      </ExtendedData>
+      <Point>
+        <coordinates>
+          121.031625,24.881903,0
+        </coordinates>
+      </Point>
+    </Placemark>
+    <Placemark>
+      <name>M4280</name>
+      <description>識別碼: 0343006251275280200032&lt;br&gt;地址: 新竹縣湖口鄉山崎陸橋1107號&lt;br&gt;備註: 人孔&lt;br&gt;coord_97x: 251,741.16&lt;br&gt;coord_97y: 2,753,228.003&lt;br&gt;緯度: 24.886696&lt;br&gt;經度: 121.017234&lt;br&gt;閥栓種類: 窨井</description>
+      <styleUrl>#icon-1899-FFEA00</styleUrl>
+      <ExtendedData>
+        <Data name="識別碼">
+          <value>0343006251275280200032</value>
+        </Data>
+        <Data name="地址">
+          <value>新竹縣湖口鄉山崎陸橋1107號</value>
+        </Data>
+        <Data name="備註">
+          <value>人孔</value>
+        </Data>
+        <Data name="coord_97x">
+          <value>251741.16</value>
+        </Data>
+        <Data name="coord_97y">
+          <value>2753228.003</value>
+        </Data>
+        <Data name="緯度">
+          <value>24.886696</value>
+        </Data>
+        <Data name="經度">
+          <value>121.017234</value>
+        </Data>
+        <Data name="閥栓種類">
+          <value>窨井</value>
+        </Data>
+      </ExtendedData>
+      <Point>
+        <coordinates>
+          121.017234,24.886696,0
+        </coordinates>
+      </Point>
+    </Placemark>
+    <Placemark>
+      <name>M4278</name>
+      <description>識別碼: 0343006251275280200030&lt;br&gt;地址: 新竹縣湖口鄉八德路一段山崎陸橋與縱貫鐵路口&lt;br&gt;備註: 人孔&lt;br&gt;coord_97x: 251,889.332&lt;br&gt;coord_97y: 2,753,207.917&lt;br&gt;緯度: 24.886514&lt;br&gt;經度: 121.0187&lt;br&gt;閥栓種類: 窨井</description>
+      <styleUrl>#icon-1899-FFEA00</styleUrl>
+      <ExtendedData>
+        <Data name="識別碼">
+          <value>0343006251275280200030</value>
+        </Data>
+        <Data name="地址">
+          <value>新竹縣湖口鄉八德路一段山崎陸橋與縱貫鐵路口</value>
+        </Data>
+        <Data name="備註">
+          <value>人孔</value>
+        </Data>
+        <Data name="coord_97x">
+          <value>251889.332</value>
+        </Data>
+        <Data name="coord_97y">
+          <value>2753207.917</value>
+        </Data>
+        <Data name="緯度">
+          <value>24.886514</value>
+        </Data>
+        <Data name="經度">
+          <value>121.0187</value>
+        </Data>
+        <Data name="閥栓種類">
+          <value>窨井</value>
+        </Data>
+      </ExtendedData>
+      <Point>
+        <coordinates>
+          121.0187,24.886514,0
+        </coordinates>
+      </Point>
+    </Placemark>
+    <Placemark>
+      <name>M4305</name>
+      <description>識別碼: 0343006250475220200018&lt;br&gt;地址: 新竹縣縱貫公路636號&lt;br&gt;備註: 人孔 窨井&lt;br&gt;coord_97x: 250,776.854&lt;br&gt;coord_97y: 2,752,521.065&lt;br&gt;緯度: 24.880314&lt;br&gt;經度: 121.007689&lt;br&gt;閥栓種類: 窨井</description>
+      <styleUrl>#icon-1899-FFEA00</styleUrl>
+      <ExtendedData>
+        <Data name="識別碼">
+          <value>0343006250475220200018</value>
+        </Data>
+        <Data name="地址">
+          <value>新竹縣縱貫公路636號</value>
+        </Data>
+        <Data name="備註">
+          <value>人孔 窨井</value>
+        </Data>
+        <Data name="coord_97x">
+          <value>250776.854</value>
+        </Data>
+        <Data name="coord_97y">
+          <value>2752521.065</value>
+        </Data>
+        <Data name="緯度">
+          <value>24.880314</value>
+        </Data>
+        <Data name="經度">
+          <value>121.007689</value>
+        </Data>
+        <Data name="閥栓種類">
+          <value>窨井</value>
+        </Data>
+      </ExtendedData>
+      <Point>
+        <coordinates>
+          121.007689,24.880314,0
+        </coordinates>
+      </Point>
+    </Placemark>
+    <Placemark>
+      <name>M4314</name>
+      <description>識別碼: 0343006248875040200007&lt;br&gt;地址: 新竹縣新豐鄉新興路66之2號&lt;br&gt;備註: 人孔 窨井&lt;br&gt;coord_97x: 249,286.416&lt;br&gt;coord_97y: 2,750,994.502&lt;br&gt;緯度: 24.866531&lt;br&gt;經度: 120.992938&lt;br&gt;閥栓種類: 窨井</description>
+      <styleUrl>#icon-1899-FFEA00</styleUrl>
+      <ExtendedData>
+        <Data name="識別碼">
+          <value>0343006248875040200007</value>
+        </Data>
+        <Data name="地址">
+          <value>新竹縣新豐鄉新興路66之2號</value>
+        </Data>
+        <Data name="備註">
+          <value>人孔 窨井</value>
+        </Data>
+        <Data name="coord_97x">
+          <value>249286.416</value>
+        </Data>
+        <Data name="coord_97y">
+          <value>2750994.502</value>
+        </Data>
+        <Data name="緯度">
+          <value>24.866531</value>
+        </Data>
+        <Data name="經度">
+          <value>120.992938</value>
+        </Data>
+        <Data name="閥栓種類">
+          <value>窨井</value>
+        </Data>
+      </ExtendedData>
+      <Point>
+        <coordinates>
+          120.992938,24.866531,0
+        </coordinates>
+      </Point>
+    </Placemark>
+    <Placemark>
+      <name>M4304</name>
+      <description>識別碼: 0343006250475220200017&lt;br&gt;地址: 新竹縣湖口鄉縱貫公路768號&lt;br&gt;備註: &lt;br&gt;coord_97x: 251,052.33&lt;br&gt;coord_97y: 2,752,752.499&lt;br&gt;緯度: 24.882403&lt;br&gt;經度: 121.010415&lt;br&gt;閥栓種類: 窨井</description>
+      <styleUrl>#icon-1899-FFEA00</styleUrl>
+      <ExtendedData>
+        <Data name="識別碼">
+          <value>0343006250475220200017</value>
+        </Data>
+        <Data name="地址">
+          <value>新竹縣湖口鄉縱貫公路768號</value>
+        </Data>
+        <Data name="備註">
+          <value />
+        </Data>
+        <Data name="coord_97x">
+          <value>251052.33</value>
+        </Data>
+        <Data name="coord_97y">
+          <value>2752752.499</value>
+        </Data>
+        <Data name="緯度">
+          <value>24.882403</value>
+        </Data>
+        <Data name="經度">
+          <value>121.010415</value>
+        </Data>
+        <Data name="閥栓種類">
+          <value>窨井</value>
+        </Data>
+      </ExtendedData>
+      <Point>
+        <coordinates>
+          121.010415,24.882403,0
+        </coordinates>
+      </Point>
+    </Placemark>
+    <Placemark>
+      <name>M4509</name>
+      <description>識別碼: 0343006252075100200006&lt;br&gt;地址: 新竹縣湖口鄉光復東路35號&lt;br&gt;備註: &lt;br&gt;coord_97x: 252,728.264&lt;br&gt;coord_97y: 2,751,309.615&lt;br&gt;緯度: 24.869374&lt;br&gt;經度: 121.027&lt;br&gt;閥栓種類: 窨井</description>
+      <styleUrl>#icon-1899-FFEA00</styleUrl>
+      <ExtendedData>
+        <Data name="識別碼">
+          <value>0343006252075100200006</value>
+        </Data>
+        <Data name="地址">
+          <value>新竹縣湖口鄉光復東路35號</value>
+        </Data>
+        <Data name="備註">
+          <value />
+        </Data>
+        <Data name="coord_97x">
+          <value>252728.264</value>
+        </Data>
+        <Data name="coord_97y">
+          <value>2751309.615</value>
+        </Data>
+        <Data name="緯度">
+          <value>24.869374</value>
+        </Data>
+        <Data name="經度">
+          <value>121.027</value>
+        </Data>
+        <Data name="閥栓種類">
+          <value>窨井</value>
+        </Data>
+      </ExtendedData>
+      <Point>
+        <coordinates>
+          121.027,24.869374,0
+        </coordinates>
+      </Point>
+    </Placemark>
+    <Placemark>
+      <name>M4510</name>
+      <description>識別碼: 0343006250475100200005&lt;br&gt;地址: 新竹縣湖口鄉中華路22號&lt;br&gt;備註: &lt;br&gt;coord_97x: 250,974.505&lt;br&gt;coord_97y: 2,751,568.083&lt;br&gt;緯度: 24.87171&lt;br&gt;經度: 121.009644&lt;br&gt;閥栓種類: 窨井</description>
+      <styleUrl>#icon-1899-FFEA00</styleUrl>
+      <ExtendedData>
+        <Data name="識別碼">
+          <value>0343006250475100200005</value>
+        </Data>
+        <Data name="地址">
+          <value>新竹縣湖口鄉中華路22號</value>
+        </Data>
+        <Data name="備註">
+          <value />
+        </Data>
+        <Data name="coord_97x">
+          <value>250974.505</value>
+        </Data>
+        <Data name="coord_97y">
+          <value>2751568.083</value>
+        </Data>
+        <Data name="緯度">
+          <value>24.87171</value>
+        </Data>
+        <Data name="經度">
+          <value>121.009644</value>
+        </Data>
+        <Data name="閥栓種類">
+          <value>窨井</value>
+        </Data>
+      </ExtendedData>
+      <Point>
+        <coordinates>
+          121.009644,24.87171,0
+        </coordinates>
+      </Point>
+    </Placemark>
+    <Placemark>
+      <name>M4522</name>
+      <description>識別碼: 0343006250475100200006&lt;br&gt;地址: 新竹縣湖口鄉中華路22號新竹工業區管理中心&lt;br&gt;備註: &lt;br&gt;coord_97x: 250,974.505&lt;br&gt;coord_97y: 2,751,568.083&lt;br&gt;緯度: 24.87171&lt;br&gt;經度: 121.009644&lt;br&gt;閥栓種類: 窨井</description>
+      <styleUrl>#icon-1899-FFEA00</styleUrl>
+      <ExtendedData>
+        <Data name="識別碼">
+          <value>0343006250475100200006</value>
+        </Data>
+        <Data name="地址">
+          <value>新竹縣湖口鄉中華路22號新竹工業區管理中心</value>
+        </Data>
+        <Data name="備註">
+          <value />
+        </Data>
+        <Data name="coord_97x">
+          <value>250974.505</value>
+        </Data>
+        <Data name="coord_97y">
+          <value>2751568.083</value>
+        </Data>
+        <Data name="緯度">
+          <value>24.87171</value>
+        </Data>
+        <Data name="經度">
+          <value>121.009644</value>
+        </Data>
+        <Data name="閥栓種類">
+          <value>窨井</value>
+        </Data>
+      </ExtendedData>
+      <Point>
+        <coordinates>
+          121.009644,24.87171,0
+        </coordinates>
+      </Point>
+    </Placemark>
+    <Placemark>
+      <name>M72</name>
+      <description>識別碼: 0343006248875100210002&lt;br&gt;地址: 新竹縣湖口鄉三民一路1號&lt;br&gt;備註: 水量計窨窨井蓋&lt;br&gt;coord_97x: 249,561.276&lt;br&gt;coord_97y: 2,751,156.212&lt;br&gt;緯度: 24.867992&lt;br&gt;經度: 120.995658&lt;br&gt;閥栓種類: 窨井</description>
+      <styleUrl>#icon-1899-FFEA00</styleUrl>
+      <ExtendedData>
+        <Data name="識別碼">
+          <value>0343006248875100210002</value>
+        </Data>
+        <Data name="地址">
+          <value>新竹縣湖口鄉三民一路1號</value>
+        </Data>
+        <Data name="備註">
+          <value>水量計窨窨井蓋</value>
+        </Data>
+        <Data name="coord_97x">
+          <value>249561.276</value>
+        </Data>
+        <Data name="coord_97y">
+          <value>2751156.212</value>
+        </Data>
+        <Data name="緯度">
+          <value>24.867992</value>
+        </Data>
+        <Data name="經度">
+          <value>120.995658</value>
+        </Data>
+        <Data name="閥栓種類">
+          <value>窨井</value>
+        </Data>
+      </ExtendedData>
+      <Point>
+        <coordinates>
+          120.995658,24.867992,0
+        </coordinates>
+      </Point>
+    </Placemark>
+    <Placemark>
+      <name>M110</name>
+      <description>識別碼: 0343006248875100210003&lt;br&gt;地址: 新竹縣湖口鄉三民一路1號&lt;br&gt;備註: 電動閥窨窨井蓋&lt;br&gt;coord_97x: 249,563.557&lt;br&gt;coord_97y: 2,751,161.687&lt;br&gt;緯度: 24.868041&lt;br&gt;經度: 120.995681&lt;br&gt;閥栓種類: 窨井</description>
+      <styleUrl>#icon-1899-FFEA00</styleUrl>
+      <ExtendedData>
+        <Data name="識別碼">
+          <value>0343006248875100210003</value>
+        </Data>
+        <Data name="地址">
+          <value>新竹縣湖口鄉三民一路1號</value>
+        </Data>
+        <Data name="備註">
+          <value>電動閥窨窨井蓋</value>
+        </Data>
+        <Data name="coord_97x">
+          <value>249563.557</value>
+        </Data>
+        <Data name="coord_97y">
+          <value>2751161.687</value>
+        </Data>
+        <Data name="緯度">
+          <value>24.868041</value>
+        </Data>
+        <Data name="經度">
+          <value>120.995681</value>
+        </Data>
+        <Data name="閥栓種類">
+          <value>窨井</value>
+        </Data>
+      </ExtendedData>
+      <Point>
+        <coordinates>
+          120.995681,24.868041,0
+        </coordinates>
+      </Point>
+    </Placemark>
+    <Placemark>
+      <name>M4520</name>
+      <description>識別碼: 0343006248875040200015&lt;br&gt;地址: 新竹縣湖口鄉民安街26號&lt;br&gt;備註: 流量計窨窨井蓋&lt;br&gt;coord_97x: 249,164.486&lt;br&gt;coord_97y: 2,750,878.167&lt;br&gt;緯度: 24.865481&lt;br&gt;經度: 120.991732&lt;br&gt;閥栓種類: 窨井</description>
+      <styleUrl>#icon-1899-FFEA00</styleUrl>
+      <ExtendedData>
+        <Data name="識別碼">
+          <value>0343006248875040200015</value>
+        </Data>
+        <Data name="地址">
+          <value>新竹縣湖口鄉民安街26號</value>
+        </Data>
+        <Data name="備註">
+          <value>流量計窨窨井蓋</value>
+        </Data>
+        <Data name="coord_97x">
+          <value>249164.486</value>
+        </Data>
+        <Data name="coord_97y">
+          <value>2750878.167</value>
+        </Data>
+        <Data name="緯度">
+          <value>24.865481</value>
+        </Data>
+        <Data name="經度">
+          <value>120.991732</value>
+        </Data>
+        <Data name="閥栓種類">
+          <value>窨井</value>
+        </Data>
+      </ExtendedData>
+      <Point>
+        <coordinates>
+          120.991732,24.865481,0
+        </coordinates>
+      </Point>
+    </Placemark>
+    <Placemark>
+      <name>M4302</name>
+      <description>識別碼: 0343006250475280200011&lt;br&gt;地址: 新竹縣新豐鄉縱貫公路780號在加油站前面&lt;br&gt;備註: 人孔&lt;br&gt;coord_97x: 251,120.544&lt;br&gt;coord_97y: 2,752,803.938&lt;br&gt;緯度: 24.882868&lt;br&gt;經度: 121.011091&lt;br&gt;閥栓種類: 窨井</description>
+      <styleUrl>#icon-1899-FFEA00</styleUrl>
+      <ExtendedData>
+        <Data name="識別碼">
+          <value>0343006250475280200011</value>
+        </Data>
+        <Data name="地址">
+          <value>新竹縣新豐鄉縱貫公路780號在加油站前面</value>
+        </Data>
+        <Data name="備註">
+          <value>人孔</value>
+        </Data>
+        <Data name="coord_97x">
+          <value>251120.544</value>
+        </Data>
+        <Data name="coord_97y">
+          <value>2752803.938</value>
+        </Data>
+        <Data name="緯度">
+          <value>24.882868</value>
+        </Data>
+        <Data name="經度">
+          <value>121.011091</value>
+        </Data>
+        <Data name="閥栓種類">
+          <value>窨井</value>
+        </Data>
+      </ExtendedData>
+      <Point>
+        <coordinates>
+          121.011091,24.882868,0
+        </coordinates>
+      </Point>
+    </Placemark>
+    <Placemark>
+      <name>M4404</name>
+      <description>識別碼: 0343006256875280200031&lt;br&gt;地址: 新竹縣湖口鄉八德路二段與祥喜路路口&lt;br&gt;備註: &lt;br&gt;coord_97x: 257,411.542&lt;br&gt;coord_97y: 2,752,864.681&lt;br&gt;緯度: 24.883399&lt;br&gt;經度: 121.073356&lt;br&gt;閥栓種類: 窨井</description>
+      <styleUrl>#icon-1899-FFEA00</styleUrl>
+      <ExtendedData>
+        <Data name="識別碼">
+          <value>0343006256875280200031</value>
+        </Data>
+        <Data name="地址">
+          <value>新竹縣湖口鄉八德路二段與祥喜路路口</value>
+        </Data>
+        <Data name="備註">
+          <value />
+        </Data>
+        <Data name="coord_97x">
+          <value>257411.542</value>
+        </Data>
+        <Data name="coord_97y">
+          <value>2752864.681</value>
+        </Data>
+        <Data name="緯度">
+          <value>24.883399</value>
+        </Data>
+        <Data name="經度">
+          <value>121.073356</value>
+        </Data>
+        <Data name="閥栓種類">
+          <value>窨井</value>
+        </Data>
+      </ExtendedData>
+      <Point>
+        <coordinates>
+          121.073356,24.883399,0
+        </coordinates>
+      </Point>
+    </Placemark>
+    <Placemark>
+      <name>M4271</name>
+      <description>識別碼: 0343006253675220200001&lt;br&gt;地址: 新竹縣湖口鄉八德路一段與德美路口&lt;br&gt;備註: &lt;br&gt;coord_97x: 254,336.175&lt;br&gt;coord_97y: 2,752,290.535&lt;br&gt;緯度: 24.878227&lt;br&gt;經度: 121.042916&lt;br&gt;閥栓種類: 窨井</description>
+      <styleUrl>#icon-1899-FFEA00</styleUrl>
+      <ExtendedData>
+        <Data name="識別碼">
+          <value>0343006253675220200001</value>
+        </Data>
+        <Data name="地址">
+          <value>新竹縣湖口鄉八德路一段與德美路口</value>
+        </Data>
+        <Data name="備註">
+          <value />
+        </Data>
+        <Data name="coord_97x">
+          <value>254336.175</value>
+        </Data>
+        <Data name="coord_97y">
+          <value>2752290.535</value>
+        </Data>
+        <Data name="緯度">
+          <value>24.878227</value>
+        </Data>
+        <Data name="經度">
+          <value>121.042916</value>
+        </Data>
+        <Data name="閥栓種類">
+          <value>窨井</value>
+        </Data>
+      </ExtendedData>
+      <Point>
+        <coordinates>
+          121.042916,24.878227,0
+        </coordinates>
+      </Point>
+    </Placemark>
+    <Placemark>
+      <name>M38</name>
+      <description>識別碼: 0343006248875100210001&lt;br&gt;地址: 新豐鄉自強路附近&lt;br&gt;備註: &lt;br&gt;coord_97x: 249,580.99&lt;br&gt;coord_97y: 2,751,186.08&lt;br&gt;緯度: 24.868261&lt;br&gt;經度: 120.995853&lt;br&gt;閥栓種類: 窨井</description>
+      <styleUrl>#icon-1899-FFEA00</styleUrl>
+      <ExtendedData>
+        <Data name="識別碼">
+          <value>0343006248875100210001</value>
+        </Data>
+        <Data name="地址">
+          <value>新豐鄉自強路附近</value>
+        </Data>
+        <Data name="備註">
+          <value />
+        </Data>
+        <Data name="coord_97x">
+          <value>249580.99</value>
+        </Data>
+        <Data name="coord_97y">
+          <value>2751186.08</value>
+        </Data>
+        <Data name="緯度">
+          <value>24.868261</value>
+        </Data>
+        <Data name="經度">
+          <value>120.995853</value>
+        </Data>
+        <Data name="閥栓種類">
+          <value>窨井</value>
+        </Data>
+      </ExtendedData>
+      <Point>
+        <coordinates>
+          120.995853,24.868261,0
+        </coordinates>
+      </Point>
+    </Placemark>
+    <Placemark>
+      <name>M4275</name>
+      <description>識別碼: 0343006252075280200001&lt;br&gt;地址: 新竹縣湖口鄉八德路一段與八德路一段3巷口&lt;br&gt;備註: &lt;br&gt;coord_97x: 252,491.51&lt;br&gt;coord_97y: 2,753,010.967&lt;br&gt;緯度: 24.884735&lt;br&gt;經度: 121.02466&lt;br&gt;閥栓種類: 窨井</description>
+      <styleUrl>#icon-1899-FFEA00</styleUrl>
+      <ExtendedData>
+        <Data name="識別碼">
+          <value>0343006252075280200001</value>
+        </Data>
+        <Data name="地址">
+          <value>新竹縣湖口鄉八德路一段與八德路一段3巷口</value>
+        </Data>
+        <Data name="備註">
+          <value />
+        </Data>
+        <Data name="coord_97x">
+          <value>252491.51</value>
+        </Data>
+        <Data name="coord_97y">
+          <value>2753010.967</value>
+        </Data>
+        <Data name="緯度">
+          <value>24.884735</value>
+        </Data>
+        <Data name="經度">
+          <value>121.02466</value>
+        </Data>
+        <Data name="閥栓種類">
+          <value>窨井</value>
+        </Data>
+      </ExtendedData>
+      <Point>
+        <coordinates>
+          121.02466,24.884735,0
+        </coordinates>
+      </Point>
+    </Placemark>
+  </Document></kml>

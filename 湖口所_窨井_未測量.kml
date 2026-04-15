@@ -1,0 +1,726 @@
+<?xml version='1.0' encoding='utf-8'?>
+<ns0:kml xmlns:ns0="http://www.opengis.net/kml/2.2">
+  <ns0:Document>
+    <ns0:name>窨井</ns0:name>
+    <ns0:Style id="icon-1899-0288D1-normal">
+      <ns0:IconStyle>
+        <ns0:color>ffd18802</ns0:color>
+        <ns0:scale>1</ns0:scale>
+        <ns0:Icon>
+          <ns0:href>https://www.gstatic.com/mapspro/images/stock/503-wht-blank_maps.png</ns0:href>
+        </ns0:Icon>
+        <ns0:hotSpot x="32" xunits="pixels" y="64" yunits="insetPixels" />
+      </ns0:IconStyle>
+      <ns0:LabelStyle>
+        <ns0:scale>0</ns0:scale>
+      </ns0:LabelStyle>
+    </ns0:Style>
+    <ns0:Style id="icon-1899-0288D1-highlight">
+      <ns0:IconStyle>
+        <ns0:color>ffd18802</ns0:color>
+        <ns0:scale>1</ns0:scale>
+        <ns0:Icon>
+          <ns0:href>https://www.gstatic.com/mapspro/images/stock/503-wht-blank_maps.png</ns0:href>
+        </ns0:Icon>
+        <ns0:hotSpot x="32" xunits="pixels" y="64" yunits="insetPixels" />
+      </ns0:IconStyle>
+      <ns0:LabelStyle>
+        <ns0:scale>1</ns0:scale>
+      </ns0:LabelStyle>
+    </ns0:Style>
+    <ns0:StyleMap id="icon-1899-0288D1">
+      <ns0:Pair>
+        <ns0:key>normal</ns0:key>
+        <ns0:styleUrl>#icon-1899-0288D1-normal</ns0:styleUrl>
+      </ns0:Pair>
+      <ns0:Pair>
+        <ns0:key>highlight</ns0:key>
+        <ns0:styleUrl>#icon-1899-0288D1-highlight</ns0:styleUrl>
+      </ns0:Pair>
+    </ns0:StyleMap>
+    <ns0:Placemark>
+      <ns0:name>M30</ns0:name>
+      <ns0:description>unific_id: 0343006252075040210006&lt;br&gt;bury_loc: 勝利營區&lt;br&gt;remark: &lt;br&gt;coord_97x: 252,696.074&lt;br&gt;coord_97y: 2,750,599.507&lt;br&gt;經度: 121.02668&lt;br&gt;緯度: 24.862963&lt;br&gt;閥栓種類: 窨井</ns0:description>
+      <ns0:styleUrl>#icon-1899-0288D1</ns0:styleUrl>
+      <ns0:ExtendedData>
+        <ns0:Data name="unific_id">
+          <ns0:value>0343006252075040210006</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="bury_loc">
+          <ns0:value>勝利營區</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="remark">
+          <ns0:value />
+        </ns0:Data>
+        <ns0:Data name="coord_97x">
+          <ns0:value>252696.074</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="coord_97y">
+          <ns0:value>2750599.507</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="經度">
+          <ns0:value>121.02668</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="緯度">
+          <ns0:value>24.862963</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="閥栓種類">
+          <ns0:value>窨井</ns0:value>
+        </ns0:Data>
+      </ns0:ExtendedData>
+      <ns0:Point>
+        <ns0:coordinates>
+          121.02668,24.862963,0
+        </ns0:coordinates>
+      </ns0:Point>
+    </ns0:Placemark>
+    <ns0:Placemark>
+      <ns0:name>M19</ns0:name>
+      <ns0:description>unific_id: 0343006253675520200001&lt;br&gt;bury_loc: 湖口鄉成功路103號旁&lt;br&gt;remark: &lt;br&gt;coord_97x: 254,399.029&lt;br&gt;coord_97y: 2,755,269.249&lt;br&gt;經度: 121.043547&lt;br&gt;緯度: 24.90512&lt;br&gt;閥栓種類: 窨井</ns0:description>
+      <ns0:styleUrl>#icon-1899-0288D1</ns0:styleUrl>
+      <ns0:ExtendedData>
+        <ns0:Data name="unific_id">
+          <ns0:value>0343006253675520200001</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="bury_loc">
+          <ns0:value>湖口鄉成功路103號旁</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="remark">
+          <ns0:value />
+        </ns0:Data>
+        <ns0:Data name="coord_97x">
+          <ns0:value>254399.029</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="coord_97y">
+          <ns0:value>2755269.249</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="經度">
+          <ns0:value>121.043547</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="緯度">
+          <ns0:value>24.90512</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="閥栓種類">
+          <ns0:value>窨井</ns0:value>
+        </ns0:Data>
+      </ns0:ExtendedData>
+      <ns0:Point>
+        <ns0:coordinates>
+          121.043547,24.90512,0
+        </ns0:coordinates>
+      </ns0:Point>
+    </ns0:Placemark>
+    <ns0:Placemark>
+      <ns0:name>M4526</ns0:name>
+      <ns0:description>unific_id: 0343006256875220200001&lt;br&gt;bury_loc: 八德路二段301號(縱貫公路)&lt;br&gt;remark: &lt;br&gt;coord_97x: 256,805.454&lt;br&gt;coord_97y: 2,752,510.7&lt;br&gt;經度: 121.067356&lt;br&gt;緯度: 24.880206&lt;br&gt;閥栓種類: 窨井</ns0:description>
+      <ns0:styleUrl>#icon-1899-0288D1</ns0:styleUrl>
+      <ns0:ExtendedData>
+        <ns0:Data name="unific_id">
+          <ns0:value>0343006256875220200001</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="bury_loc">
+          <ns0:value>八德路二段301號(縱貫公路)</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="remark">
+          <ns0:value />
+        </ns0:Data>
+        <ns0:Data name="coord_97x">
+          <ns0:value>256805.454</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="coord_97y">
+          <ns0:value>2752510.7</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="經度">
+          <ns0:value>121.067356</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="緯度">
+          <ns0:value>24.880206</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="閥栓種類">
+          <ns0:value>窨井</ns0:value>
+        </ns0:Data>
+      </ns0:ExtendedData>
+      <ns0:Point>
+        <ns0:coordinates>
+          121.067356,24.880206,0
+        </ns0:coordinates>
+      </ns0:Point>
+    </ns0:Placemark>
+    <ns0:Placemark>
+      <ns0:name>M50</ns0:name>
+      <ns0:description>unific_id: 0343006248075640200001&lt;br&gt;bury_loc: &lt;br&gt;remark: &lt;br&gt;coord_97x: 248,596.92&lt;br&gt;coord_97y: 2,756,688.44&lt;br&gt;經度: 120.986109&lt;br&gt;緯度: 24.917939&lt;br&gt;閥栓種類: 窨井</ns0:description>
+      <ns0:styleUrl>#icon-1899-0288D1</ns0:styleUrl>
+      <ns0:ExtendedData>
+        <ns0:Data name="unific_id">
+          <ns0:value>0343006248075640200001</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="bury_loc">
+          <ns0:value />
+        </ns0:Data>
+        <ns0:Data name="remark">
+          <ns0:value />
+        </ns0:Data>
+        <ns0:Data name="coord_97x">
+          <ns0:value>248596.92</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="coord_97y">
+          <ns0:value>2756688.44</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="經度">
+          <ns0:value>120.986109</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="緯度">
+          <ns0:value>24.917939</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="閥栓種類">
+          <ns0:value>窨井</ns0:value>
+        </ns0:Data>
+      </ns0:ExtendedData>
+      <ns0:Point>
+        <ns0:coordinates>
+          120.986109,24.917939,0
+        </ns0:coordinates>
+      </ns0:Point>
+    </ns0:Placemark>
+    <ns0:Placemark>
+      <ns0:name>M49</ns0:name>
+      <ns0:description>unific_id: 0343006252075040200001&lt;br&gt;bury_loc: 新工加壓站&lt;br&gt;remark: &lt;br&gt;coord_97x: 252,303.92&lt;br&gt;coord_97y: 2,750,859.346&lt;br&gt;經度: 121.0228&lt;br&gt;緯度: 24.86531&lt;br&gt;閥栓種類: 窨井</ns0:description>
+      <ns0:styleUrl>#icon-1899-0288D1</ns0:styleUrl>
+      <ns0:ExtendedData>
+        <ns0:Data name="unific_id">
+          <ns0:value>0343006252075040200001</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="bury_loc">
+          <ns0:value>新工加壓站</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="remark">
+          <ns0:value />
+        </ns0:Data>
+        <ns0:Data name="coord_97x">
+          <ns0:value>252303.92</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="coord_97y">
+          <ns0:value>2750859.346</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="經度">
+          <ns0:value>121.0228</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="緯度">
+          <ns0:value>24.86531</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="閥栓種類">
+          <ns0:value>窨井</ns0:value>
+        </ns0:Data>
+      </ns0:ExtendedData>
+      <ns0:Point>
+        <ns0:coordinates>
+          121.0228,24.86531,0
+        </ns0:coordinates>
+      </ns0:Point>
+    </ns0:Placemark>
+    <ns0:Placemark>
+      <ns0:name>M79</ns0:name>
+      <ns0:description>unific_id: 0343006255275460210001&lt;br&gt;bury_loc: 湖口鄉民生街與民生街388號建物前&lt;br&gt;remark: &lt;br&gt;coord_97x: 255,348.888&lt;br&gt;coord_97y: 2,755,203.175&lt;br&gt;經度: 121.05295&lt;br&gt;緯度: 24.90452&lt;br&gt;閥栓種類: 窨井</ns0:description>
+      <ns0:styleUrl>#icon-1899-0288D1</ns0:styleUrl>
+      <ns0:ExtendedData>
+        <ns0:Data name="unific_id">
+          <ns0:value>0343006255275460210001</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="bury_loc">
+          <ns0:value>湖口鄉民生街與民生街388號建物前</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="remark">
+          <ns0:value />
+        </ns0:Data>
+        <ns0:Data name="coord_97x">
+          <ns0:value>255348.888</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="coord_97y">
+          <ns0:value>2755203.175</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="經度">
+          <ns0:value>121.05295</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="緯度">
+          <ns0:value>24.90452</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="閥栓種類">
+          <ns0:value>窨井</ns0:value>
+        </ns0:Data>
+      </ns0:ExtendedData>
+      <ns0:Point>
+        <ns0:coordinates>
+          121.05295,24.90452,0
+        </ns0:coordinates>
+      </ns0:Point>
+    </ns0:Placemark>
+    <ns0:Placemark>
+      <ns0:name>M3601</ns0:name>
+      <ns0:description>unific_id: 0343006248875280210024&lt;br&gt;bury_loc: 榮華街88巷1弄42號前&lt;br&gt;remark: &lt;br&gt;coord_97x: 249,163.672&lt;br&gt;coord_97y: 2,752,968.898&lt;br&gt;經度: 120.991722&lt;br&gt;緯度: 24.884357&lt;br&gt;閥栓種類: 窨井</ns0:description>
+      <ns0:styleUrl>#icon-1899-0288D1</ns0:styleUrl>
+      <ns0:ExtendedData>
+        <ns0:Data name="unific_id">
+          <ns0:value>0343006248875280210024</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="bury_loc">
+          <ns0:value>榮華街88巷1弄42號前</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="remark">
+          <ns0:value />
+        </ns0:Data>
+        <ns0:Data name="coord_97x">
+          <ns0:value>249163.672</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="coord_97y">
+          <ns0:value>2752968.898</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="經度">
+          <ns0:value>120.991722</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="緯度">
+          <ns0:value>24.884357</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="閥栓種類">
+          <ns0:value>窨井</ns0:value>
+        </ns0:Data>
+      </ns0:ExtendedData>
+      <ns0:Point>
+        <ns0:coordinates>
+          120.991722,24.884357,0
+        </ns0:coordinates>
+      </ns0:Point>
+    </ns0:Placemark>
+    <ns0:Placemark>
+      <ns0:name>M4438</ns0:name>
+      <ns0:description>unific_id: 0343006254475160200031&lt;br&gt;bury_loc: 新竹縣湖口鄉八德路一段與鐵騎路口&lt;br&gt;remark: &lt;br&gt;coord_97x: 254,955.779&lt;br&gt;coord_97y: 2,752,177.963&lt;br&gt;經度: 121.049048&lt;br&gt;緯度: 24.877209&lt;br&gt;閥栓種類: 窨井</ns0:description>
+      <ns0:styleUrl>#icon-1899-0288D1</ns0:styleUrl>
+      <ns0:ExtendedData>
+        <ns0:Data name="unific_id">
+          <ns0:value>0343006254475160200031</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="bury_loc">
+          <ns0:value>新竹縣湖口鄉八德路一段與鐵騎路口</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="remark">
+          <ns0:value />
+        </ns0:Data>
+        <ns0:Data name="coord_97x">
+          <ns0:value>254955.779</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="coord_97y">
+          <ns0:value>2752177.963</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="經度">
+          <ns0:value>121.049048</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="緯度">
+          <ns0:value>24.877209</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="閥栓種類">
+          <ns0:value>窨井</ns0:value>
+        </ns0:Data>
+      </ns0:ExtendedData>
+      <ns0:Point>
+        <ns0:coordinates>
+          121.049048,24.877209,0
+        </ns0:coordinates>
+      </ns0:Point>
+    </ns0:Placemark>
+    <ns0:Placemark>
+      <ns0:name>M46</ns0:name>
+      <ns0:description>unific_id: 0343006253675220210001&lt;br&gt;bury_loc: 八德路一段361巷路口右側&lt;br&gt;remark: &lt;br&gt;coord_97x: 253,818.43&lt;br&gt;coord_97y: 2,752,481.53&lt;br&gt;經度: 121.037792&lt;br&gt;緯度: 24.879953&lt;br&gt;閥栓種類: 窨井</ns0:description>
+      <ns0:styleUrl>#icon-1899-0288D1</ns0:styleUrl>
+      <ns0:ExtendedData>
+        <ns0:Data name="unific_id">
+          <ns0:value>0343006253675220210001</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="bury_loc">
+          <ns0:value>八德路一段361巷路口右側</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="remark">
+          <ns0:value />
+        </ns0:Data>
+        <ns0:Data name="coord_97x">
+          <ns0:value>253818.43</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="coord_97y">
+          <ns0:value>2752481.53</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="經度">
+          <ns0:value>121.037792</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="緯度">
+          <ns0:value>24.879953</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="閥栓種類">
+          <ns0:value>窨井</ns0:value>
+        </ns0:Data>
+      </ns0:ExtendedData>
+      <ns0:Point>
+        <ns0:coordinates>
+          121.037792,24.879953,0
+        </ns0:coordinates>
+      </ns0:Point>
+    </ns0:Placemark>
+    <ns0:Placemark>
+      <ns0:name>M4327</ns0:name>
+      <ns0:description>unific_id: 0343006251274980200003&lt;br&gt;bury_loc: 新竹縣湖口鄉光復北路106號對面&lt;br&gt;remark: &lt;br&gt;coord_97x: 251,399.73&lt;br&gt;coord_97y: 2,750,181.194&lt;br&gt;經度: 121.013851&lt;br&gt;緯度: 24.859188&lt;br&gt;閥栓種類: 窨井</ns0:description>
+      <ns0:styleUrl>#icon-1899-0288D1</ns0:styleUrl>
+      <ns0:ExtendedData>
+        <ns0:Data name="unific_id">
+          <ns0:value>0343006251274980200003</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="bury_loc">
+          <ns0:value>新竹縣湖口鄉光復北路106號對面</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="remark">
+          <ns0:value />
+        </ns0:Data>
+        <ns0:Data name="coord_97x">
+          <ns0:value>251399.73</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="coord_97y">
+          <ns0:value>2750181.194</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="經度">
+          <ns0:value>121.013851</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="緯度">
+          <ns0:value>24.859188</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="閥栓種類">
+          <ns0:value>窨井</ns0:value>
+        </ns0:Data>
+      </ns0:ExtendedData>
+      <ns0:Point>
+        <ns0:coordinates>
+          121.013851,24.859188,0
+        </ns0:coordinates>
+      </ns0:Point>
+    </ns0:Placemark>
+    <ns0:Placemark>
+      <ns0:name>M4325</ns0:name>
+      <ns0:description>unific_id: 0343006253675760200002&lt;br&gt;bury_loc: 新竹縣湖口鄉德興路885號旁&lt;br&gt;remark: &lt;br&gt;coord_97x: 253,794.578&lt;br&gt;coord_97y: 2,757,871.578&lt;br&gt;經度: 121.037571&lt;br&gt;緯度: 24.928617&lt;br&gt;閥栓種類: 窨井</ns0:description>
+      <ns0:styleUrl>#icon-1899-0288D1</ns0:styleUrl>
+      <ns0:ExtendedData>
+        <ns0:Data name="unific_id">
+          <ns0:value>0343006253675760200002</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="bury_loc">
+          <ns0:value>新竹縣湖口鄉德興路885號旁</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="remark">
+          <ns0:value />
+        </ns0:Data>
+        <ns0:Data name="coord_97x">
+          <ns0:value>253794.578</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="coord_97y">
+          <ns0:value>2757871.578</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="經度">
+          <ns0:value>121.037571</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="緯度">
+          <ns0:value>24.928617</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="閥栓種類">
+          <ns0:value>窨井</ns0:value>
+        </ns0:Data>
+      </ns0:ExtendedData>
+      <ns0:Point>
+        <ns0:coordinates>
+          121.037571,24.928617,0
+        </ns0:coordinates>
+      </ns0:Point>
+    </ns0:Placemark>
+    <ns0:Placemark>
+      <ns0:name>M4538</ns0:name>
+      <ns0:description>unific_id: 0343006257675280200018&lt;br&gt;bury_loc: 八德路二段515號(縱貫公路)&lt;br&gt;remark: &lt;br&gt;coord_97x: 258,133.053&lt;br&gt;coord_97y: 2,753,147.917&lt;br&gt;經度: 121.080499&lt;br&gt;緯度: 24.885952&lt;br&gt;閥栓種類: 窨井</ns0:description>
+      <ns0:styleUrl>#icon-1899-0288D1</ns0:styleUrl>
+      <ns0:ExtendedData>
+        <ns0:Data name="unific_id">
+          <ns0:value>0343006257675280200018</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="bury_loc">
+          <ns0:value>八德路二段515號(縱貫公路)</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="remark">
+          <ns0:value />
+        </ns0:Data>
+        <ns0:Data name="coord_97x">
+          <ns0:value>258133.053</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="coord_97y">
+          <ns0:value>2753147.917</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="經度">
+          <ns0:value>121.080499</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="緯度">
+          <ns0:value>24.885952</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="閥栓種類">
+          <ns0:value>窨井</ns0:value>
+        </ns0:Data>
+      </ns0:ExtendedData>
+      <ns0:Point>
+        <ns0:coordinates>
+          121.080499,24.885952,0
+        </ns0:coordinates>
+      </ns0:Point>
+    </ns0:Placemark>
+    <ns0:Placemark>
+      <ns0:name>M41</ns0:name>
+      <ns0:description>unific_id: 0343006248875040200002&lt;br&gt;bury_loc: 新竹縣新豐鄉新興路與民安街口&lt;br&gt;remark: &lt;br&gt;coord_97x: 249,199.275&lt;br&gt;coord_97y: 2,750,859.936&lt;br&gt;經度: 120.992076&lt;br&gt;緯度: 24.865317&lt;br&gt;閥栓種類: 窨井</ns0:description>
+      <ns0:styleUrl>#icon-1899-0288D1</ns0:styleUrl>
+      <ns0:ExtendedData>
+        <ns0:Data name="unific_id">
+          <ns0:value>0343006248875040200002</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="bury_loc">
+          <ns0:value>新竹縣新豐鄉新興路與民安街口</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="remark">
+          <ns0:value />
+        </ns0:Data>
+        <ns0:Data name="coord_97x">
+          <ns0:value>249199.275</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="coord_97y">
+          <ns0:value>2750859.936</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="經度">
+          <ns0:value>120.992076</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="緯度">
+          <ns0:value>24.865317</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="閥栓種類">
+          <ns0:value>窨井</ns0:value>
+        </ns0:Data>
+      </ns0:ExtendedData>
+      <ns0:Point>
+        <ns0:coordinates>
+          120.992076,24.865317,0
+        </ns0:coordinates>
+      </ns0:Point>
+    </ns0:Placemark>
+    <ns0:Placemark>
+      <ns0:name>M4536</ns0:name>
+      <ns0:description>unific_id: 0343006257675280200016&lt;br&gt;bury_loc: 八德路二段4710號(縱貫公路)&lt;br&gt;remark: &lt;br&gt;coord_97x: 258,006.64&lt;br&gt;coord_97y: 2,753,103.974&lt;br&gt;經度: 121.079248&lt;br&gt;緯度: 24.885556&lt;br&gt;閥栓種類: 窨井</ns0:description>
+      <ns0:styleUrl>#icon-1899-0288D1</ns0:styleUrl>
+      <ns0:ExtendedData>
+        <ns0:Data name="unific_id">
+          <ns0:value>0343006257675280200016</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="bury_loc">
+          <ns0:value>八德路二段4710號(縱貫公路)</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="remark">
+          <ns0:value />
+        </ns0:Data>
+        <ns0:Data name="coord_97x">
+          <ns0:value>258006.64</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="coord_97y">
+          <ns0:value>2753103.974</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="經度">
+          <ns0:value>121.079248</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="緯度">
+          <ns0:value>24.885556</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="閥栓種類">
+          <ns0:value>窨井</ns0:value>
+        </ns0:Data>
+      </ns0:ExtendedData>
+      <ns0:Point>
+        <ns0:coordinates>
+          121.079248,24.885556,0
+        </ns0:coordinates>
+      </ns0:Point>
+    </ns0:Placemark>
+    <ns0:Placemark>
+      <ns0:name>M4539</ns0:name>
+      <ns0:description>unific_id: 0343006257675280200019&lt;br&gt;bury_loc: 八德路二段515號(縱貫公路)&lt;br&gt;remark: &lt;br&gt;coord_97x: 258,115.043&lt;br&gt;coord_97y: 2,753,142.753&lt;br&gt;經度: 121.080321&lt;br&gt;緯度: 24.885906&lt;br&gt;閥栓種類: 窨井</ns0:description>
+      <ns0:styleUrl>#icon-1899-0288D1</ns0:styleUrl>
+      <ns0:ExtendedData>
+        <ns0:Data name="unific_id">
+          <ns0:value>0343006257675280200019</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="bury_loc">
+          <ns0:value>八德路二段515號(縱貫公路)</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="remark">
+          <ns0:value />
+        </ns0:Data>
+        <ns0:Data name="coord_97x">
+          <ns0:value>258115.043</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="coord_97y">
+          <ns0:value>2753142.753</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="經度">
+          <ns0:value>121.080321</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="緯度">
+          <ns0:value>24.885906</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="閥栓種類">
+          <ns0:value>窨井</ns0:value>
+        </ns0:Data>
+      </ns0:ExtendedData>
+      <ns0:Point>
+        <ns0:coordinates>
+          121.080321,24.885906,0
+        </ns0:coordinates>
+      </ns0:Point>
+    </ns0:Placemark>
+    <ns0:Placemark>
+      <ns0:name>M20</ns0:name>
+      <ns0:description>unific_id: 0343006254475520200001&lt;br&gt;bury_loc: 湖口鄉德興路83號旁&lt;br&gt;remark: &lt;br&gt;coord_97x: 254,545.538&lt;br&gt;coord_97y: 2,755,520.02&lt;br&gt;經度: 121.044998&lt;br&gt;緯度: 24.907384&lt;br&gt;閥栓種類: 窨井</ns0:description>
+      <ns0:styleUrl>#icon-1899-0288D1</ns0:styleUrl>
+      <ns0:ExtendedData>
+        <ns0:Data name="unific_id">
+          <ns0:value>0343006254475520200001</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="bury_loc">
+          <ns0:value>湖口鄉德興路83號旁</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="remark">
+          <ns0:value />
+        </ns0:Data>
+        <ns0:Data name="coord_97x">
+          <ns0:value>254545.538</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="coord_97y">
+          <ns0:value>2755520.02</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="經度">
+          <ns0:value>121.044998</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="緯度">
+          <ns0:value>24.907384</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="閥栓種類">
+          <ns0:value>窨井</ns0:value>
+        </ns0:Data>
+      </ns0:ExtendedData>
+      <ns0:Point>
+        <ns0:coordinates>
+          121.044998,24.907384,0
+        </ns0:coordinates>
+      </ns0:Point>
+    </ns0:Placemark>
+    <ns0:Placemark>
+      <ns0:name>M3696</ns0:name>
+      <ns0:description>unific_id: 0343006248875280210021&lt;br&gt;bury_loc: 榮華街88巷4弄26號&lt;br&gt;remark: &lt;br&gt;coord_97x: 249,059.857&lt;br&gt;coord_97y: 2,752,839.793&lt;br&gt;經度: 120.990695&lt;br&gt;緯度: 24.883192&lt;br&gt;閥栓種類: 窨井</ns0:description>
+      <ns0:styleUrl>#icon-1899-0288D1</ns0:styleUrl>
+      <ns0:ExtendedData>
+        <ns0:Data name="unific_id">
+          <ns0:value>0343006248875280210021</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="bury_loc">
+          <ns0:value>榮華街88巷4弄26號</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="remark">
+          <ns0:value />
+        </ns0:Data>
+        <ns0:Data name="coord_97x">
+          <ns0:value>249059.857</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="coord_97y">
+          <ns0:value>2752839.793</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="經度">
+          <ns0:value>120.990695</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="緯度">
+          <ns0:value>24.883192</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="閥栓種類">
+          <ns0:value>窨井</ns0:value>
+        </ns0:Data>
+      </ns0:ExtendedData>
+      <ns0:Point>
+        <ns0:coordinates>
+          120.990695,24.883192,0
+        </ns0:coordinates>
+      </ns0:Point>
+    </ns0:Placemark>
+    <ns0:Placemark>
+      <ns0:name>M1279</ns0:name>
+      <ns0:description>unific_id: 0343006260875400200014&lt;br&gt;bury_loc: 楊梅台一線新竹牧場路口&lt;br&gt;remark: 截流滑門&lt;br&gt;coord_97x: 260,825.515&lt;br&gt;coord_97y: 2,754,107.196&lt;br&gt;經度: 121.107156&lt;br&gt;緯度: 24.894596&lt;br&gt;閥栓種類: 窨井</ns0:description>
+      <ns0:styleUrl>#icon-1899-0288D1</ns0:styleUrl>
+      <ns0:ExtendedData>
+        <ns0:Data name="unific_id">
+          <ns0:value>0343006260875400200014</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="bury_loc">
+          <ns0:value>楊梅台一線新竹牧場路口</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="remark">
+          <ns0:value>截流滑門</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="coord_97x">
+          <ns0:value>260825.515</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="coord_97y">
+          <ns0:value>2754107.196</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="經度">
+          <ns0:value>121.107156</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="緯度">
+          <ns0:value>24.894596</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="閥栓種類">
+          <ns0:value>窨井</ns0:value>
+        </ns0:Data>
+      </ns0:ExtendedData>
+      <ns0:Point>
+        <ns0:coordinates>
+          121.107156,24.894596,0
+        </ns0:coordinates>
+      </ns0:Point>
+    </ns0:Placemark>
+    <ns0:Placemark>
+      <ns0:name>M1282</ns0:name>
+      <ns0:description>unific_id: 0343006260875400200013&lt;br&gt;bury_loc: 台一線桃竹縣界51K+900&lt;br&gt;remark: &lt;br&gt;coord_97x: 260,830.027&lt;br&gt;coord_97y: 2,754,110.48&lt;br&gt;經度: 121.1072&lt;br&gt;緯度: 24.894626&lt;br&gt;閥栓種類: 窨井</ns0:description>
+      <ns0:styleUrl>#icon-1899-0288D1</ns0:styleUrl>
+      <ns0:ExtendedData>
+        <ns0:Data name="unific_id">
+          <ns0:value>0343006260875400200013</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="bury_loc">
+          <ns0:value>台一線桃竹縣界51K+900</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="remark">
+          <ns0:value />
+        </ns0:Data>
+        <ns0:Data name="coord_97x">
+          <ns0:value>260830.027</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="coord_97y">
+          <ns0:value>2754110.48</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="經度">
+          <ns0:value>121.1072</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="緯度">
+          <ns0:value>24.894626</ns0:value>
+        </ns0:Data>
+        <ns0:Data name="閥栓種類">
+          <ns0:value>窨井</ns0:value>
+        </ns0:Data>
+      </ns0:ExtendedData>
+      <ns0:Point>
+        <ns0:coordinates>
+          121.1072,24.894626,0
+        </ns0:coordinates>
+      </ns0:Point>
+    </ns0:Placemark>
+  </ns0:Document>
+</ns0:kml>
