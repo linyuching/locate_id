@@ -30,7 +30,7 @@
             color: white;
             flex-direction: column;
         }
-        .btn-active:active { transform: scale(0.98); }
+        .btn-active:active { transform: scale(0.95); }
         #actionPanel { 
             transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             transform: translateY(100%);
@@ -42,6 +42,17 @@
         #actionPanel.show { transform: translateY(0); }
         .selected-marker { filter: hue-rotate(240deg) brightness(1.2); transform: scale(1.3); transition: all 0.3s; z-index: 999 !important; }
         .finished-marker { filter: hue-rotate(90deg) brightness(1.1) saturate(1.5); opacity: 0.9; }
+        .leaflet-top { margin-top: 80px; }
+        .leaflet-control-locate {
+            background: white;
+            width: 34px; height: 34px;
+            display: flex; align-items: center; justify-content: center;
+            cursor: pointer; border-radius: 4px;
+            box-shadow: 0 1px 5px rgba(0,0,0,0.4);
+        }
+        /* 自定義彈出視窗樣式 */
+        .nav-popup .leaflet-popup-content-wrapper { border-radius: 12px; padding: 5px; }
+        .nav-popup .leaflet-popup-content { margin: 10px; text-align: center; }
         input[type="number"]::-webkit-inner-spin-button, 
         input[type="number"]::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; }
     </style>
@@ -63,7 +74,7 @@
         <div class="bg-white/95 backdrop-blur-md p-3 rounded-2xl shadow-2xl flex justify-between items-center pointer-events-auto border border-white/20">
             <div class="flex items-center gap-2">
                 <div id="statusIndicator" class="w-2.5 h-2.5 rounded-full bg-yellow-500 animate-pulse"></div>
-                <h1 class="text-lg font-black text-slate-800 tracking-tighter">外業調查拍照 <span class="text-blue-500 text-xs">V2.2</span></h1>
+                <h1 class="text-lg font-black text-slate-800 tracking-tighter">外業調查拍照 <span class="text-blue-500 text-xs">V2.4</span></h1>
             </div>
             <div id="statusTag" class="bg-slate-100 text-slate-500 text-[10px] px-2.5 py-1 rounded-full font-black uppercase">連線中</div>
         </div>
@@ -80,9 +91,18 @@
                 <p id="selectedLoc" class="text-xs text-slate-500 mt-1 font-medium italic"></p>
                 <p id="selectedUnific" class="text-[10px] text-slate-400 mt-1 font-mono"></p>
             </div>
-            <button id="closePanelBtn" class="bg-slate-100 text-slate-400 p-2.5 rounded-full btn-active shadow-sm">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
-            </button>
+            <div class="flex flex-col gap-2 ml-4">
+                <button id="closePanelBtn" class="bg-slate-100 text-slate-400 p-2.5 rounded-full btn-active self-end shadow-sm">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
+                </button>
+                <button id="navBtn" class="bg-blue-600 text-white p-4 rounded-2xl btn-active shadow-lg shadow-blue-200 flex flex-col items-center justify-center gap-1">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                    </svg>
+                    <span class="text-[8px] font-bold uppercase">導航</span>
+                </button>
+            </div>
         </div>
 
         <!-- 支距填寫區 -->
@@ -92,12 +112,10 @@
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" /></svg>
                     <span class="text-xs font-bold text-slate-500 uppercase tracking-wider">支距量測資料</span>
                 </div>
-                
                 <div class="space-y-3" id="offsetRows">
                     <!-- Row 1, 2, 3 -->
                 </div>
             </div>
-
             <button id="cameraBtn" class="w-full bg-slate-900 text-white py-5 rounded-3xl font-black text-lg shadow-xl btn-active flex items-center justify-center gap-4 tracking-tighter">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" /><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
                 拍攝現場照片
@@ -111,7 +129,6 @@
                 <div class="absolute top-4 left-4 bg-black/50 backdrop-blur-md px-3 py-1.5 rounded-full text-[10px] text-white font-bold">照片已就緒</div>
                 <button id="retakeBtn" class="absolute bottom-4 right-4 bg-white/90 backdrop-blur-md px-4 py-2 rounded-full text-xs font-black text-slate-800 shadow-xl border border-white/50 btn-active">重新拍攝</button>
             </div>
-            
             <div class="grid grid-cols-2 gap-4">
                 <button id="exportBtn" class="bg-emerald-600 text-white font-black py-5 rounded-2xl shadow-xl btn-active text-lg flex flex-col items-center justify-center">
                     <span class="text-xs opacity-80 font-medium mb-1">完成量測</span>
@@ -157,6 +174,17 @@
             map = L.map('map', { zoomControl: false, maxZoom: 20 }).setView([23.5, 121], 7);
             L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
             markersLayer = L.layerGroup().addTo(map);
+            
+            const LocateControl = L.Control.extend({
+                options: { position: 'topleft' },
+                onAdd: function() {
+                    const container = L.DomUtil.create('div', 'leaflet-control-locate');
+                    container.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-slate-700" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4-1.79-4-4-4zm8.94 3c-.46-4.17-3.77-7.48-7.94-7.94V1h-2v2.06C6.83 3.52 3.52 6.83 3.06 11H1v2h2.06c.46 4.17 3.77 7.48 7.94 7.94V23h2v-2.06c4.17-.46 7.48-3.77 7.94-7.94H23v-2h-2.06z" /></svg>`;
+                    container.onclick = () => map.locate({ setView: true, maxZoom: 16 });
+                    return container;
+                }
+            });
+            map.addControl(new LocateControl());
         }
 
         function createFormRows() {
@@ -239,7 +267,6 @@
                 let unific_id = "";
                 let bury_loc = "";
 
-                // 優先從 ExtendedData 解析
                 const extendedData = p.getElementsByTagName("ExtendedData")[0];
                 if (extendedData) {
                     const dataNodes = Array.from(extendedData.getElementsByTagName("Data"));
@@ -251,7 +278,6 @@
                     }
                 }
 
-                // 若 ExtendedData 無資料，從 description 解析
                 if (!unific_id) {
                     const idMatch = desc.match(/unific_id:\s*([^<|\n|\r]+)/i);
                     unific_id = idMatch ? idMatch[1].trim() : name;
@@ -275,14 +301,12 @@
             markersLayer.clearLayers();
             points.forEach(p => {
                 const m = L.marker([p.lat, p.lng]).on('click', () => {
-                    // 縮放層級調降為 17 (原為 19)
-                    map.flyTo([p.lat, p.lng], 17);
+                    map.flyTo([p.lat, p.lng], 17); // 縮放至 17 級 (小2級)
                     if (selectedMarker) selectedMarker.getElement()?.classList.remove('selected-marker');
                     selectedMarker = m;
                     m.getElement()?.classList.add('selected-marker');
                     selectedPoint = p;
                     
-                    // 標題顯示 KML 中的 name (例如 117.0)
                     document.getElementById('selectedId').textContent = p.id;
                     document.getElementById('selectedLoc').textContent = p.bury_loc || "位置未標註";
                     document.getElementById('selectedUnific').textContent = `ID: ${p.unific_id}`;
@@ -290,10 +314,29 @@
                     document.getElementById('actionPanel').classList.add('show');
                     resetUIState();
                 });
+
+                // 加入點位彈出視窗按鈕
+                const popupContent = `
+                    <div class="text-center">
+                        <div class="font-bold text-slate-800 mb-2">${p.id}</div>
+                        <button onclick="window.open('https://www.google.com/maps/dir/?api=1&destination=${p.lat},${p.lng}', '_blank')" 
+                                class="bg-blue-600 text-white px-4 py-2 rounded-lg text-xs font-bold shadow-md active:scale-95 transition-transform">
+                            Google 導航
+                        </button>
+                    </div>
+                `;
+                m.bindPopup(popupContent, { className: 'nav-popup', offset: [0, -32] });
+                
                 markersLayer.addLayer(m);
             });
             if (points.length) map.fitBounds(L.featureGroup(markersLayer.getLayers()).getBounds());
         }
+
+        document.getElementById('navBtn').onclick = () => {
+            if (!selectedPoint) return;
+            const url = `https://www.google.com/maps/dir/?api=1&destination=${selectedPoint.lat},${selectedPoint.lng}`;
+            window.open(url, '_blank');
+        };
 
         const cameraInput = document.getElementById('cameraInput');
         document.getElementById('cameraBtn').onclick = () => cameraInput.click();
@@ -372,7 +415,6 @@
                         const cellText = String(cell.value || "").trim();
                         const cleanVal = cellText.replace(/\s/g, '');
                         
-                        // 1. 處理「編號」標籤：填入 unific_id
                         if (cleanVal === "編號") {
                             if (sheetName.includes("圖卡背面")) {
                                 let rowOffset = 1;
@@ -397,7 +439,6 @@
                             }
                         }
                         
-                        // 2. 處理「位置」標籤：填入 bury_loc (使用循環偵測)
                         if (cleanVal === "位置") {
                             let offset = 1;
                             while (colNumber + offset <= sheet.columnCount) {
@@ -410,7 +451,6 @@
                             }
                         }
 
-                        // 3. 處理「支距」表格
                         if (cleanVal === "支距") {
                             for (let i = 0; i < 3; i++) {
                                 const dataRow = sheet.getRow(rowNumber + 1 + i);
@@ -419,7 +459,6 @@
                             }
                         }
 
-                        // 4. 填入照片
                         if (!photoInsertedInSheet && cleanVal.includes("現場照片")) {
                             sheet.addImage(imageId, { 
                                 tl: { col: colNumber - 1 + 0.1, row: rowNumber + 0.1 }, 
@@ -440,15 +479,30 @@
             try {
                 showLoadingMask(true, "產生成果圖卡中...");
                 const blob = await generateExcel();
-                const url = URL.createObjectURL(blob);
-                const a = document.createElement("a");
-                a.href = url;
-                a.download = `${selectedPoint.unific_id}.xlsx`;
-                a.click();
+                triggerDownload(blob, `${selectedPoint.unific_id}_調查成果.xlsx`);
                 setTimeout(closePanel, 800);
             } catch (err) { alert("匯出出錯: " + err.message); }
             showLoadingMask(false);
         };
+
+        function triggerDownload(blob, fileName) {
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement("a");
+            a.style.display = "none";
+            a.href = url;
+            a.download = fileName;
+            document.body.appendChild(a);
+            try { a.click(); } catch (e) { window.location.href = url; }
+            
+            setTimeout(() => {
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+            }, 10000); 
+
+            if (/Line|FBAN|FBAV|Messenger/i.test(navigator.userAgent)) {
+                alert("提醒：您正在使用社群 App 內建瀏覽器，若下載沒反應，請點選右上角並選擇「以 Chrome/Safari 開啟」。");
+            }
+        }
 
         function showLoadingMask(s, t) {
             document.getElementById('loading').style.display = s ? 'flex' : 'none';
