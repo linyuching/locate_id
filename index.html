@@ -15,7 +15,7 @@
         import { getFirestore, doc, setDoc, collection } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
         import { getStorage, ref, uploadString, getDownloadURL } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-storage.js";
         
-        // 封裝到全域供主程式使用
+        // 直接把所有需要的工具掛在 window.firebaseCore 下
         window.firebaseCore = { 
             initializeApp, getAuth, signInAnonymously, onAuthStateChanged, 
             getFirestore, doc, setDoc, collection,
