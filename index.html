@@ -509,32 +509,33 @@
             const parser = new DOMParser();
             const xml = parser.parseFromString(text, "text/xml");
             const placemarks = Array.from(xml.getElementsByTagName("Placemark"));
-
+        
             return placemarks.map(p => {
                 const name = p.getElementsByTagName("name")[0]?.textContent || "未命名";
                 const desc = p.getElementsByTagName("description")[0]?.textContent || "";
                 const coordsNode = p.getElementsByTagName("coordinates")[0];
                 const coords = coordsNode ? coordsNode.textContent.trim().split(",") : [0, 0];
-
+        
                 let unific_id = "";
                 let bury_loc = "";
-
+        
                 const extendedData = p.getElementsByTagName("ExtendedData")[0];
                 if (extendedData) {
                     const dataNodes = Array.from(extendedData.getElementsByTagName("Data"));
                     for (const node of dataNodes) {
                         const dataName = node.getAttribute("name");
                         const val = node.getElementsByTagName("value")[0]?.textContent?.trim();
-
+        
                         if (dataName === "unific_id" || dataName === "識別碼") {
                             unific_id = val;
                         }
-                        if (dataName === "bury_loc") {
+        
+                        if (dataName === "bury_loc" || dataName === "地址") {
                             bury_loc = val;
                         }
                     }
                 }
-
+        
                 if (!unific_id) {
                     let match = desc.match(/unific_id\s*:\s*([^<|\n|\r]+)/i);
                     if (!match) {
@@ -544,16 +545,19 @@
                         unific_id = match[1].trim();
                     }
                 }
-
+        
                 if (!bury_loc) {
-                    const locMatch = desc.match(/bury_loc\s*:\s*([^<|\n|\r]+)/i);
+                    let locMatch = desc.match(/bury_loc\s*:\s*([^<|\n|\r]+)/i);
+                    if (!locMatch) {
+                        locMatch = desc.match(/地址\s*:\s*([^<|\n|\r]+)/i);
+                    }
                     bury_loc = locMatch ? locMatch[1].trim() : "";
                 }
-
+        
                 if (!unific_id) {
                     console.warn("⚠️ 無法解析 unific_id / 識別碼：", name, desc);
                 }
-
+        
                 return {
                     id: name,
                     unific_id,
@@ -1010,38 +1014,58 @@
             const targetWidthPx = targetHeightPx * (dims.w / dims.h);
 
             workbook.eachSheet((sheet) => {
+                const sheetName = sheet.name.replace(/\s/g, "");
                 let photoInsertedInSheet = false;
-
+            
                 sheet.eachRow({ includeEmpty: true }, (row, rowNumber) => {
                     row.eachCell({ includeEmpty: true }, (cell, colNumber) => {
                         const cellText = String(cell.value || "").trim();
                         const cleanVal = cellText.replace(/\s/g, "");
-
+            
+                        // ===== 編號 =====
                         if (cleanVal === "編號") {
-                            let offset = 1;
-                            while (colNumber + offset <= sheet.columnCount) {
-                                const targetCell = sheet.getRow(rowNumber).getCell(colNumber + offset);
-                                if (targetCell.master.address !== cell.master.address) {
-                                    targetCell.master.value = selectedPoint.unific_id || "";
-                                    break;
+                            if (sheetName.includes("圖卡背面")) {
+                                // 圖卡背面：填在正下方儲存格
+                                let rowOffset = 1;
+                                while (rowNumber + rowOffset <= sheet.rowCount) {
+                                    const targetCell = sheet.getRow(rowNumber + rowOffset).getCell(colNumber);
+                                    if (targetCell.master.address !== cell.master.address) {
+                                        targetCell.master.value = selectedPoint.unific_id || "";
+                                        break;
+                                    }
+                                    rowOffset++;
                                 }
-                                offset++;
+                            } else {
+                                // 其他分頁：填在右方儲存格
+                                let colOffset = 1;
+                                while (colNumber + colOffset <= sheet.columnCount) {
+                                    const targetCell = sheet.getRow(rowNumber).getCell(colNumber + colOffset);
+                                    if (targetCell.master.address !== cell.master.address) {
+                                        targetCell.master.value = selectedPoint.unific_id || "";
+                                        break;
+                                    }
+                                    colOffset++;
+                                }
                             }
                         }
-
+            
+                        // ===== 位置 =====
                         if (cleanVal === "位置") {
-                            let offset = 1;
-                            while (colNumber + offset <= sheet.columnCount) {
-                                const targetCell = sheet.getRow(rowNumber).getCell(colNumber + offset);
+                            // 位置：填在右方儲存格
+                            let colOffset = 1;
+                            while (colNumber + colOffset <= sheet.columnCount) {
+                                const targetCell = sheet.getRow(rowNumber).getCell(colNumber + colOffset);
                                 if (targetCell.master.address !== cell.master.address) {
                                     targetCell.master.value = selectedPoint.bury_loc || "";
                                     break;
                                 }
-                                offset++;
+                                colOffset++;
                             }
                         }
-
+            
+                        // ===== 位置描述 =====
                         if (cleanVal === "位置描述") {
+                            // 位置描述：填在正下方儲存格
                             let rowOffset = 1;
                             while (rowNumber + rowOffset <= sheet.rowCount) {
                                 const targetCell = sheet.getRow(rowNumber + rowOffset).getCell(colNumber);
@@ -1052,7 +1076,8 @@
                                 rowOffset++;
                             }
                         }
-
+            
+                        // ===== 支距 =====
                         if (cleanVal === "支距") {
                             for (let i = 0; i < 3; i++) {
                                 const dataRow = sheet.getRow(rowNumber + 1 + i);
@@ -1060,7 +1085,8 @@
                                 dataRow.getCell(colNumber + 2).master.value = offsets[i].note;
                             }
                         }
-
+            
+                        // ===== 現場照片 =====
                         if (!photoInsertedInSheet && cleanVal.includes("現場照片")) {
                             sheet.addImage(imageId, {
                                 tl: { col: colNumber - 1 + 0.1, row: rowNumber + 0.1 },
