@@ -601,6 +601,19 @@
             }
         }
 
+        async function uploadPhoto(base64, path) {
+            const { ref, uploadBytes, getDownloadURL } = window.firebaseCore;
+        
+            const res = await fetch(base64);
+            const blob = await res.blob();
+        
+            const storageRef = ref(storage, path);
+            await uploadBytes(storageRef, blob, { contentType: "image/jpeg" });
+        
+            return await getDownloadURL(storageRef);
+}
+
+        
         function getByLocalName(parent, localName) {
             return Array.from(parent.getElementsByTagName("*")).find(el => el.localName === localName) || null;
         }
@@ -1397,6 +1410,24 @@
                 showLoadingMask(true, "產生並上傳成果圖卡中...");
 
                 const blob = await generateExcel();
+                const id = getPointKey(selectedPoint);
+
+                // 現場照片
+                await uploadPhoto(processedPhotoBase64,
+                    `artifacts/${appId}/photos/${id}/${id}_現場.jpg`
+                );
+                
+                // 三支距照片
+                for (let i = 0; i < 3; i++) {
+                    await uploadPhoto(offsetPhotoBase64[i],
+                        `artifacts/${appId}/photos/${id}/${id}_支距${i+1}.jpg`
+                    );
+                }
+                
+                // 交維照片
+                await uploadPhoto(trafficPhotoBase64,
+                    `artifacts/${appId}/photos/${id}/${id}_交維.jpg`
+                );
                 const fileInfo = await uploadExcelToCloud(blob, selectedPoint);
 
                 await saveCompletedFileRecord(selectedPoint, fileInfo);
