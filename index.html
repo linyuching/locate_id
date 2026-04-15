@@ -641,23 +641,15 @@
                 }
 
                 if (!unific_id) {
-                    let match = desc.match(/unific_id\s*:\s*([^<|
-|
-]+)/i);
-                    if (!match) match = desc.match(/識別碼\s*:\s*([^<|
-|
-]+)/i);
+                    let match = desc.match(/unific_id\s*:\s*([^<||]+)/i);
+                    if (!match) match = desc.match(/識別碼\s*:\s*([^<||]+)/i);
                     if (match) unific_id = match[1].trim();
                 }
 
                 if (!bury_loc) {
-                    let locMatch = desc.match(/bury_loc\s*:\s*([^<|
-|
-]+)/i);
-                    if (!locMatch) locMatch = desc.match(/地址\s*:\s*([^<|
-|
-]+)/i);
-                    bury_loc = locMatch ? locMatch[1].trim() : "";
+                    let locMatch = desc.match(/bury_loc\s*:\s*([^<||]+)/i);
+                    if (!locMatch) locMatch = desc.match(/地址\s*:\s*([^<||]+)/i);
+                    bury_loc = locMatch? locMatch[1].trim() : "";
                 }
 
                 return {
