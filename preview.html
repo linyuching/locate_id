@@ -1,0 +1,146 @@
+
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>批次下載工具（完整）</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+</head>
+<body class="bg-slate-100">
+
+<div class="max-w-4xl mx-auto p-6">
+  <div class="bg-white p-6 rounded-3xl shadow-xl">
+    <h1 class="text-xl font-black mb-4">批次下載工具</h1>
+
+    <div class="grid grid-cols-2 gap-4 mb-4">
+      <input id="startDate" type="date" class="border p-2 rounded-xl">
+      <input id="endDate" type="date" class="border p-2 rounded-xl">
+    </div>
+
+    <div class="flex gap-4 mb-4">
+      <label><input type="checkbox" id="chkXlsx" checked> 下載 XLSX</label>
+      <label><input type="checkbox" id="chkPhoto" checked> 下載照片</label>
+    </div>
+
+    <div class="flex gap-4 mb-4">
+      <button id="searchBtn" class="bg-blue-600 text-white px-4 py-2 rounded-xl w-full">
+        查詢資料
+      </button>
+      <button id="downloadBtn" class="bg-emerald-600 text-white px-4 py-2 rounded-xl w-full" disabled>
+        開始下載
+      </button>
+    </div>
+
+    <!-- 查詢結果 -->
+    <div class="border rounded-xl mb-4 max-h-60 overflow-y-auto">
+      <div id="resultList" class="text-sm"></div>
+    </div>
+
+    <!-- 進度條 -->
+    <div class="w-full bg-slate-200 rounded-full h-4 overflow-hidden">
+      <div id="progressBar" class="bg-emerald-500 h-full w-0 transition-all"></div>
+    </div>
+    <div id="progressText" class="text-sm text-slate-600 mt-2">0%</div>
+
+  </div>
+</div>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+import { getStorage, ref, getDownloadURL } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-storage.js";
+
+const config = {
+ apiKey: "AIzaSyAQtyOTpKY3ajw6u4spxwLyFZDw19xhQEE",
+ authDomain: "fieldsurveyproject-cba4e.firebaseapp.com",
+ projectId: "fieldsurveyproject-cba4e",
+ storageBucket: "fieldsurveyproject-cba4e.firebasestorage.app"
+};
+
+const app = initializeApp(config);
+const db = getFirestore(app);
+const storage = getStorage(app);
+
+let results = [];
+
+const resultList = document.getElementById("resultList");
+const downloadBtn = document.getElementById("downloadBtn");
+
+function updateProgress(p){
+ document.getElementById("progressBar").style.width = p + "%";
+ document.getElementById("progressText").textContent = Math.floor(p) + "%";
+}
+
+async function fetchBlob(path){
+ const url = await getDownloadURL(ref(storage, path));
+ const res = await fetch(url);
+ return await res.blob();
+}
+
+function renderResults(){
+ if(results.length===0){
+   resultList.innerHTML = '<div class="p-3 text-slate-400">無資料</div>';
+   return;
+ }
+
+ resultList.innerHTML = results.map(r=>`
+   <div class="p-3 border-b">
+     <div class="font-bold">${r.unific_id}</div>
+     <div class="text-xs text-slate-500">${r.category || ""}</div>
+   </div>
+ `).join("");
+}
+
+document.getElementById("searchBtn").onclick = async ()=>{
+ const snap = await getDocs(collection(db,"artifacts/field-survey-app/public/data/completed_points"));
+ results = [];
+ snap.forEach(d=>results.push(d.data()));
+ renderResults();
+ downloadBtn.disabled = results.length===0;
+};
+
+document.getElementById("downloadBtn").onclick = async ()=>{
+ const includeXlsx = document.getElementById("chkXlsx").checked;
+ const includePhoto = document.getElementById("chkPhoto").checked;
+
+ const zip = new JSZip();
+ let total = results.length;
+ let count = 0;
+
+ for(const item of results){
+   const id = item.unific_id;
+   const folder = zip.folder(id);
+
+   if(includeXlsx){
+     try{
+       const blob = await fetchBlob(`artifacts/field-survey-app/completed_xlsx/${id}/${id}.xlsx`);
+       folder.file(id+".xlsx", blob);
+     }catch{}
+   }
+
+   if(includePhoto){
+     const suffixes = ["現場","支距1","支距2","支距3","交維"];
+     for(const s of suffixes){
+       try{
+         const blob = await fetchBlob(`artifacts/field-survey-app/photos/${id}/${id}_${s}.jpg`);
+         folder.file(id+"_"+s+".jpg", blob);
+       }catch{}
+     }
+   }
+
+   count++;
+   updateProgress((count/total)*100);
+ }
+
+ const zipBlob = await zip.generateAsync({type:"blob"});
+ const a = document.createElement("a");
+ a.href = URL.createObjectURL(zipBlob);
+ a.download = "download.zip";
+ a.click();
+};
+</script>
+
+</body>
+</html>
