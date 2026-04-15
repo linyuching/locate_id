@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>外業調查拍照系統 (支距增強版)</title>
+    <title>外業調查拍照系統 (支距註記版)</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
@@ -479,7 +479,7 @@
             try {
                 showLoadingMask(true, "產生成果圖卡中...");
                 const blob = await generateExcel();
-                triggerDownload(blob, `${selectedPoint.unific_id}_調查成果.xlsx`);
+                triggerDownload(blob, `${selectedPoint.unific_id}.xlsx`);
                 setTimeout(closePanel, 800);
             } catch (err) { alert("匯出出錯: " + err.message); }
             showLoadingMask(false);
