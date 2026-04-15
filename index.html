@@ -87,10 +87,10 @@
         
         <div class="flex justify-between items-start mb-6">
             <div class="flex-1">
-                <span class="text-[10px] font-black text-blue-600 uppercase tracking-widest bg-blue-50 px-2 py-0.5 rounded-md">目前選定點位</span>
-                <h2 class="text-3xl font-black text-slate-900 mt-2 break-all" id="selectedId">讀取中</h2>
+                <span class="text-[10px] font-black text-blue-600 uppercase tracking-widest bg-blue-50 px-2 py-0.5 rounded-md">目前選定點位 (Unific ID)</span>
+                <h2 class="text-3xl font-black text-slate-900 mt-2 break-all leading-tight" id="selectedId">讀取中</h2>
                 <p id="selectedCoords" class="text-xs font-mono text-slate-400 mt-2 tracking-tighter"></p>
-                <p id="selectedLoc" class="text-xs text-slate-500 mt-1"></p>
+                <p id="selectedLoc" class="text-xs text-slate-500 mt-1 font-medium"></p>
             </div>
             <div class="flex flex-col gap-2 ml-4">
                 <button id="closePanelBtn" class="bg-slate-100 text-slate-400 p-2.5 rounded-full btn-active self-end shadow-sm">
@@ -122,7 +122,7 @@
             <div class="space-y-4">
                 <button id="exportBtn" class="w-full bg-emerald-600 text-white font-black py-5 rounded-2xl shadow-xl btn-active text-lg flex items-center justify-center gap-3">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" /></svg>
-                    產生成果並下載 Excel
+                    匯出成果圖卡 (unific_id)
                 </button>
                 <button id="finishBtn" class="w-full bg-slate-100 text-slate-600 font-black py-4 rounded-2xl btn-active text-sm shadow-sm border border-slate-200">
                     取消並回地圖
@@ -134,7 +134,6 @@
     </div>
 
     <script type="module">
-        // 預設備份配置
         const backupConfig = {
             apiKey: "AIzaSyAQtyOTpKY3ajw6u4spxwLyFZDw19xhQEE",
             authDomain: "fieldsurveyproject-cba4e.firebaseapp.com",
@@ -161,9 +160,7 @@
             let config;
             try {
                 config = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : backupConfig;
-            } catch (e) {
-                config = backupConfig;
-            }
+            } catch (e) { config = backupConfig; }
 
             const app = initializeApp(config);
             auth = getAuth(app);
@@ -174,12 +171,8 @@
                 try {
                     if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
                         await signInWithCustomToken(auth, __initial_auth_token);
-                    } else {
-                        await signInAnonymously(auth);
-                    }
-                } catch (err) {
-                    console.error("Auth Failed:", err);
-                }
+                    } else { await signInAnonymously(auth); }
+                } catch (err) { console.error("Auth Failed:", err); }
             };
 
             await performAuth();
@@ -193,9 +186,7 @@
                             finishedPoints.clear();
                             snapshot.forEach(doc => finishedPoints.set(doc.id, doc.data()));
                             refreshMarkers();
-                        }, (error) => {
-                            console.error("Firestore Error:", error);
-                        });
+                        }, (error) => { console.error("Firestore Error:", error); });
                     }
                     resolve();
                 });
@@ -247,7 +238,7 @@
         }
 
         /**
-         * 加強版 KML 解析，抓取 unific_id, bury_loc, 閥栓種類
+         * 核心解析邏輯：從 <description> 中的 CDATA 解析資料
          */
         function parseKML(text) {
             const parser = new DOMParser();
@@ -258,30 +249,30 @@
             for (let i = 0; i < placemarks.length; i++) {
                 const p = placemarks[i];
                 const name = p.getElementsByTagName("name")[0]?.textContent || "未命名";
+                const description = p.getElementsByTagName("description")[0]?.textContent || "";
                 const coords = p.getElementsByTagName("coordinates")[0]?.textContent?.trim();
                 
-                // 抓取 ExtendedData 中的欄位
-                const extendedData = p.getElementsByTagName("ExtendedData")[0];
                 let unific_id = name;
                 let bury_loc = "";
                 let type = "";
 
-                if (extendedData) {
-                    const simpleData = extendedData.getElementsByTagName("SimpleData");
-                    for (let j = 0; j < simpleData.length; j++) {
-                        const attrName = simpleData[j].getAttribute("name");
-                        const val = simpleData[j].textContent;
-                        if (attrName === "unific_id") unific_id = val;
-                        if (attrName === "bury_loc") bury_loc = val;
-                        if (attrName === "閥栓種類") type = val;
-                    }
+                // 解析 description 中的 key: value 格式
+                if (description) {
+                    // 使用正則表達式抓取 unific_id: 後面直到 < 或 換行 的內容
+                    const idMatch = description.match(/unific_id:\s*([^<|\n|\r]+)/i);
+                    const locMatch = description.match(/bury_loc:\s*([^<|\n|\r]+)/i);
+                    const typeMatch = description.match(/閥栓種類:\s*([^<|\n|\r]+)/i);
+
+                    if (idMatch) unific_id = idMatch[1].trim();
+                    if (locMatch) bury_loc = locMatch[1].trim();
+                    if (typeMatch) type = typeMatch[1].trim();
                 }
 
                 if (coords) {
                     const parts = coords.split(",");
                     if (parts.length >= 2) {
                         results.push({ 
-                            id: unific_id, // 以 unific_id 作為主要 ID
+                            id: unific_id, // 以抓到的 unific_id 作為主要 ID
                             lat: parseFloat(parts[1]), 
                             lng: parseFloat(parts[0]),
                             bury_loc: bury_loc,
@@ -297,7 +288,6 @@
             markersLayer.clearLayers();
             points.forEach(p => {
                 const m = L.marker([p.lat, p.lng]).on('click', () => {
-                    // 點擊移動並放大
                     map.flyTo([p.lat, p.lng], 18, { animate: true, duration: 0.8 });
 
                     if (selectedMarker) {
@@ -447,7 +437,7 @@
                     // 2. 填入 unific_id 至「編號」標籤下方的單元格
                     if (val === "編號") {
                         const cellBelow = sheetToUse.getRow(rowNumber + 1).getCell(colNumber);
-                        cellBelow.value = selectedPoint.id;
+                        cellBelow.value = selectedPoint.id; // 此 ID 已在 parseKML 被設為 unific_id
                     }
 
                     // 3. 填入 bury_loc 至「位置」標籤右側的單元格
@@ -469,7 +459,7 @@
                     await saveFinishedState(selectedPoint.id);
                 }
                 const blob = await generateExcel();
-                // 檔名改為直接以 unific_id (即 selectedPoint.id) 命名
+                // 檔名完全以 unific_id 命名
                 triggerDownload(blob, `${selectedPoint.id}.xlsx`);
                 setTimeout(closePanel, 500);
             } catch (err) { alert(err.message); }
