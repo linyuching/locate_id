@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>外業調查拍照系統 (協同版)</title>
+    <title>外業調查拍照系統_ID</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
@@ -379,7 +379,9 @@
         }
 
         /**
-         * 修正版 Excel 填入邏輯
+         * 修正版 Excel 填入邏輯:
+         * 1. 照片高度固定為 6公分 (約 227 像素)，自動比例縮放。
+         * 2. 「位置」與「編號」填入標籤右側儲存格，不覆蓋標籤。
          */
         async function generateExcel() {
             if (!templateData || !processedPhotoBase64) throw new Error("尚未拍攝照片");
@@ -388,12 +390,12 @@
             
             const imageId = workbook.addImage({ base64: processedPhotoBase64, extension: 'jpeg' });
             
-            // 預設照片插入高度 (像素)，可依需求調整
-            const targetHeightPx = 380; 
+            // 設定照片高度為 6公分 (1cm 約等於 37.8 像素)
+            const targetHeightPx = 227; 
             const dims = await new Promise(r => { const i = new Image(); i.onload = () => r({w:i.width,h:i.height}); i.src = processedPhotoBase64; });
-            const targetWidthPx = targetHeightPx * (dims.w / dims.h);
+            const targetWidthPx = targetHeightPx * (dims.w / dims.h); // 依高度比例計算寬度，確保不變形
 
-            // 遍歷所有分頁進行檢查
+            // 遍歷所有分頁
             workbook.eachSheet((sheet) => {
                 const sheetName = sheet.name.replace(/\s/g, '');
                 let photoInsertedInThisSheet = false;
@@ -402,29 +404,37 @@
                     row.eachCell({ includeEmpty: true }, (cell, colNumber) => {
                         const cleanVal = (cell.value ? String(cell.value) : "").replace(/\s/g, '');
                         
-                        // 1. 填入「位置」: 寫入右側儲存格 (例如 B2 標籤 -> C2 填值)
+                        // 1. 填入「位置」: 寫入右側欄位
                         if (cleanVal === "位置") {
-                            const targetCell = sheet.getRow(rowNumber).getCell(colNumber + 1);
-                            targetCell.master.value = selectedPoint.bury_loc || "";
+                            // 根據範例圖，跳過合併的標籤儲存格 (通常位移 2 欄可避開標籤)
+                            let offset = 1;
+                            // 尋找第一個 master 與標籤不同的儲存格
+                            while (sheet.getRow(rowNumber).getCell(colNumber + offset).master.address === cell.master.address) {
+                                offset++;
+                            }
+                            const targetCell = sheet.getRow(rowNumber).getCell(colNumber + offset);
+                            targetCell.value = selectedPoint.bury_loc || "";
                         }
 
                         // 2. 填入「編號」: 
                         if (cleanVal === "編號") {
-                            // 根據分頁名稱判斷邏輯
                             if (sheetName.includes("圖卡背面")) {
-                                // 圖卡背面：寫入下方 (D2 標籤 -> D3 填值)
+                                // 圖卡背面邏輯不變：寫入標籤下方
                                 const targetCell = sheet.getRow(rowNumber + 1).getCell(colNumber);
                                 targetCell.master.value = selectedPoint.id;
                             } else {
-                                // 制水閥記錄卡或其他：寫入右方 (T4 標籤 -> U4 填值)
-                                const targetCell = sheet.getRow(rowNumber).getCell(colNumber + 1);
-                                targetCell.master.value = selectedPoint.id;
+                                // 制水閥記錄卡：寫入右方儲存格
+                                let offset = 1;
+                                while (sheet.getRow(rowNumber).getCell(colNumber + offset).master.address === cell.master.address) {
+                                    offset++;
+                                }
+                                const targetCell = sheet.getRow(rowNumber).getCell(colNumber + offset);
+                                targetCell.value = selectedPoint.id;
                             }
                         }
 
-                        // 3. 填入照片: 尋找「現場照片」標籤
+                        // 3. 填入照片: 尋找「現場照片」標籤，插入在其下方
                         if (!photoInsertedInThisSheet && cleanVal.includes("現場照片")) {
-                            // 插入到標籤的下一行位置
                             sheet.addImage(imageId, { 
                                 tl: { col: colNumber - 1 + 0.1, row: rowNumber + 0.1 }, 
                                 ext: { width: targetWidthPx, height: targetHeightPx }, 
@@ -449,7 +459,7 @@
                 setTimeout(closePanel, 500);
             } catch (err) { 
                 console.error(err);
-                alert("錯誤: " + err.message); 
+                alert("匯出失敗: " + err.message); 
             }
             showLoadingMask(false);
         };
