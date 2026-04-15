@@ -73,7 +73,7 @@
         <div class="bg-white/95 backdrop-blur-md p-3 rounded-2xl shadow-2xl flex justify-between items-center pointer-events-auto border border-white/20">
             <div class="flex items-center gap-2">
                 <div id="statusIndicator" class="w-2.5 h-2.5 rounded-full bg-yellow-500 animate-pulse"></div>
-                <h1 class="text-lg font-black text-slate-800 tracking-tighter">外業調查拍照 <span class="text-blue-500 text-xs">V2.6.1</span></h1>
+                <h1 class="text-lg font-black text-slate-800 tracking-tighter">外業調查拍照 <span class="text-blue-500 text-xs">V2.6.2</span></h1>
             </div>
             <div id="statusTag" class="bg-slate-100 text-slate-500 text-[10px] px-2.5 py-1 rounded-full font-black uppercase">連線中</div>
         </div>
@@ -116,7 +116,7 @@
                 </div>
             </div>
             <button id="cameraBtn" class="w-full bg-slate-900 text-white py-5 rounded-3xl font-black text-lg shadow-xl btn-active flex items-center justify-center gap-4 tracking-tighter">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812-1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" /><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" /><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
                 拍攝現場照片
             </button>
         </div>
@@ -171,25 +171,43 @@
         };
 
         async function initFirebase() {
-            const { initializeApp, getAuth, signInAnonymously, onAuthStateChanged, getFirestore, collection, onSnapshot } = window.firebaseCore;
+            const { initializeApp, getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged, getFirestore, collection, onSnapshot } = window.firebaseCore;
+            
             let config;
             try { config = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : backupConfig; } catch (e) { config = backupConfig; }
+            
             const app = initializeApp(config);
             auth = getAuth(app);
             db = getFirestore(app);
             appId = typeof __app_id !== 'undefined' ? __app_id : 'field-survey-app';
 
-            onAuthStateChanged(auth, async (u) => {
+            // 重構驗證流程：確保先登入再執行監聽 (Rule 3)
+            const initAuth = async () => {
+                try {
+                    if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
+                        await signInWithCustomToken(auth, __initial_auth_token);
+                    } else {
+                        await signInAnonymously(auth);
+                    }
+                } catch (e) {
+                    console.error("Auth Error:", e);
+                }
+            };
+
+            await initAuth();
+
+            onAuthStateChanged(auth, (u) => {
                 user = u;
                 if (user) {
                     const publicDataCol = collection(db, 'artifacts', appId, 'public', 'data', 'finished_points');
+                    // 加入錯誤回呼預防權限報錯 (Critical Requirement)
                     onSnapshot(publicDataCol, (snapshot) => {
                         finishedPoints.clear();
                         snapshot.forEach(doc => finishedPoints.set(doc.id, doc.data()));
                         refreshMarkers();
+                    }, (err) => {
+                        console.error("Firestore Snapshot Error:", err);
                     });
-                } else {
-                    await signInAnonymously(auth);
                 }
             });
         }
@@ -249,17 +267,28 @@
 
         async function autoLoadAssets() {
             try {
-                const kmlRes = await fetch('./POI.kml');
+                // 優化路徑解析：確保 fetch 使用正確的 URL
+                const baseUrl = window.location.origin + window.location.pathname.substring(0, window.location.pathname.lastIndexOf('/')) + '/';
+                const kmlUrl = new URL('POI.kml', baseUrl).href;
+                const xlsxUrl = new URL('template.xlsx', baseUrl).href;
+
+                const kmlRes = await fetch(kmlUrl);
+                if (!kmlRes.ok) throw new Error("KML 載入失敗");
                 const kmlText = await kmlRes.text();
                 window.allPoints = parseKML(kmlText); 
                 plotPoints(window.allPoints);
 
-                const xlsxRes = await fetch('./template.xlsx');
+                const xlsxRes = await fetch(xlsxUrl);
+                if (!xlsxRes.ok) throw new Error("Excel 範本載入失敗");
                 templateData = await xlsxRes.arrayBuffer();
 
                 document.getElementById('loading').style.display = 'none';
                 document.getElementById('statusIndicator').className = 'w-2.5 h-2.5 rounded-full bg-emerald-500';
-            } catch (err) { console.error(err); }
+            } catch (err) { 
+                console.error("Asset Load Error:", err);
+                // 如果 fetch 失敗，顯示錯誤在 UI 上
+                document.getElementById('loadingMsg').innerHTML = `<p class="text-red-500">資源載入錯誤: ${err.message}</p><p>請確認 POI.kml 與 template.xlsx 是否存在。</p>`;
+            }
         }
 
         function parseKML(text) {
@@ -282,13 +311,11 @@
                     for (const node of dataNodes) {
                         const dataName = node.getAttribute("name");
                         const val = node.getElementsByTagName("value")[0]?.textContent?.trim();
-                        // 處理 bury_loc，確保讀取 Data 標籤中的值
                         if (dataName === "unific_id") unific_id = val;
                         if (dataName === "bury_loc") bury_loc = val;
                     }
                 }
 
-                // Fallback: 如果 ExtendedData 沒有，則從 description 嘗試解析
                 if (!unific_id) {
                     const idMatch = desc.match(/unific_id:\s*([^<|\n|\r]+)/i);
                     unific_id = idMatch ? idMatch[1].trim() : name;
@@ -525,7 +552,6 @@
                 }
 
                 const blob = await generateExcel();
-                // 參考 index0415.html 的下載方式
                 triggerDownload(blob, `${selectedPoint.unific_id}_調查成果.xlsx`);
                 
                 setTimeout(closePanel, 800);
