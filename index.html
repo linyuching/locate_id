@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-    <title>外業調查拍照系統（多KML）</title>
+    <title>外業調查拍照圖卡系統</title>
 
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
@@ -158,7 +158,7 @@
 
     <div id="loading" class="loading-overlay">
         <div class="animate-spin rounded-full h-16 w-16 border-t-4 border-blue-500 mb-6"></div>
-        <h2 class="text-xl font-bold mb-2 tracking-tight text-center px-4">系統資料同步中</h2>
+        <h2 class="text-xl font-bold mb-2 tracking-tight text-center px-4">處理中</h2>
         <div id="loadingMsg" class="text-slate-400 text-sm text-center px-8 space-y-2">
             <p>正在連接雲端並載入資源...</p>
         </div>
@@ -170,19 +170,9 @@
         <div class="bg-white/95 backdrop-blur-md p-3 rounded-2xl shadow-2xl flex justify-between items-center pointer-events-auto border border-white/20">
             <div class="flex items-center gap-2">
                 <div id="statusIndicator" class="w-2.5 h-2.5 rounded-full bg-yellow-500 animate-pulse"></div>
-                <h1 class="text-lg font-black text-slate-800 tracking-tighter">外業調查拍照 <span class="text-blue-500 text-xs">V4.0</span></h1>
+                <h1 class="text-lg font-black text-slate-800 tracking-tighter">外業調查拍照 <span class="text-blue-500 text-xs">V4.2</span></h1>
             </div>
             <div id="statusTag" class="bg-slate-100 text-slate-500 text-[10px] px-2.5 py-1 rounded-full font-black uppercase">連線中</div>
-        </div>
-    </div>
-
-    <div id="completedFilesPanel" class="absolute right-4 bottom-4 z-[1200] w-[360px] max-w-[92vw] bg-white/95 backdrop-blur-md rounded-2xl shadow-2xl border border-white/30 overflow-hidden">
-        <div class="px-4 py-3 border-b border-slate-200 flex items-center justify-between">
-            <h3 class="text-sm font-black text-slate-800">已完成成果圖卡</h3>
-            <span id="completedFilesCount" class="text-[10px] px-2 py-1 rounded-full bg-emerald-50 text-emerald-700 font-bold">0</span>
-        </div>
-        <div id="completedFilesList" class="max-h-[320px] overflow-y-auto p-3 space-y-2 text-sm text-slate-700">
-            <div class="text-slate-400 text-xs">尚無已完成調查點位</div>
         </div>
     </div>
 
@@ -326,21 +316,21 @@
 
                 <div class="bg-slate-50 border border-slate-200 rounded-3xl p-4">
                     <div class="text-xs font-bold text-slate-500 uppercase tracking-wider mb-3">現場照片</div>
-                    <img id="previewMainPhoto" src="" class="w-full h-52 object-cover rounded-2xl border border-slate-200" />
+                    <img id="previewMainPhoto" src="" class="w-full h-32 object-cover rounded-2xl border border-slate-200" />
                 </div>
 
                 <div class="bg-slate-50 border border-slate-200 rounded-3xl p-4">
                     <div class="text-xs font-bold text-slate-500 uppercase tracking-wider mb-3">三支距照片</div>
                     <div class="grid grid-cols-3 gap-2">
-                        <img id="previewOffsetPhoto0" class="w-full h-28 object-cover rounded-2xl border border-slate-200" />
-                        <img id="previewOffsetPhoto1" class="w-full h-28 object-cover rounded-2xl border border-slate-200" />
-                        <img id="previewOffsetPhoto2" class="w-full h-28 object-cover rounded-2xl border border-slate-200" />
+                        <img id="previewOffsetPhoto0" class="w-full h-20 object-cover rounded-2xl border border-slate-200" />
+                        <img id="previewOffsetPhoto1" class="w-full h-20 object-cover rounded-2xl border border-slate-200" />
+                        <img id="previewOffsetPhoto2" class="w-full h-20 object-cover rounded-2xl border border-slate-200" />
                     </div>
                 </div>
 
                 <div class="bg-slate-50 border border-slate-200 rounded-3xl p-4">
                     <div class="text-xs font-bold text-slate-500 uppercase tracking-wider mb-3">交維照片</div>
-                    <img id="previewTrafficPhoto" class="w-full h-52 object-cover rounded-2xl border border-slate-200" />
+                    <img id="previewTrafficPhoto" class="w-full h-32 object-cover rounded-2xl border border-slate-200" />
                 </div>
             </div>
 
@@ -356,10 +346,10 @@
         </div>
 
         <input type="file" id="cameraInput" accept="image/*" capture="camera" class="hidden" />
-        <input type="file" id="offsetCameraInput0" accept="image/*" class="hidden" />
-        <input type="file" id="offsetCameraInput1" accept="image/*" class="hidden" />
-        <input type="file" id="offsetCameraInput2" accept="image/*" class="hidden" />
-        <input type="file" id="trafficCameraInput" accept="image/*" class="hidden" />
+        <input type="file" id="offsetCameraInput0" accept="image/*" capture="environment" class="hidden" />
+        <input type="file" id="offsetCameraInput1" accept="image/*" capture="environment" class="hidden" />
+        <input type="file" id="offsetCameraInput2" accept="image/*" capture="environment" class="hidden" />
+        <input type="file" id="trafficCameraInput" accept="image/*" capture="environment" class="hidden" />
     </div>
 
     <script type="module">
@@ -392,7 +382,7 @@
             { file: "./湖口所_窨井_未測量.kml", label: "窨井｜未測量", color: "#86efac", category: "窨井", status: "未測量", iconType: "manhole" }
         ];
 
-        const COMPLETED_LAYER_LABEL = "已完成 / 已測量";
+        const COMPLETED_LAYER_LABEL = "已調查";
 
         let map;
         let selectedPoint = null;
@@ -413,7 +403,6 @@
         let completedPointIds = new Set();
 
         let completedUnsubscribe = null;
-        let filesUnsubscribe = null;
         let assetsLoaded = false;
 
         let db, auth, user, appId, storage;
@@ -538,7 +527,6 @@
                     assetsLoaded = true;
                     await autoLoadAssets();
                     subscribeCompletedPoints();
-                    subscribeCompletedFiles();
                 }
             });
         }
@@ -601,17 +589,40 @@
             }
         }
 
-        async function uploadPhoto(base64, path) {
-            const { ref, uploadBytes, getDownloadURL } = window.firebaseCore;
         
-            const res = await fetch(base64);
-            const blob = await res.blob();
-        
-            const storageRef = ref(storage, path);
-            await uploadBytes(storageRef, blob, { contentType: "image/jpeg" });
-        
-            return await getDownloadURL(storageRef);
+async function uploadPhoto(base64, path) {
+    const { ref, uploadBytes, getDownloadURL } = window.firebaseCore;
+    if (!base64) throw new Error(`缺少照片資料：${path}`);
+
+    const res = await fetch(base64);
+    const blob = await res.blob();
+
+    const storageRef = ref(storage, path);
+    await uploadBytes(storageRef, blob, { contentType: "image/jpeg" });
+
+    return await getDownloadURL(storageRef);
 }
+
+async function uploadAllSurveyPhotos(point) {
+    const id = sanitizeFileName(getPointKey(point));
+    const uploads = [
+        { label: "現場照片", data: processedPhotoBase64, path: `artifacts/${appId}/photos/${id}/${id}_現場.jpg` },
+        { label: "支距1照片", data: offsetPhotoBase64[0], path: `artifacts/${appId}/photos/${id}/${id}_支距1.jpg` },
+        { label: "支距2照片", data: offsetPhotoBase64[1], path: `artifacts/${appId}/photos/${id}/${id}_支距2.jpg` },
+        { label: "支距3照片", data: offsetPhotoBase64[2], path: `artifacts/${appId}/photos/${id}/${id}_支距3.jpg` },
+        { label: "交維照片", data: trafficPhotoBase64, path: `artifacts/${appId}/photos/${id}/${id}_交維.jpg` },
+    ];
+
+    const results = [];
+    for (const item of uploads) {
+        if (!item.data) throw new Error(`${item.label}不存在，無法上傳`);
+        showLoadingMask(true, `正在上傳：${item.label}`);
+        const url = await uploadPhoto(item.data, item.path);
+        results.push({ ...item, downloadURL: url });
+    }
+    return results;
+}
+
 
         
         function getByLocalName(parent, localName) {
@@ -654,15 +665,15 @@
                 }
 
                 if (!unific_id) {
-                    let match = desc.match(/unific_id\s*:\s*([^<||]+)/i);
-                    if (!match) match = desc.match(/識別碼\s*:\s*([^<||]+)/i);
+                    let match = desc.match(/unific_id\s*:\s*([^<\n\r]+)/i);
+                    if (!match) match = desc.match(/識別碼\s*:\s*([^<\n\r]+)/i);
                     if (match) unific_id = match[1].trim();
                 }
 
                 if (!bury_loc) {
-                    let locMatch = desc.match(/bury_loc\s*:\s*([^<||]+)/i);
-                    if (!locMatch) locMatch = desc.match(/地址\s*:\s*([^<||]+)/i);
-                    bury_loc = locMatch? locMatch[1].trim() : "";
+                    let locMatch = desc.match(/bury_loc\s*:\s*([^<\n\r]+)/i);
+                    if (!locMatch) locMatch = desc.match(/地址\s*:\s*([^<\n\r]+)/i);
+                    bury_loc = locMatch ? locMatch[1].trim() : "";
                 }
 
                 return {
@@ -852,109 +863,30 @@
             });
         }
 
-        function subscribeCompletedFiles() {
-            const { collection, onSnapshot } = window.firebaseCore;
-            const filesRef = collection(db, `artifacts/${appId}/public/data/completed_points`);
 
-            if (filesUnsubscribe) filesUnsubscribe();
-            filesUnsubscribe = onSnapshot(filesRef, (snapshot) => {
-                const items = [];
-                snapshot.forEach((docSnap) => items.push(docSnap.data()));
-                items.sort((a, b) => (b?.completedAt?.seconds || 0) - (a?.completedAt?.seconds || 0));
-                renderCompletedFiles(items);
-            }, (err) => {
-                console.error("completed_points 面板同步失敗", err);
-            });
-        }
+async function savePhotoRecords(point, uploadedPhotos) {
+    const { doc, setDoc, serverTimestamp } = window.firebaseCore;
+    const pointKey = getPointKey(point);
 
-        function renderCompletedFiles(items) {
-            const countEl = document.getElementById("completedFilesCount");
-            const listEl = document.getElementById("completedFilesList");
-            countEl.textContent = items.length;
+    for (const photo of uploadedPhotos) {
+        const docId = `${pointKey}__${photo.label}`;
+        const fileRef = doc(db, `artifacts/${appId}/public/data/completed_photo_files/${docId}`);
+        await setDoc(fileRef, {
+            pointKey,
+            unific_id: point.unific_id || "",
+            id: point.id || "",
+            category: point.category || "",
+            originalStatus: point.status || "",
+            photoLabel: photo.label,
+            storagePath: photo.path,
+            downloadURL: photo.downloadURL,
+            uploadedBy: user?.uid || "anonymous",
+            uploadedAt: serverTimestamp()
+        }, { merge: true });
+    }
+}
 
-            if (!items.length) {
-                listEl.innerHTML = `<div class="text-slate-400 text-xs">尚無已完成調查點位</div>`;
-                return;
-            }
-
-            listEl.innerHTML = items.map(item => {
-                const title = item.unific_id || item.pointKey || "未命名";
-                const category = item.category || "";
-                const originalStatus = item.originalStatus || "";
-                const url = item.downloadURL || "#";
-
-                return `
-                    <div class="file-card border border-slate-200 rounded-xl p-3 bg-slate-50">
-                        <div class="font-bold text-slate-800 text-xs break-all">${title}</div>
-                        <div class="text-[11px] text-slate-500 mt-1">${category} ｜ 原始：${originalStatus}</div>
-                        <div class="text-[11px] text-emerald-600 font-bold mt-1">已調查</div>
-                        <div class="mt-2 flex gap-2">
-                            <a href="${url}" target="_blank" class="inline-flex items-center px-3 py-1.5 rounded-lg bg-blue-600 text-white text-xs font-bold">
-                                開啟 xlsx
-                            </a>
-                        </div>
-                    </div>
-                `;
-            }).join("");
-        }
-
-        async function uploadExcelToCloud(blob, point) {
-            const { ref, uploadBytes, getDownloadURL } = window.firebaseCore;
-            const id = getPointKey(point);
-            const safeId = sanitizeFileName(id);
-            const fileName = buildExcelFileName(point);
-            const storagePath = `artifacts/${appId}/completed_xlsx/${safeId}/${safeId}.xlsx`;
-
-            const storageRef = ref(storage, storagePath);
-            await uploadBytes(storageRef, blob, { contentType: XLSX_MIME });
-            const downloadURL = await getDownloadURL(storageRef);
-
-            return { fileName, storagePath, downloadURL };
-        }
-
-        async function savePointCompleted(point, fileInfo) {
-            const { doc, setDoc, serverTimestamp } = window.firebaseCore;
-            const pointKey = getPointKey(point);
-
-            const pointRef = doc(db, `artifacts/${appId}/public/data/completed_points/${pointKey}`);
-            await setDoc(pointRef, {
-                pointKey,
-                id: point.id || "",
-                unific_id: point.unific_id || "",
-                category: point.category || "",
-                originalStatus: point.status || "",
-                sourceLayerLabel: point.layerLabel || "",
-                status: "已調查",
-                completedBy: user?.uid || "anonymous",
-                completedAt: serverTimestamp(),
-                fileName: fileInfo.fileName,
-                storagePath: fileInfo.storagePath,
-                downloadURL: fileInfo.downloadURL
-            }, { merge: true });
-        }
-
-        async function saveCompletedFileRecord(point, fileInfo) {
-            const { doc, setDoc, serverTimestamp } = window.firebaseCore;
-            const pointKey = getPointKey(point);
-
-            const fileDocId = `${pointKey}__latest`;
-            const fileRef = doc(db, `artifacts/${appId}/public/data/completed_files/${fileDocId}`);
-
-            await setDoc(fileRef, {
-                pointKey,
-                id: point.id || "",
-                unific_id: point.unific_id || "",
-                category: point.category || "",
-                originalStatus: point.status || "",
-                fileName: fileInfo.fileName,
-                storagePath: fileInfo.storagePath,
-                downloadURL: fileInfo.downloadURL,
-                uploadedBy: user?.uid || "anonymous",
-                uploadedAt: serverTimestamp()
-            }, { merge: true });
-        }
-
-        function compressImageFile(file, maxWidth = 1200, quality = 0.8) {
+        function compressImageFile(file, maxWidth = 1000, quality = 0.72) {
             return new Promise((resolve, reject) => {
                 const reader = new FileReader();
                 reader.onload = (ev) => {
@@ -1393,6 +1325,7 @@
             return new Blob([buffer], { type: XLSX_MIME });
         }
 
+        
         document.getElementById("confirmSubmitBtn").onclick = async () => {
             if (!validateBeforePreview()) return;
             if (!selectedPoint?.unific_id) {
@@ -1407,31 +1340,19 @@
             }
 
             try {
-                showLoadingMask(true, "產生並上傳成果圖卡中...");
-
+                showLoadingMask(true, "正在產生 Excel...");
                 const blob = await generateExcel();
-                const id = getPointKey(selectedPoint);
 
-                // 現場照片
-                await uploadPhoto(processedPhotoBase64,
-                    `artifacts/${appId}/photos/${id}/${id}_現場.jpg`
-                );
-                
-                // 三支距照片
-                for (let i = 0; i < 3; i++) {
-                    await uploadPhoto(offsetPhotoBase64[i],
-                        `artifacts/${appId}/photos/${id}/${id}_支距${i+1}.jpg`
-                    );
-                }
-                
-                // 交維照片
-                await uploadPhoto(trafficPhotoBase64,
-                    `artifacts/${appId}/photos/${id}/${id}_交維.jpg`
-                );
+                showLoadingMask(true, "正在上傳照片...");
+                const uploadedPhotos = await uploadAllSurveyPhotos(selectedPoint);
+
+                showLoadingMask(true, "正在上傳 Excel...");
                 const fileInfo = await uploadExcelToCloud(blob, selectedPoint);
 
+                showLoadingMask(true, "正在寫入完成狀態...");
                 await saveCompletedFileRecord(selectedPoint, fileInfo);
                 await savePointCompleted(selectedPoint, fileInfo);
+                await savePhotoRecords(selectedPoint, uploadedPhotos);
 
                 completedPointIds.add(getPointKey(selectedPoint));
                 applyCompletedState(new Set(completedPointIds));
@@ -1441,7 +1362,10 @@
                 if (selectedMarker) selectedMarker.closePopup();
                 setTimeout(() => {
                     closePanel();
-                }, 800);
+                }, 300);
+
+                alert(`已完成上傳。
+Storage 照片資料夾：artifacts/${appId}/photos/${sanitizeFileName(pointKey)}/`);
             } catch (err) {
                 console.error("完整錯誤物件：", err);
                 console.error("錯誤代碼：", err?.code);
@@ -1451,6 +1375,7 @@
                 showLoadingMask(false);
             }
         };
+
 
         function triggerDownload(blob, fileName) {
             const url = URL.createObjectURL(blob);
