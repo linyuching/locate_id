@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>外業調查拍照系統_ID</title>
+    <title>外業調查拍照系統 (協同版)</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
@@ -80,7 +80,7 @@
         
         <div class="flex justify-between items-start mb-6">
             <div class="flex-1">
-                <span class="text-[10px] font-black text-blue-600 uppercase tracking-widest bg-blue-50 px-2 py-0.5 rounded-md">目前選定點位</span>
+                <span class="text-[10px] font-black text-blue-600 uppercase tracking-widest bg-blue-50 px-2 py-0.5 rounded-md">目前選定點位 (Unific ID)</span>
                 <h2 class="text-2xl font-black text-slate-900 mt-2 break-all leading-tight" id="selectedId">讀取中</h2>
                 <p id="selectedCoords" class="text-xs font-mono text-slate-400 mt-2 tracking-tighter"></p>
                 <p id="selectedLoc" class="text-xs text-slate-500 mt-1 font-medium"></p>
@@ -213,13 +213,25 @@
                 const desc = p.getElementsByTagName("description")[0]?.textContent || "";
                 const coords = p.getElementsByTagName("coordinates")[0]?.textContent?.trim();
                 
+                let unific_id = name;
                 let bury_loc = "";
+
+                // 解析 description 中的 key: value 格式
+                const idMatch = desc.match(/unific_id:\s*([^<|\n|\r]+)/i);
                 const locMatch = desc.match(/bury_loc:\s*([^<|\n|\r]+)/i);
+
+                if (idMatch) unific_id = idMatch[1].trim();
                 if (locMatch) bury_loc = locMatch[1].trim();
 
                 if (coords) {
                     const parts = coords.split(",");
-                    results.push({ id: name, lat: parseFloat(parts[1]), lng: parseFloat(parts[0]), bury_loc: bury_loc });
+                    results.push({ 
+                        id: name, 
+                        unific_id: unific_id, 
+                        lat: parseFloat(parts[1]), 
+                        lng: parseFloat(parts[0]), 
+                        bury_loc: bury_loc 
+                    });
                 }
             }
             return results;
@@ -235,7 +247,7 @@
                     m.getElement()?.classList.add('selected-marker');
                     selectedPoint = p;
                     document.getElementById('actionPanel').classList.add('show');
-                    document.getElementById('selectedId').textContent = p.id;
+                    document.getElementById('selectedId').textContent = p.unific_id; // 優先顯示 unific_id
                     document.getElementById('selectedCoords').textContent = `緯度: ${p.lat.toFixed(6)} / 經度: ${p.lng.toFixed(6)}`;
                     document.getElementById('selectedLoc').textContent = p.bury_loc ? `位置: ${p.bury_loc}` : "";
                     resetUIState();
@@ -248,7 +260,8 @@
             markersLayer.eachLayer(m => {
                 const latlng = m.getLatLng();
                 const p = window.allPoints?.find(pt => Math.abs(pt.lat - latlng.lat) < 0.0001);
-                if (p && finishedPoints.has(p.id)) { m.getElement()?.classList.add('finished-marker'); }
+                // 使用 unific_id 作為狀態檢查基準
+                if (p && finishedPoints.has(p.unific_id)) { m.getElement()?.classList.add('finished-marker'); }
             });
         }
 
@@ -300,22 +313,34 @@
                 sheet.eachRow({ includeEmpty: true }, (row, rowNumber) => {
                     row.eachCell({ includeEmpty: true }, (cell, colNumber) => {
                         const cleanVal = (cell.value ? String(cell.value) : "").replace(/\s/g, '');
+                        
+                        // 1. 處理「位置」欄位
                         if (cleanVal === "位置") {
                             let offset = 1;
+                            // 跳過合併區域
                             while (sheet.getRow(rowNumber).getCell(colNumber + offset).master.address === cell.master.address) { offset++; }
                             sheet.getRow(rowNumber).getCell(colNumber + offset).value = selectedPoint.bury_loc || "";
                         }
+                        
+                        // 2. 處理「編號」欄位
                         if (cleanVal === "編號") {
                             if (sheetName.includes("圖卡背面")) {
-                                sheet.getRow(rowNumber + 1).getCell(colNumber).master.value = selectedPoint.id;
+                                // 圖卡背面邏輯：填入下方儲存格
+                                sheet.getRow(rowNumber + 1).getCell(colNumber).master.value = selectedPoint.unific_id;
                             } else {
+                                // 制水閥記錄卡邏輯：填入右側欄位
                                 let offset = 1;
                                 while (sheet.getRow(rowNumber).getCell(colNumber + offset).master.address === cell.master.address) { offset++; }
-                                sheet.getRow(rowNumber).getCell(colNumber + offset).value = selectedPoint.id;
+                                sheet.getRow(rowNumber).getCell(colNumber + offset).value = selectedPoint.unific_id;
                             }
                         }
+                        
+                        // 3. 處理「現場照片」標籤
                         if (!photoInserted && cleanVal.includes("現場照片")) {
-                            sheet.addImage(imageId, { tl: { col: colNumber - 1 + 0.1, row: rowNumber + 0.1 }, ext: { width: targetWidthPx, height: targetHeightPx } });
+                            sheet.addImage(imageId, { 
+                                tl: { col: colNumber - 1 + 0.1, row: rowNumber + 0.1 }, 
+                                ext: { width: targetWidthPx, height: targetHeightPx } 
+                            });
                             photoInserted = true; 
                         }
                     });
@@ -329,7 +354,8 @@
             try {
                 showLoadingMask(true, "產生成果中...");
                 const blob = await generateExcel();
-                triggerDownload(blob, `${selectedPoint.id}.xlsx`);
+                // 檔名使用 unific_id
+                triggerDownload(blob, `${selectedPoint.unific_id}.xlsx`);
                 setTimeout(closePanel, 500);
             } catch (err) { alert("出錯: " + err.message); }
             showLoadingMask(false);
@@ -344,7 +370,6 @@
             document.body.appendChild(a); // 手機必須掛載到 DOM
             try { a.click(); } catch (e) { window.location.href = url; }
             
-            // 延長釋放時間至 10 秒，手機上下載才不會斷掉
             setTimeout(() => {
                 document.body.removeChild(a);
                 URL.revokeObjectURL(url);
