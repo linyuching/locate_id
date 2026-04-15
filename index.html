@@ -83,7 +83,7 @@
                 <span class="text-[10px] font-black text-blue-600 uppercase tracking-widest bg-blue-50 px-2 py-0.5 rounded-md">目前選定點位 (Unific ID)</span>
                 <h2 class="text-2xl font-black text-slate-900 mt-2 break-all leading-tight" id="selectedId">讀取中</h2>
                 <p id="selectedCoords" class="text-xs font-mono text-slate-400 mt-2 tracking-tighter"></p>
-                <p id="selectedLoc" class="text-xs text-slate-500 mt-1 font-medium"></p>
+                <p id="selectedLoc" class="text-xs text-slate-500 mt-1 font-medium italic"></p>
             </div>
             <div class="flex flex-col gap-2 ml-4">
                 <button id="closePanelBtn" class="bg-slate-100 text-slate-400 p-2.5 rounded-full btn-active self-end shadow-sm">
@@ -148,7 +148,7 @@
         };
 
         async function initFirebase() {
-            const { initializeApp, getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged, getFirestore, collection, onSnapshot } = window.firebaseCore;
+            const { initializeApp, getAuth, signInAnonymously, onAuthStateChanged, getFirestore, collection, onSnapshot } = window.firebaseCore;
             let config;
             try { config = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : backupConfig; } catch (e) { config = backupConfig; }
             const app = initializeApp(config);
@@ -205,22 +205,38 @@
         function parseKML(text) {
             const parser = new DOMParser();
             const xml = parser.parseFromString(text, "text/xml");
-            const placemarks = xml.getElementsByTagName("Placemark");
+            const placemarks = Array.from(xml.getElementsByTagName("Placemark"));
             const results = [];
-            for (let i = 0; i < placemarks.length; i++) {
-                const p = placemarks[i];
+            
+            for (const p of placemarks) {
                 const name = p.getElementsByTagName("name")[0]?.textContent || "未命名";
                 const desc = p.getElementsByTagName("description")[0]?.textContent || "";
                 const coords = p.getElementsByTagName("coordinates")[0]?.textContent?.trim();
                 
-                let unific_id = name;
+                let unific_id = "";
                 let bury_loc = "";
 
+                // --- 1. 優先嘗試從 ExtendedData 解析精確欄位 ---
+                const extendedData = p.getElementsByTagName("ExtendedData")[0];
+                if (extendedData) {
+                    const dataNodes = Array.from(extendedData.getElementsByTagName("Data"));
+                    for (const node of dataNodes) {
+                        const dataName = node.getAttribute("name");
+                        const val = node.getElementsByTagName("value")[0]?.textContent;
+                        if (dataName === "unific_id") unific_id = val?.trim() || "";
+                        if (dataName === "bury_loc") bury_loc = val?.trim() || "";
+                    }
+                }
+
+                // --- 2. 如果沒解析到，從 description 解析 (處理 CDATA) ---
                 const idMatch = desc.match(/unific_id:\s*([^<|\n|\r]+)/i);
                 const locMatch = desc.match(/bury_loc:\s*([^<|\n|\r]+)/i);
-
-                if (idMatch) unific_id = idMatch[1].trim();
-                if (locMatch) bury_loc = locMatch[1].trim();
+                
+                if (!unific_id && idMatch) unific_id = idMatch[1].trim();
+                if (!bury_loc && locMatch) bury_loc = locMatch[1].trim();
+                
+                // 最終備案
+                if (!unific_id) unific_id = name;
 
                 if (coords) {
                     const parts = coords.split(",");
@@ -248,11 +264,16 @@
                     document.getElementById('actionPanel').classList.add('show');
                     document.getElementById('selectedId').textContent = p.unific_id;
                     document.getElementById('selectedCoords').textContent = `緯度: ${p.lat.toFixed(6)} / 經度: ${p.lng.toFixed(6)}`;
-                    document.getElementById('selectedLoc').textContent = p.bury_loc ? `位置: ${p.bury_loc}` : "";
+                    document.getElementById('selectedLoc').textContent = p.bury_loc ? `位置: ${p.bury_loc}` : "(位置未解析)";
                     resetUIState();
                 });
                 markersLayer.addLayer(m);
             });
+
+            if (points.length > 0) {
+                const bounds = L.featureGroup(markersLayer.getLayers()).getBounds();
+                map.fitBounds(bounds, { padding: [50, 50], animate: true });
+            }
         }
 
         function refreshMarkers() {
@@ -311,42 +332,47 @@
                 
                 sheet.eachRow({ includeEmpty: true }, (row, rowNumber) => {
                     row.eachCell({ includeEmpty: true }, (cell, colNumber) => {
-                        // 取得顯示文字並去除空白以利比對
                         const cellText = cell.value ? String(cell.value).trim() : "";
                         const cleanVal = cellText.replace(/\s/g, '');
                         
-                        // 1. 處理「位置」欄位 (制水閥記錄卡填入右側)
+                        // 1. 處理標籤為「位置」的欄位
                         if (cleanVal === "位置") {
+                            // 無論在哪個分頁，「位置」都填入右側
                             let offset = 1;
-                            // 往右跳過與標籤本身同屬一個合併範圍的儲存格
-                            while (colNumber + offset <= sheet.columnCount && 
-                                   sheet.getRow(rowNumber).getCell(colNumber + offset).master.address === cell.master.address) {
+                            while (colNumber + offset <= sheet.columnCount) {
+                                const targetCell = sheet.getRow(rowNumber).getCell(colNumber + offset);
+                                if (targetCell.master.address !== cell.master.address) {
+                                    targetCell.master.value = selectedPoint.bury_loc || "";
+                                    break;
+                                }
                                 offset++;
                             }
-                            const targetCell = sheet.getRow(rowNumber).getCell(colNumber + offset);
-                            targetCell.master.value = selectedPoint.bury_loc || "";
                         }
                         
-                        // 2. 處理「編號」欄位
+                        // 2. 處理標籤為「編號」的欄位
                         if (cleanVal === "編號") {
                             if (sheetName.includes("圖卡背面")) {
-                                // 圖卡背面邏輯：填入標籤下方儲存格 (跳過標籤合併範圍)
+                                // 圖卡背面分頁：填入下方儲存格
                                 let rowOffset = 1;
-                                while (rowNumber + rowOffset <= sheet.rowCount && 
-                                       sheet.getRow(rowNumber + rowOffset).getCell(colNumber).master.address === cell.master.address) {
+                                while (rowNumber + rowOffset <= sheet.rowCount) {
+                                    const targetCell = sheet.getRow(rowNumber + rowOffset).getCell(colNumber);
+                                    if (targetCell.master.address !== cell.master.address) {
+                                        targetCell.master.value = selectedPoint.unific_id;
+                                        break;
+                                    }
                                     rowOffset++;
                                 }
-                                const targetCell = sheet.getRow(rowNumber + rowOffset).getCell(colNumber);
-                                targetCell.master.value = selectedPoint.unific_id;
                             } else {
-                                // 制水閥記錄卡邏輯：填入標籤右側欄位
+                                // 其他分頁 (如制水閥記錄卡)：填入右側儲存格
                                 let colOffset = 1;
-                                while (colNumber + colOffset <= sheet.columnCount && 
-                                       sheet.getRow(rowNumber).getCell(colNumber + colOffset).master.address === cell.master.address) {
+                                while (colNumber + colOffset <= sheet.columnCount) {
+                                    const targetCell = sheet.getRow(rowNumber).getCell(colNumber + colOffset);
+                                    if (targetCell.master.address !== cell.master.address) {
+                                        targetCell.master.value = selectedPoint.unific_id;
+                                        break;
+                                    }
                                     colOffset++;
                                 }
-                                const targetCell = sheet.getRow(rowNumber).getCell(colNumber + colOffset);
-                                targetCell.master.value = selectedPoint.unific_id;
                             }
                         }
                         
@@ -370,6 +396,7 @@
             try {
                 showLoadingMask(true, "產生成果中...");
                 const blob = await generateExcel();
+                // 使用 unific_id 作為檔名
                 triggerDownload(blob, `${selectedPoint.unific_id}.xlsx`);
                 setTimeout(closePanel, 500);
             } catch (err) { alert("出錯: " + err.message); }
