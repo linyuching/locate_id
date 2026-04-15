@@ -63,7 +63,7 @@
         <div class="bg-white/95 backdrop-blur-md p-3 rounded-2xl shadow-2xl flex justify-between items-center pointer-events-auto border border-white/20">
             <div class="flex items-center gap-2">
                 <div id="statusIndicator" class="w-2.5 h-2.5 rounded-full bg-yellow-500 animate-pulse"></div>
-                <h1 class="text-lg font-black text-slate-800 tracking-tighter">外業調查拍照 <span class="text-blue-500 text-xs">V2.1</span></h1>
+                <h1 class="text-lg font-black text-slate-800 tracking-tighter">外業調查拍照 <span class="text-blue-500 text-xs">V2.2</span></h1>
             </div>
             <div id="statusTag" class="bg-slate-100 text-slate-500 text-[10px] px-2.5 py-1 rounded-full font-black uppercase">連線中</div>
         </div>
@@ -75,9 +75,10 @@
         
         <div class="flex justify-between items-start mb-6">
             <div class="flex-1">
-                <span class="text-[10px] font-black text-blue-600 uppercase tracking-widest bg-blue-50 px-2 py-0.5 rounded-md">目前選定點位</span>
+                <span class="text-[10px] font-black text-blue-600 uppercase tracking-widest bg-blue-50 px-2 py-0.5 rounded-md">目前選定點位 (Name)</span>
                 <h2 class="text-2xl font-black text-slate-900 mt-2 break-all leading-tight" id="selectedId">讀取中</h2>
                 <p id="selectedLoc" class="text-xs text-slate-500 mt-1 font-medium italic"></p>
+                <p id="selectedUnific" class="text-[10px] text-slate-400 mt-1 font-mono"></p>
             </div>
             <button id="closePanelBtn" class="bg-slate-100 text-slate-400 p-2.5 rounded-full btn-active shadow-sm">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
@@ -250,7 +251,7 @@
                     }
                 }
 
-                // 若 ExtendedData 無資料，從 description 解析 (Regex)
+                // 若 ExtendedData 無資料，從 description 解析
                 if (!unific_id) {
                     const idMatch = desc.match(/unific_id:\s*([^<|\n|\r]+)/i);
                     unific_id = idMatch ? idMatch[1].trim() : name;
@@ -274,14 +275,18 @@
             markersLayer.clearLayers();
             points.forEach(p => {
                 const m = L.marker([p.lat, p.lng]).on('click', () => {
-                    map.flyTo([p.lat, p.lng], 19);
+                    // 縮放層級調降為 17 (原為 19)
+                    map.flyTo([p.lat, p.lng], 17);
                     if (selectedMarker) selectedMarker.getElement()?.classList.remove('selected-marker');
                     selectedMarker = m;
                     m.getElement()?.classList.add('selected-marker');
                     selectedPoint = p;
                     
-                    document.getElementById('selectedId').textContent = p.unific_id;
+                    // 標題顯示 KML 中的 name (例如 117.0)
+                    document.getElementById('selectedId').textContent = p.id;
                     document.getElementById('selectedLoc').textContent = p.bury_loc || "位置未標註";
+                    document.getElementById('selectedUnific').textContent = `ID: ${p.unific_id}`;
+                    
                     document.getElementById('actionPanel').classList.add('show');
                     resetUIState();
                 });
@@ -360,31 +365,53 @@
 
             workbook.eachSheet((sheet) => {
                 const sheetName = sheet.name.replace(/\s/g, '');
-                let photoInsertedInSheet = false; // 旗標：確保每一頁只插入一次照片
+                let photoInsertedInSheet = false; 
 
                 sheet.eachRow({ includeEmpty: true }, (row, rowNumber) => {
                     row.eachCell({ includeEmpty: true }, (cell, colNumber) => {
-                        const cellText = String(cell.value || "").trim().replace(/\s/g, '');
+                        const cellText = String(cell.value || "").trim();
+                        const cleanVal = cellText.replace(/\s/g, '');
                         
-                        // 填入編號
-                        if (cellText === "編號") {
-                            let target;
+                        // 1. 處理「編號」標籤：填入 unific_id
+                        if (cleanVal === "編號") {
                             if (sheetName.includes("圖卡背面")) {
-                                target = sheet.getRow(rowNumber + 1).getCell(colNumber);
+                                let rowOffset = 1;
+                                while (rowNumber + rowOffset <= sheet.rowCount) {
+                                    const targetCell = sheet.getRow(rowNumber + rowOffset).getCell(colNumber);
+                                    if (targetCell.master.address !== cell.master.address) {
+                                        targetCell.master.value = selectedPoint.unific_id;
+                                        break;
+                                    }
+                                    rowOffset++;
+                                }
                             } else {
-                                target = sheet.getRow(rowNumber).getCell(colNumber + 1);
+                                let colOffset = 1;
+                                while (colNumber + colOffset <= sheet.columnCount) {
+                                    const targetCell = sheet.getRow(rowNumber).getCell(colNumber + colOffset);
+                                    if (targetCell.master.address !== cell.master.address) {
+                                        targetCell.master.value = selectedPoint.unific_id;
+                                        break;
+                                    }
+                                    colOffset++;
+                                }
                             }
-                            target.master.value = selectedPoint.unific_id;
                         }
                         
-                        // 填入位置 (bury_loc)
-                        if (cellText === "位置") {
-                            // 填入標籤右側儲存格
-                            sheet.getRow(rowNumber).getCell(colNumber + 1).master.value = selectedPoint.bury_loc;
+                        // 2. 處理「位置」標籤：填入 bury_loc (使用循環偵測)
+                        if (cleanVal === "位置") {
+                            let offset = 1;
+                            while (colNumber + offset <= sheet.columnCount) {
+                                const targetCell = sheet.getRow(rowNumber).getCell(colNumber + offset);
+                                if (targetCell.master.address !== cell.master.address) {
+                                    targetCell.master.value = selectedPoint.bury_loc || "";
+                                    break;
+                                }
+                                offset++;
+                            }
                         }
 
-                        // 填入支距表格
-                        if (cellText === "支距") {
+                        // 3. 處理「支距」表格
+                        if (cleanVal === "支距") {
                             for (let i = 0; i < 3; i++) {
                                 const dataRow = sheet.getRow(rowNumber + 1 + i);
                                 dataRow.getCell(colNumber + 1).master.value = offsets[i].dist;
@@ -392,10 +419,10 @@
                             }
                         }
 
-                        // 填入照片 (使用旗標防止重複插入)
-                        if (!photoInsertedInSheet && cellText.includes("現場照片")) {
+                        // 4. 填入照片
+                        if (!photoInsertedInSheet && cleanVal.includes("現場照片")) {
                             sheet.addImage(imageId, { 
-                                tl: { col: colNumber - 1 + 0.05, row: rowNumber + 0.1 }, 
+                                tl: { col: colNumber - 1 + 0.1, row: rowNumber + 0.1 }, 
                                 ext: { width: targetWidthPx, height: targetHeightPx },
                                 editAs: 'oneCell'
                             });
