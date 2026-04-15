@@ -182,7 +182,7 @@
             <span id="completedFilesCount" class="text-[10px] px-2 py-1 rounded-full bg-emerald-50 text-emerald-700 font-bold">0</span>
         </div>
         <div id="completedFilesList" class="max-h-[320px] overflow-y-auto p-3 space-y-2 text-sm text-slate-700">
-            <div class="text-slate-400 text-xs">尚無已上傳成果檔</div>
+            <div class="text-slate-400 text-xs">尚無已完成調查點位</div>
         </div>
     </div>
 
@@ -356,7 +356,7 @@
         </div>
 
         <input type="file" id="cameraInput" accept="image/*" capture="camera" class="hidden" />
-        <input type="file" id="offsetCameraInput0" accept="image/*"  class="hidden" />
+        <input type="file" id="offsetCameraInput0" accept="image/*" class="hidden" />
         <input type="file" id="offsetCameraInput1" accept="image/*" class="hidden" />
         <input type="file" id="offsetCameraInput2" accept="image/*" class="hidden" />
         <input type="file" id="trafficCameraInput" accept="image/*" class="hidden" />
@@ -601,45 +601,62 @@
             }
         }
 
+        function getByLocalName(parent, localName) {
+            return Array.from(parent.getElementsByTagName("*")).find(el => el.localName === localName) || null;
+        }
+
+        function getChildrenByLocalName(parent, localName) {
+            return Array.from(parent.getElementsByTagName("*")).filter(el => el.localName === localName);
+        }
+
         function parseKML(text) {
             const parser = new DOMParser();
             const xml = parser.parseFromString(text, "text/xml");
-            const placemarks = Array.from(xml.getElementsByTagName("Placemark"));
+            const placemarks = Array.from(xml.getElementsByTagName("*")).filter(el => el.localName === "Placemark");
 
             return placemarks.map(p => {
-                const name = p.getElementsByTagName("name")[0]?.textContent || "未命名";
-                const desc = p.getElementsByTagName("description")[0]?.textContent || "";
-                const coordsNode = p.getElementsByTagName("coordinates")[0];
-                const coords = coordsNode ? coordsNode.textContent.trim().split(",") : [0, 0];
+                const nameNode = getByLocalName(p, "name");
+                const descNode = getByLocalName(p, "description");
+                const coordNode = getByLocalName(p, "coordinates");
+
+                const name = nameNode?.textContent?.trim() || "未命名";
+                const desc = descNode?.textContent || "";
+                const coords = coordNode ? coordNode.textContent.trim().split(",") : [0, 0];
 
                 let unific_id = "";
                 let bury_loc = "";
 
-                const extendedData = p.getElementsByTagName("ExtendedData")[0];
-                if (extendedData) {
-                    const dataNodes = Array.from(extendedData.getElementsByTagName("Data"));
-                    for (const node of dataNodes) {
-                        const dataName = node.getAttribute("name");
-                        const val = node.getElementsByTagName("value")[0]?.textContent?.trim();
+                const dataNodes = getChildrenByLocalName(p, "Data");
+                for (const node of dataNodes) {
+                    const dataName = node.getAttribute("name");
+                    const valueNode = getByLocalName(node, "value");
+                    const val = valueNode?.textContent?.trim() || "";
 
-                        if (dataName === "unific_id" || dataName === "識別碼") {
-                            unific_id = val;
-                        }
-                        if (dataName === "bury_loc" || dataName === "地址") {
-                            bury_loc = val;
-                        }
+                    if (dataName === "unific_id" || dataName === "識別碼") {
+                        unific_id = val;
+                    }
+                    if (dataName === "bury_loc" || dataName === "地址") {
+                        bury_loc = val;
                     }
                 }
 
                 if (!unific_id) {
-                    let match = desc.match(/unific_id\s*:\s*([^<|\n|\r]+)/i);
-                    if (!match) match = desc.match(/識別碼\s*:\s*([^<|\n|\r]+)/i);
+                    let match = desc.match(/unific_id\s*:\s*([^<|
+|
+]+)/i);
+                    if (!match) match = desc.match(/識別碼\s*:\s*([^<|
+|
+]+)/i);
                     if (match) unific_id = match[1].trim();
                 }
 
                 if (!bury_loc) {
-                    let locMatch = desc.match(/bury_loc\s*:\s*([^<|\n|\r]+)/i);
-                    if (!locMatch) locMatch = desc.match(/地址\s*:\s*([^<|\n|\r]+)/i);
+                    let locMatch = desc.match(/bury_loc\s*:\s*([^<|
+|
+]+)/i);
+                    if (!locMatch) locMatch = desc.match(/地址\s*:\s*([^<|
+|
+]+)/i);
                     bury_loc = locMatch ? locMatch[1].trim() : "";
                 }
 
@@ -832,16 +849,16 @@
 
         function subscribeCompletedFiles() {
             const { collection, onSnapshot } = window.firebaseCore;
-            const filesRef = collection(db, `artifacts/${appId}/public/data/completed_files`);
+            const filesRef = collection(db, `artifacts/${appId}/public/data/completed_points`);
 
             if (filesUnsubscribe) filesUnsubscribe();
             filesUnsubscribe = onSnapshot(filesRef, (snapshot) => {
                 const items = [];
                 snapshot.forEach((docSnap) => items.push(docSnap.data()));
-                items.sort((a, b) => (b?.uploadedAt?.seconds || 0) - (a?.uploadedAt?.seconds || 0));
+                items.sort((a, b) => (b?.completedAt?.seconds || 0) - (a?.completedAt?.seconds || 0));
                 renderCompletedFiles(items);
             }, (err) => {
-                console.error("completed_files 同步失敗", err);
+                console.error("completed_points 面板同步失敗", err);
             });
         }
 
@@ -851,13 +868,12 @@
             countEl.textContent = items.length;
 
             if (!items.length) {
-                listEl.innerHTML = `<div class="text-slate-400 text-xs">尚無已上傳成果檔</div>`;
+                listEl.innerHTML = `<div class="text-slate-400 text-xs">尚無已完成調查點位</div>`;
                 return;
             }
 
             listEl.innerHTML = items.map(item => {
-                const title = item.fileName || "未命名成果檔";
-                const pointKey = item.pointKey || "";
+                const title = item.unific_id || item.pointKey || "未命名";
                 const category = item.category || "";
                 const originalStatus = item.originalStatus || "";
                 const url = item.downloadURL || "#";
@@ -865,10 +881,11 @@
                 return `
                     <div class="file-card border border-slate-200 rounded-xl p-3 bg-slate-50">
                         <div class="font-bold text-slate-800 text-xs break-all">${title}</div>
-                        <div class="text-[11px] text-slate-500 mt-1">${pointKey} ｜ ${category} ｜ 原始：${originalStatus}</div>
-                        <div class="mt-2">
+                        <div class="text-[11px] text-slate-500 mt-1">${category} ｜ 原始：${originalStatus}</div>
+                        <div class="text-[11px] text-emerald-600 font-bold mt-1">已調查</div>
+                        <div class="mt-2 flex gap-2">
                             <a href="${url}" target="_blank" class="inline-flex items-center px-3 py-1.5 rounded-lg bg-blue-600 text-white text-xs font-bold">
-                                開啟 / 下載
+                                開啟 xlsx
                             </a>
                         </div>
                     </div>
@@ -1392,6 +1409,9 @@
 
                 await saveCompletedFileRecord(selectedPoint, fileInfo);
                 await savePointCompleted(selectedPoint, fileInfo);
+
+                completedPointIds.add(getPointKey(selectedPoint));
+                applyCompletedState(new Set(completedPointIds));
 
                 triggerDownload(blob, fileInfo.fileName);
 
