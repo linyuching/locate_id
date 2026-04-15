@@ -121,7 +121,7 @@
             <div class="space-y-4">
                 <button id="exportBtn" class="w-full bg-emerald-600 text-white font-black py-5 rounded-2xl shadow-xl btn-active text-lg flex items-center justify-center gap-3">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" /></svg>
-                    匯出成果圖卡 (unific_id)
+                    匯出成果圖卡 (.xlsx)
                 </button>
                 <button id="finishBtn" class="w-full bg-slate-100 text-slate-600 font-black py-4 rounded-2xl btn-active text-sm shadow-sm border border-slate-200">
                     取消並回地圖
@@ -235,9 +235,6 @@
             }
         }
 
-        /**
-         * 核心：從 <description> 中的 CDATA 結構解析資訊
-         */
         function parseKML(text) {
             const parser = new DOMParser();
             const xml = parser.parseFromString(text, "text/xml");
@@ -254,7 +251,6 @@
                 let bury_loc = "";
                 let type = "";
 
-                // 解析 description 中的 key: value 格式 (包含 <br> 處理)
                 if (description) {
                     const idMatch = description.match(/unific_id:\s*([^<|\n|\r]+)/i);
                     const locMatch = description.match(/bury_loc:\s*([^<|\n|\r]+)/i);
@@ -347,7 +343,7 @@
         
         cameraInput.onchange = async e => {
             if (!e.target.files[0]) return;
-            showLoadingMask(true, "處理照片轉向中...");
+            showLoadingMask(true, "處理照片中...");
             processedPhotoBase64 = await processImage(e.target.files[0]);
             document.getElementById('capturedImg').src = processedPhotoBase64;
             document.getElementById('captureArea').classList.add('hidden');
@@ -383,52 +379,60 @@
         }
 
         /**
-         * 強化版 Excel 填入邏輯 (處理合併儲存格與模糊匹配)
+         * 修正版 Excel 填入邏輯
          */
         async function generateExcel() {
             if (!templateData || !processedPhotoBase64) throw new Error("尚未拍攝照片");
             const workbook = new ExcelJS.Workbook();
             await workbook.xlsx.load(templateData);
             
-            // 處理分頁
-            let sheetToUse = workbook.worksheets[0];
-            if (selectedPoint.type === "閥") {
-                const found = workbook.worksheets.find(s => s.name.replace(/\s/g, '').includes("制水閥記錄卡"));
-                if (found) sheetToUse = found;
-            }
-
             const imageId = workbook.addImage({ base64: processedPhotoBase64, extension: 'jpeg' });
-            const targetHeightPx = 250; 
+            
+            // 預設照片插入高度 (像素)，可依需求調整
+            const targetHeightPx = 380; 
             const dims = await new Promise(r => { const i = new Image(); i.onload = () => r({w:i.width,h:i.height}); i.src = processedPhotoBase64; });
             const targetWidthPx = targetHeightPx * (dims.w / dims.h);
 
-            let photoInserted = false;
-            sheetToUse.eachRow({ includeEmpty: true }, (row, rowNumber) => {
-                row.eachCell({ includeEmpty: true }, (cell, colNumber) => {
-                    // 去除所有空格後比對
-                    const cleanVal = (cell.value ? String(cell.value) : "").replace(/\s/g, '');
-                    
-                    // 1. 填入照片
-                    if (!photoInserted && cleanVal.includes("現場照片")) {
-                        sheetToUse.addImage(imageId, { 
-                            tl: { col: colNumber - 1 + 0.1, row: rowNumber + 0.1 }, 
-                            ext: { width: targetWidthPx, height: targetHeightPx }, 
-                            editAs: 'oneCell' 
-                        });
-                        photoInserted = true; 
-                    }
-                    
-                    // 2. 填入編號 (寫入標籤下方儲存格的 master)
-                    if (cleanVal === "編號") {
-                        const targetCell = sheetToUse.getRow(rowNumber + 1).getCell(colNumber);
-                        targetCell.master.value = selectedPoint.id;
-                    }
+            // 遍歷所有分頁進行檢查
+            workbook.eachSheet((sheet) => {
+                const sheetName = sheet.name.replace(/\s/g, '');
+                let photoInsertedInThisSheet = false;
 
-                    // 3. 填入位置 (寫入標籤右方儲存格的 master)
-                    if (cleanVal === "位置") {
-                        const targetCell = sheetToUse.getRow(rowNumber).getCell(colNumber + 1);
-                        targetCell.master.value = selectedPoint.bury_loc;
-                    }
+                sheet.eachRow({ includeEmpty: true }, (row, rowNumber) => {
+                    row.eachCell({ includeEmpty: true }, (cell, colNumber) => {
+                        const cleanVal = (cell.value ? String(cell.value) : "").replace(/\s/g, '');
+                        
+                        // 1. 填入「位置」: 寫入右側儲存格 (例如 B2 標籤 -> C2 填值)
+                        if (cleanVal === "位置") {
+                            const targetCell = sheet.getRow(rowNumber).getCell(colNumber + 1);
+                            targetCell.master.value = selectedPoint.bury_loc || "";
+                        }
+
+                        // 2. 填入「編號」: 
+                        if (cleanVal === "編號") {
+                            // 根據分頁名稱判斷邏輯
+                            if (sheetName.includes("圖卡背面")) {
+                                // 圖卡背面：寫入下方 (D2 標籤 -> D3 填值)
+                                const targetCell = sheet.getRow(rowNumber + 1).getCell(colNumber);
+                                targetCell.master.value = selectedPoint.id;
+                            } else {
+                                // 制水閥記錄卡或其他：寫入右方 (T4 標籤 -> U4 填值)
+                                const targetCell = sheet.getRow(rowNumber).getCell(colNumber + 1);
+                                targetCell.master.value = selectedPoint.id;
+                            }
+                        }
+
+                        // 3. 填入照片: 尋找「現場照片」標籤
+                        if (!photoInsertedInThisSheet && cleanVal.includes("現場照片")) {
+                            // 插入到標籤的下一行位置
+                            sheet.addImage(imageId, { 
+                                tl: { col: colNumber - 1 + 0.1, row: rowNumber + 0.1 }, 
+                                ext: { width: targetWidthPx, height: targetHeightPx }, 
+                                editAs: 'oneCell' 
+                            });
+                            photoInsertedInThisSheet = true; 
+                        }
+                    });
                 });
             });
 
@@ -438,12 +442,15 @@
 
         document.getElementById('exportBtn').onclick = async () => {
             try {
-                showLoadingMask(true, "產生成果...");
+                showLoadingMask(true, "產生成果中...");
                 if (selectedPoint) { await saveFinishedState(selectedPoint.id); }
                 const blob = await generateExcel();
                 triggerDownload(blob, `${selectedPoint.id}.xlsx`);
                 setTimeout(closePanel, 500);
-            } catch (err) { alert(err.message); }
+            } catch (err) { 
+                console.error(err);
+                alert("錯誤: " + err.message); 
+            }
             showLoadingMask(false);
         };
 
