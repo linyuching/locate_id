@@ -1424,7 +1424,7 @@ async function savePhotoRecords(point, uploadedPhotos) {
                 }, 300);
 
                 alert(`已完成上傳。
-Storage 照片資料夾：artifacts/${appId}/photos/${sanitizeFileName(pointKey)}/`);
+：${sanitizeFileName(pointKey)}`);
             } catch (err) {
                 console.error("完整錯誤物件：", err);
                 console.error("錯誤代碼：", err?.code);
