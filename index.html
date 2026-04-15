@@ -126,6 +126,36 @@
         .file-card a {
             text-decoration: none;
         }
+
+        .thumb-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 8px;
+            margin-top: 8px;
+        }
+
+        .thumb-box {
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            overflow: hidden;
+            background: #fff;
+            aspect-ratio: 4 / 3;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .thumb-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .thumb-empty {
+            font-size: 10px;
+            color: #94a3b8;
+            font-weight: 700;
+        }
     </style>
 </head>
 <body class="bg-slate-900 min-h-screen overflow-hidden">
@@ -144,7 +174,7 @@
         <div class="bg-white/95 backdrop-blur-md p-3 rounded-2xl shadow-2xl flex justify-between items-center pointer-events-auto border border-white/20">
             <div class="flex items-center gap-2">
                 <div id="statusIndicator" class="w-2.5 h-2.5 rounded-full bg-yellow-500 animate-pulse"></div>
-                <h1 class="text-lg font-black text-slate-800 tracking-tighter">外業調查拍照 <span class="text-blue-500 text-xs">V3.1</span></h1>
+                <h1 class="text-lg font-black text-slate-800 tracking-tighter">外業調查拍照 <span class="text-blue-500 text-xs">V3.2</span></h1>
             </div>
             <div id="statusTag" class="bg-slate-100 text-slate-500 text-[10px] px-2.5 py-1 rounded-full font-black uppercase">連線中</div>
         </div>
@@ -204,6 +234,59 @@
                 </svg>
                 拍攝現場照片
             </button>
+
+            <div class="bg-slate-50 rounded-3xl p-4 border border-slate-100">
+                <div class="flex items-center gap-2 mb-3 px-1">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                    </svg>
+                    <span class="text-xs font-bold text-slate-500 uppercase tracking-wider">支距對應照片</span>
+                </div>
+
+                <div class="grid grid-cols-1 gap-3">
+                    <div class="border border-slate-200 rounded-2xl p-3 bg-white">
+                        <div class="flex items-center justify-between mb-2">
+                            <div class="text-sm font-black text-slate-700">支距 1 照片</div>
+                            <span id="offsetPhotoStatus1" class="text-[10px] px-2 py-1 rounded-full bg-slate-100 text-slate-500 font-bold">未選擇</span>
+                        </div>
+                        <div class="flex gap-2">
+                            <button type="button" class="offsetPhotoBtn flex-1 bg-blue-600 text-white py-2.5 rounded-xl text-sm font-bold btn-active" data-index="0">拍照 / 選擇照片</button>
+                            <button type="button" class="offsetPhotoClearBtn bg-slate-100 text-slate-500 px-4 rounded-xl text-sm font-bold btn-active" data-index="0">清除</button>
+                        </div>
+                        <div class="thumb-grid">
+                            <div class="thumb-box"><img id="offsetThumb0" class="hidden" /><div id="offsetThumbEmpty0" class="thumb-empty">尚無照片</div></div>
+                        </div>
+                    </div>
+
+                    <div class="border border-slate-200 rounded-2xl p-3 bg-white">
+                        <div class="flex items-center justify-between mb-2">
+                            <div class="text-sm font-black text-slate-700">支距 2 照片</div>
+                            <span id="offsetPhotoStatus2" class="text-[10px] px-2 py-1 rounded-full bg-slate-100 text-slate-500 font-bold">未選擇</span>
+                        </div>
+                        <div class="flex gap-2">
+                            <button type="button" class="offsetPhotoBtn flex-1 bg-blue-600 text-white py-2.5 rounded-xl text-sm font-bold btn-active" data-index="1">拍照 / 選擇照片</button>
+                            <button type="button" class="offsetPhotoClearBtn bg-slate-100 text-slate-500 px-4 rounded-xl text-sm font-bold btn-active" data-index="1">清除</button>
+                        </div>
+                        <div class="thumb-grid">
+                            <div class="thumb-box"><img id="offsetThumb1" class="hidden" /><div id="offsetThumbEmpty1" class="thumb-empty">尚無照片</div></div>
+                        </div>
+                    </div>
+
+                    <div class="border border-slate-200 rounded-2xl p-3 bg-white">
+                        <div class="flex items-center justify-between mb-2">
+                            <div class="text-sm font-black text-slate-700">支距 3 照片</div>
+                            <span id="offsetPhotoStatus3" class="text-[10px] px-2 py-1 rounded-full bg-slate-100 text-slate-500 font-bold">未選擇</span>
+                        </div>
+                        <div class="flex gap-2">
+                            <button type="button" class="offsetPhotoBtn flex-1 bg-blue-600 text-white py-2.5 rounded-xl text-sm font-bold btn-active" data-index="2">拍照 / 選擇照片</button>
+                            <button type="button" class="offsetPhotoClearBtn bg-slate-100 text-slate-500 px-4 rounded-xl text-sm font-bold btn-active" data-index="2">清除</button>
+                        </div>
+                        <div class="thumb-grid">
+                            <div class="thumb-box"><img id="offsetThumb2" class="hidden" /><div id="offsetThumbEmpty2" class="thumb-empty">尚無照片</div></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
 
         <div id="previewArea" class="hidden animate-in fade-in slide-in-from-bottom-6 duration-500">
@@ -224,6 +307,9 @@
         </div>
 
         <input type="file" id="cameraInput" accept="image/*" capture="camera" class="hidden" />
+        <input type="file" id="offsetCameraInput0" accept="image/*" capture="environment" class="hidden" />
+        <input type="file" id="offsetCameraInput1" accept="image/*" capture="environment" class="hidden" />
+        <input type="file" id="offsetCameraInput2" accept="image/*" capture="environment" class="hidden" />
     </div>
 
     <script type="module">
@@ -237,6 +323,9 @@
         };
 
         const XLSX_MIME = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+        const PHOTO_HEIGHT_PX = 227; // 約 6 公分
+        const OFFSET_PHOTO_HEIGHT_PX = 227; // 約 6 公分
+        const OFFSET_PHOTO_WIDTH_PX = 170;
 
         const NOTE_OPTIONS = [
             "建築物( )", "門柱( )", "圍牆( )", "橋墩", "轉角", "電桿( )",
@@ -301,6 +390,7 @@
         let selectedPoint = null;
         let templateData = null;
         let processedPhotoBase64 = null;
+        let offsetPhotoBase64 = [null, null, null];
         let selectedMarker = null;
 
         let allPoints = [];
@@ -323,6 +413,7 @@
             initMap();
             createFormRows();
             initFirebase();
+            updateOffsetPhotoStatus();
         };
 
         function initMap() {
@@ -509,33 +600,33 @@
             const parser = new DOMParser();
             const xml = parser.parseFromString(text, "text/xml");
             const placemarks = Array.from(xml.getElementsByTagName("Placemark"));
-        
+
             return placemarks.map(p => {
                 const name = p.getElementsByTagName("name")[0]?.textContent || "未命名";
                 const desc = p.getElementsByTagName("description")[0]?.textContent || "";
                 const coordsNode = p.getElementsByTagName("coordinates")[0];
                 const coords = coordsNode ? coordsNode.textContent.trim().split(",") : [0, 0];
-        
+
                 let unific_id = "";
                 let bury_loc = "";
-        
+
                 const extendedData = p.getElementsByTagName("ExtendedData")[0];
                 if (extendedData) {
                     const dataNodes = Array.from(extendedData.getElementsByTagName("Data"));
                     for (const node of dataNodes) {
                         const dataName = node.getAttribute("name");
                         const val = node.getElementsByTagName("value")[0]?.textContent?.trim();
-        
+
                         if (dataName === "unific_id" || dataName === "識別碼") {
                             unific_id = val;
                         }
-        
+
                         if (dataName === "bury_loc" || dataName === "地址") {
                             bury_loc = val;
                         }
                     }
                 }
-        
+
                 if (!unific_id) {
                     let match = desc.match(/unific_id\s*:\s*([^<|\n|\r]+)/i);
                     if (!match) {
@@ -545,7 +636,7 @@
                         unific_id = match[1].trim();
                     }
                 }
-        
+
                 if (!bury_loc) {
                     let locMatch = desc.match(/bury_loc\s*:\s*([^<|\n|\r]+)/i);
                     if (!locMatch) {
@@ -553,11 +644,11 @@
                     }
                     bury_loc = locMatch ? locMatch[1].trim() : "";
                 }
-        
+
                 if (!unific_id) {
                     console.warn("⚠️ 無法解析 unific_id / 識別碼：", name, desc);
                 }
-        
+
                 return {
                     id: name,
                     unific_id,
@@ -909,6 +1000,58 @@
             }, { merge: true });
         }
 
+        function compressImageFile(file, maxWidth = 1200, quality = 0.8) {
+            return new Promise((resolve, reject) => {
+                const reader = new FileReader();
+                reader.onload = (ev) => {
+                    const img = new Image();
+                    img.onload = () => {
+                        const canvas = document.createElement("canvas");
+                        let width = img.width;
+                        let height = img.height;
+
+                        if (width > maxWidth) {
+                            height *= maxWidth / width;
+                            width = maxWidth;
+                        }
+
+                        canvas.width = width;
+                        canvas.height = height;
+                        canvas.getContext("2d").drawImage(img, 0, 0, width, height);
+                        resolve(canvas.toDataURL("image/jpeg", quality));
+                    };
+                    img.onerror = reject;
+                    img.src = ev.target.result;
+                };
+                reader.onerror = reject;
+                reader.readAsDataURL(file);
+            });
+        }
+
+        function updateOffsetPhotoStatus() {
+            for (let i = 0; i < 3; i++) {
+                const statusEl = document.getElementById(`offsetPhotoStatus${i + 1}`);
+                const thumbEl = document.getElementById(`offsetThumb${i}`);
+                const emptyEl = document.getElementById(`offsetThumbEmpty${i}`);
+                const hasPhoto = !!offsetPhotoBase64[i];
+
+                statusEl.textContent = hasPhoto ? "已選擇" : "未選擇";
+                statusEl.className = hasPhoto
+                    ? "text-[10px] px-2 py-1 rounded-full bg-emerald-50 text-emerald-700 font-bold"
+                    : "text-[10px] px-2 py-1 rounded-full bg-slate-100 text-slate-500 font-bold";
+
+                if (hasPhoto) {
+                    thumbEl.src = offsetPhotoBase64[i];
+                    thumbEl.classList.remove("hidden");
+                    emptyEl.classList.add("hidden");
+                } else {
+                    thumbEl.src = "";
+                    thumbEl.classList.add("hidden");
+                    emptyEl.classList.remove("hidden");
+                }
+            }
+        }
+
         document.getElementById("navBtn").onclick = () => {
             if (!selectedPoint) return;
             const url = `https://www.google.com/maps/dir/?api=1&destination=${selectedPoint.lat},${selectedPoint.lng}`;
@@ -923,33 +1066,53 @@
             if (!e.target.files[0]) return;
             showLoadingMask(true, "縮圖處理中...");
 
-            const reader = new FileReader();
-            reader.onload = (ev) => {
-                const img = new Image();
-                img.onload = () => {
-                    const canvas = document.createElement("canvas");
-                    const MAX_WIDTH = 1200;
-                    let width = img.width;
-                    let height = img.height;
-
-                    if (width > MAX_WIDTH) {
-                        height *= MAX_WIDTH / width;
-                        width = MAX_WIDTH;
-                    }
-
-                    canvas.width = width;
-                    canvas.height = height;
-                    canvas.getContext("2d").drawImage(img, 0, 0, width, height);
-                    processedPhotoBase64 = canvas.toDataURL("image/jpeg", 0.8);
-                    document.getElementById("capturedImg").src = processedPhotoBase64;
-                    document.getElementById("formArea").classList.add("hidden");
-                    document.getElementById("previewArea").classList.remove("hidden");
-                    showLoadingMask(false);
-                };
-                img.src = ev.target.result;
-            };
-            reader.readAsDataURL(e.target.files[0]);
+            try {
+                processedPhotoBase64 = await compressImageFile(e.target.files[0], 1200, 0.8);
+                document.getElementById("capturedImg").src = processedPhotoBase64;
+                document.getElementById("formArea").classList.add("hidden");
+                document.getElementById("previewArea").classList.remove("hidden");
+            } catch (err) {
+                console.error(err);
+                alert("主照片處理失敗");
+            } finally {
+                showLoadingMask(false);
+            }
         };
+
+        document.querySelectorAll(".offsetPhotoBtn").forEach(btn => {
+            btn.onclick = () => {
+                const idx = Number(btn.dataset.index);
+                document.getElementById(`offsetCameraInput${idx}`).click();
+            };
+        });
+
+        document.querySelectorAll(".offsetPhotoClearBtn").forEach(btn => {
+            btn.onclick = () => {
+                const idx = Number(btn.dataset.index);
+                offsetPhotoBase64[idx] = null;
+                document.getElementById(`offsetCameraInput${idx}`).value = "";
+                updateOffsetPhotoStatus();
+            };
+        });
+
+        for (let i = 0; i < 3; i++) {
+            const input = document.getElementById(`offsetCameraInput${i}`);
+            input.onchange = async (e) => {
+                const file = e.target.files?.[0];
+                if (!file) return;
+
+                try {
+                    showLoadingMask(true, `處理支距 ${i + 1} 照片中...`);
+                    offsetPhotoBase64[i] = await compressImageFile(file, 1200, 0.8);
+                    updateOffsetPhotoStatus();
+                } catch (err) {
+                    console.error(err);
+                    alert(`支距 ${i + 1} 照片處理失敗`);
+                } finally {
+                    showLoadingMask(false);
+                }
+            };
+        }
 
         function closePanel() {
             document.getElementById("actionPanel").classList.remove("show");
@@ -958,7 +1121,15 @@
 
         function resetUIState() {
             processedPhotoBase64 = null;
+            offsetPhotoBase64 = [null, null, null];
+
             cameraInput.value = "";
+            for (let i = 0; i < 3; i++) {
+                const input = document.getElementById(`offsetCameraInput${i}`);
+                if (input) input.value = "";
+            }
+
+            document.getElementById("capturedImg").src = "";
             document.getElementById("formArea").classList.remove("hidden");
             document.getElementById("previewArea").classList.add("hidden");
 
@@ -969,6 +1140,8 @@
                 idInput.value = "";
                 idInput.classList.add("hidden");
             }
+
+            updateOffsetPhotoStatus();
         }
 
         document.getElementById("closePanelBtn").onclick = closePanel;
@@ -1010,22 +1183,20 @@
                 i.src = processedPhotoBase64;
             });
 
-            const targetHeightPx = 227;
+            const targetHeightPx = PHOTO_HEIGHT_PX;
             const targetWidthPx = targetHeightPx * (dims.w / dims.h);
 
             workbook.eachSheet((sheet) => {
                 const sheetName = sheet.name.replace(/\s/g, "");
                 let photoInsertedInSheet = false;
-            
+
                 sheet.eachRow({ includeEmpty: true }, (row, rowNumber) => {
                     row.eachCell({ includeEmpty: true }, (cell, colNumber) => {
                         const cellText = String(cell.value || "").trim();
                         const cleanVal = cellText.replace(/\s/g, "");
-            
-                        // ===== 編號 =====
+
                         if (cleanVal === "編號") {
                             if (sheetName.includes("圖卡背面")) {
-                                // 圖卡背面：填在正下方儲存格
                                 let rowOffset = 1;
                                 while (rowNumber + rowOffset <= sheet.rowCount) {
                                     const targetCell = sheet.getRow(rowNumber + rowOffset).getCell(colNumber);
@@ -1036,7 +1207,6 @@
                                     rowOffset++;
                                 }
                             } else {
-                                // 其他分頁：填在右方儲存格
                                 let colOffset = 1;
                                 while (colNumber + colOffset <= sheet.columnCount) {
                                     const targetCell = sheet.getRow(rowNumber).getCell(colNumber + colOffset);
@@ -1048,10 +1218,8 @@
                                 }
                             }
                         }
-            
-                        // ===== 位置 =====
+
                         if (cleanVal === "位置") {
-                            // 位置：填在右方儲存格
                             let colOffset = 1;
                             while (colNumber + colOffset <= sheet.columnCount) {
                                 const targetCell = sheet.getRow(rowNumber).getCell(colNumber + colOffset);
@@ -1062,10 +1230,8 @@
                                 colOffset++;
                             }
                         }
-            
-                        // ===== 位置描述 =====
+
                         if (cleanVal === "位置描述") {
-                            // 位置描述：填在正下方儲存格
                             let rowOffset = 1;
                             while (rowNumber + rowOffset <= sheet.rowCount) {
                                 const targetCell = sheet.getRow(rowNumber + rowOffset).getCell(colNumber);
@@ -1076,8 +1242,7 @@
                                 rowOffset++;
                             }
                         }
-            
-                        // ===== 支距 =====
+
                         if (cleanVal === "支距") {
                             for (let i = 0; i < 3; i++) {
                                 const dataRow = sheet.getRow(rowNumber + 1 + i);
@@ -1085,8 +1250,7 @@
                                 dataRow.getCell(colNumber + 2).master.value = offsets[i].note;
                             }
                         }
-            
-                        // ===== 現場照片 =====
+
                         if (!photoInsertedInSheet && cleanVal.includes("現場照片")) {
                             sheet.addImage(imageId, {
                                 tl: { col: colNumber - 1 + 0.1, row: rowNumber + 0.1 },
@@ -1097,6 +1261,26 @@
                         }
                     });
                 });
+
+                if (sheetName.includes("圖卡背面")) {
+                    const rightCol = Math.max(sheet.columnCount - 1, 1);
+                    const startRows = [2, 18, 34];
+
+                    for (let i = 0; i < 3; i++) {
+                        if (!offsetPhotoBase64[i]) continue;
+
+                        const offsetImgId = workbook.addImage({
+                            base64: offsetPhotoBase64[i],
+                            extension: "jpeg"
+                        });
+
+                        sheet.addImage(offsetImgId, {
+                            tl: { col: rightCol - 1 + 0.1, row: startRows[i] - 1 + 0.1 },
+                            ext: { width: OFFSET_PHOTO_WIDTH_PX, height: OFFSET_PHOTO_HEIGHT_PX },
+                            editAs: "oneCell"
+                        });
+                    }
+                }
             });
 
             const buffer = await workbook.xlsx.writeBuffer();
