@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>外業調查拍照系統 (協同版)</title>
+    <title>外業調查拍照系統_ID</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
@@ -394,7 +394,6 @@
             // 處理分頁選擇：如果閥栓種類是 "閥"，找 "制     水     閥     記     錄     卡"
             let sheetToUse = workbook.worksheets[0];
             if (selectedPoint.type === "閥") {
-                const targetSheetName = "制     水     閥     記     錄     卡";
                 const found = workbook.worksheets.find(s => s.name.replace(/\s/g, '').includes("制水閥記錄卡"));
                 if (found) sheetToUse = found;
             }
@@ -423,12 +422,11 @@
                     // 2. 填入 unific_id 至 "編號" 下方
                     if (val === "編號") {
                         const cellBelow = sheetToUse.getRow(rowNumber + 1).getCell(colNumber);
-                        cellBelow.value = selectedPoint.id;
+                        cellBelow.value = selectedPoint.id; // 此 id 已在 parseKML 被賦予為 unific_id
                     }
 
                     // 3. 填入 bury_loc 至 "位置" 旁邊
                     if (val === "位置") {
-                        // 嘗試填入右邊的第一個單元格或合併區域
                         const cellBeside = sheetToUse.getRow(rowNumber).getCell(colNumber + 1);
                         cellBeside.value = selectedPoint.bury_loc;
                     }
@@ -444,6 +442,7 @@
                 showLoadingMask(true, "產生成果並同步雲端...");
                 if (selectedPoint) { await saveFinishedState(selectedPoint.id); }
                 const blob = await generateExcel();
+                // 檔名改為以 unific_id (即 selectedPoint.id) 命名
                 triggerDownload(blob, `${selectedPoint.id}_成果圖卡.xlsx`);
                 setTimeout(closePanel, 500);
             } catch (err) { alert(err.message); }
