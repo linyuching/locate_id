@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>外業調查拍照系統 (支距版)</title>
+    <title>外業調查拍照系統 (支距增強版)</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
@@ -63,7 +63,7 @@
         <div class="bg-white/95 backdrop-blur-md p-3 rounded-2xl shadow-2xl flex justify-between items-center pointer-events-auto border border-white/20">
             <div class="flex items-center gap-2">
                 <div id="statusIndicator" class="w-2.5 h-2.5 rounded-full bg-yellow-500 animate-pulse"></div>
-                <h1 class="text-lg font-black text-slate-800 tracking-tighter">外業調查拍照 <span class="text-blue-500 text-xs">V2.0</span></h1>
+                <h1 class="text-lg font-black text-slate-800 tracking-tighter">外業調查拍照 <span class="text-blue-500 text-xs">V2.1</span></h1>
             </div>
             <div id="statusTag" class="bg-slate-100 text-slate-500 text-[10px] px-2.5 py-1 rounded-full font-black uppercase">連線中</div>
         </div>
@@ -93,7 +93,7 @@
                 </div>
                 
                 <div class="space-y-3" id="offsetRows">
-                    <!-- Row 1, 2, 3 will be here -->
+                    <!-- Row 1, 2, 3 -->
                 </div>
             </div>
 
@@ -136,7 +136,6 @@
         };
 
         let map, markersLayer, selectedPoint = null, templateData = null, processedPhotoBase64 = null, selectedMarker = null;
-        let finishedPoints = new Map();
         let db, auth, user, appId;
         const XLSX_MIME = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
 
@@ -182,7 +181,6 @@
                 `;
                 container.appendChild(row);
 
-                // 處理下拉選單連動
                 const select = row.querySelector(`#note_type_${i}`);
                 const idInput = row.querySelector(`#note_id_${i}`);
                 select.onchange = (e) => {
@@ -197,7 +195,7 @@
         }
 
         async function initFirebase() {
-            const { initializeApp, getAuth, signInAnonymously, onAuthStateChanged, getFirestore, collection, onSnapshot } = window.firebaseCore;
+            const { initializeApp, getAuth, signInAnonymously, onAuthStateChanged, getFirestore } = window.firebaseCore;
             let config;
             try { config = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : backupConfig; } catch (e) { config = backupConfig; }
             const app = initializeApp(config);
@@ -230,18 +228,44 @@
             const parser = new DOMParser();
             const xml = parser.parseFromString(text, "text/xml");
             const placemarks = Array.from(xml.getElementsByTagName("Placemark"));
+            
             return placemarks.map(p => {
                 const name = p.getElementsByTagName("name")[0]?.textContent || "未命名";
                 const desc = p.getElementsByTagName("description")[0]?.textContent || "";
-                const coords = p.getElementsByTagName("coordinates")[0]?.textContent?.trim().split(",");
-                const idMatch = desc.match(/unific_id:\s*([^<|\n|\r]+)/i);
-                const locMatch = desc.match(/bury_loc:\s*([^<|\n|\r]+)/i);
+                const coordsNode = p.getElementsByTagName("coordinates")[0];
+                const coords = coordsNode ? coordsNode.textContent.trim().split(",") : [0,0];
+                
+                let unific_id = "";
+                let bury_loc = "";
+
+                // 優先從 ExtendedData 解析
+                const extendedData = p.getElementsByTagName("ExtendedData")[0];
+                if (extendedData) {
+                    const dataNodes = Array.from(extendedData.getElementsByTagName("Data"));
+                    for (const node of dataNodes) {
+                        const dataName = node.getAttribute("name");
+                        const val = node.getElementsByTagName("value")[0]?.textContent?.trim();
+                        if (dataName === "unific_id") unific_id = val;
+                        if (dataName === "bury_loc") bury_loc = val;
+                    }
+                }
+
+                // 若 ExtendedData 無資料，從 description 解析 (Regex)
+                if (!unific_id) {
+                    const idMatch = desc.match(/unific_id:\s*([^<|\n|\r]+)/i);
+                    unific_id = idMatch ? idMatch[1].trim() : name;
+                }
+                if (!bury_loc) {
+                    const locMatch = desc.match(/bury_loc:\s*([^<|\n|\r]+)/i);
+                    bury_loc = locMatch ? locMatch[1].trim() : "";
+                }
+
                 return {
                     id: name,
-                    unific_id: idMatch ? idMatch[1].trim() : name,
+                    unific_id: unific_id,
                     lat: parseFloat(coords[1]),
                     lng: parseFloat(coords[0]),
-                    bury_loc: locMatch ? locMatch[1].trim() : ""
+                    bury_loc: bury_loc
                 };
             });
         }
@@ -336,7 +360,8 @@
 
             workbook.eachSheet((sheet) => {
                 const sheetName = sheet.name.replace(/\s/g, '');
-                
+                let photoInsertedInSheet = false; // 旗標：確保每一頁只插入一次照片
+
                 sheet.eachRow({ includeEmpty: true }, (row, rowNumber) => {
                     row.eachCell({ includeEmpty: true }, (cell, colNumber) => {
                         const cellText = String(cell.value || "").trim().replace(/\s/g, '');
@@ -352,30 +377,29 @@
                             target.master.value = selectedPoint.unific_id;
                         }
                         
-                        // 填入位置
+                        // 填入位置 (bury_loc)
                         if (cellText === "位置") {
+                            // 填入標籤右側儲存格
                             sheet.getRow(rowNumber).getCell(colNumber + 1).master.value = selectedPoint.bury_loc;
                         }
 
-                        // 填入支距表格 (黃色區塊)
+                        // 填入支距表格
                         if (cellText === "支距") {
-                            // 下方三列填入資料
                             for (let i = 0; i < 3; i++) {
                                 const dataRow = sheet.getRow(rowNumber + 1 + i);
-                                // 距離(M) 通常在 支距 右側第1欄
                                 dataRow.getCell(colNumber + 1).master.value = offsets[i].dist;
-                                // 註記 通常在 支距 右側第2, 3欄 (合併儲存格)
                                 dataRow.getCell(colNumber + 2).master.value = offsets[i].note;
                             }
                         }
 
-                        // 填入照片
-                        if (cellText.includes("現場照片")) {
+                        // 填入照片 (使用旗標防止重複插入)
+                        if (!photoInsertedInSheet && cellText.includes("現場照片")) {
                             sheet.addImage(imageId, { 
                                 tl: { col: colNumber - 1 + 0.05, row: rowNumber + 0.1 }, 
                                 ext: { width: targetWidthPx, height: targetHeightPx },
                                 editAs: 'oneCell'
                             });
+                            photoInsertedInSheet = true; 
                         }
                     });
                 });
@@ -392,7 +416,7 @@
                 const url = URL.createObjectURL(blob);
                 const a = document.createElement("a");
                 a.href = url;
-                a.download = `${selectedPoint.unific_id}_調查成果.xlsx`;
+                a.download = `${selectedPoint.unific_id}.xlsx`;
                 a.click();
                 setTimeout(closePanel, 800);
             } catch (err) { alert("匯出出錯: " + err.message); }
