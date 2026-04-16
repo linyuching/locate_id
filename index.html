@@ -605,8 +605,9 @@ async function uploadPhoto(base64, path) {
 
 async function uploadAllSurveyPhotos(point) {
     const id = sanitizeFileName(getPointKey(point));
+
     const uploads = [
-        { label: "現場照片", data: processedPhotoBase64, path: `artifacts/${appId}/photos/${id}/${id}_三支距.jpg` },
+        { label: "三支距照片", data: processedPhotoBase64, path: `artifacts/${appId}/photos/${id}/${id}_三支距.jpg` },
         { label: "支距1照片", data: offsetPhotoBase64[0], path: `artifacts/${appId}/photos/${id}/${id}_支距1.jpg` },
         { label: "支距2照片", data: offsetPhotoBase64[1], path: `artifacts/${appId}/photos/${id}/${id}_支距2.jpg` },
         { label: "支距3照片", data: offsetPhotoBase64[2], path: `artifacts/${appId}/photos/${id}/${id}_支距3.jpg` },
@@ -614,12 +615,19 @@ async function uploadAllSurveyPhotos(point) {
     ];
 
     const results = [];
+
     for (const item of uploads) {
         if (!item.data) throw new Error(`${item.label}不存在，無法上傳`);
+
         showLoadingMask(true, `正在上傳：${item.label}`);
         const url = await uploadPhoto(item.data, item.path);
-        results.push({ ...item, downloadURL: url });
+
+        results.push({
+            ...item,
+            downloadURL: url
+        });
     }
+
     return results;
 }
 
