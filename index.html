@@ -1046,16 +1046,16 @@ async function savePhotoRecords(point, uploadedPhotos) {
 
             const offsets = collectOffsetData();
 
-            for (const item of offsets) {
-                if (!item.dist) {
-                    alert(`請填寫第 ${item.index} 筆支距距離`);
-                    return false;
-                }
-                if (!item.note) {
-                    alert(`請填寫第 ${item.index} 筆支距註記`);
-                    return false;
-                }
-            }
+            // for (const item of offsets) {
+            //     if (!item.dist) {
+            //         alert(`請填寫第 ${item.index} 筆支距距離`);
+            //         return false;
+            //     }
+            //     if (!item.note) {
+            //         alert(`請填寫第 ${item.index} 筆支距註記`);
+            //         return false;
+            //     }
+            // }
 
             if (!processedPhotoBase64) {
                 alert("請拍攝現場照片");
@@ -1093,8 +1093,8 @@ async function savePhotoRecords(point, uploadedPhotos) {
             previewOffsets.innerHTML = offsets.map(item => `
                 <div class="rounded-2xl border border-slate-200 bg-white px-3 py-2">
                     <div><span class="font-bold text-slate-700">支距 ${item.index}</span></div>
-                    <div class="text-slate-600">距離：${item.dist}</div>
-                    <div class="text-slate-600">註記：${item.note}</div>
+                    <div class="text-slate-600">距離：${item.dist || "未填"}</div>
+                    <div class="text-slate-600">註記：${item.note || "未填"}</div>
                 </div>
             `).join("");
         }
