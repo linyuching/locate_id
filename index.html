@@ -856,11 +856,39 @@ async function uploadAllSurveyPhotos(point) {
             return { fileName, storagePath, downloadURL };
         }
 
+        // async function savePointCompleted(point, fileInfo) {
+        //     const { doc, setDoc, serverTimestamp } = window.firebaseCore;
+        //     const pointKey = getPointKey(point);
+
+        //     const pointRef = doc(db, `artifacts/${appId}/public/data/completed_points/${pointKey}`);
+        //     await setDoc(pointRef, {
+        //         pointKey,
+        //         id: point.id || "",
+        //         unific_id: point.unific_id || "",
+        //         category: point.category || "",
+        //         originalStatus: point.status || "",
+        //         sourceLayerLabel: point.layerLabel || "",
+        //         status: "已調查",
+        //         completedBy: user?.uid || "anonymous",
+        //         completedAt: serverTimestamp(),
+        //         fileName: fileInfo.fileName,
+        //         storagePath: fileInfo.storagePath,
+        //         downloadURL: fileInfo.downloadURL,
+        //         photoFolderPath: `artifacts/${appId}/photos/${sanitizeFileName(pointKey)}/`,
+        //         hasTrafficPhoto: !!trafficPhotoBase64,
+        //         hasOffsetPhotos: offsetPhotoBase64.filter(Boolean).length
+        //     }, { merge: true });
+        // }
         async function savePointCompleted(point, fileInfo) {
             const { doc, setDoc, serverTimestamp } = window.firebaseCore;
             const pointKey = getPointKey(point);
-
+        
+            console.log("準備寫入 completed_points:", pointKey);
+            console.log("appId:", appId);
+            console.log("寫入路徑:", `artifacts/${appId}/public/data/completed_points/${pointKey}`);
+        
             const pointRef = doc(db, `artifacts/${appId}/public/data/completed_points/${pointKey}`);
+        
             await setDoc(pointRef, {
                 pointKey,
                 id: point.id || "",
@@ -878,8 +906,10 @@ async function uploadAllSurveyPhotos(point) {
                 hasTrafficPhoto: !!trafficPhotoBase64,
                 hasOffsetPhotos: offsetPhotoBase64.filter(Boolean).length
             }, { merge: true });
+        
+            console.log("completed_points 寫入成功:", pointKey);
         }
-
+        
         async function saveCompletedFileRecord(point, fileInfo) {
             const { doc, setDoc, serverTimestamp } = window.firebaseCore;
             const pointKey = getPointKey(point);
