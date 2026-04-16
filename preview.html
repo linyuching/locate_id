@@ -4,143 +4,314 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>批次下載工具（完整）</title>
+<title>批次下載工具</title>
 <script src="https://cdn.tailwindcss.com"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
 </head>
-<body class="bg-slate-100">
-
-<div class="max-w-4xl mx-auto p-6">
-  <div class="bg-white p-6 rounded-3xl shadow-xl">
-    <h1 class="text-xl font-black mb-4">批次下載工具</h1>
-
-    <div class="grid grid-cols-2 gap-4 mb-4">
-      <input id="startDate" type="date" class="border p-2 rounded-xl">
-      <input id="endDate" type="date" class="border p-2 rounded-xl">
+<body class="bg-slate-100 min-h-screen">
+<div class="max-w-5xl mx-auto p-6">
+  <div class="bg-white p-6 rounded-3xl shadow-xl border border-slate-200">
+    <div class="flex items-center justify-between gap-3 flex-wrap">
+      <div>
+        <h1 class="text-2xl font-black text-slate-800">批次下載工具</h1>
+        <p class="text-sm text-slate-500 mt-1">先查詢指定日期，再下載 xlsx 與照片。</p>
+      </div>
+      <div id="authStatus" class="text-xs px-3 py-1.5 rounded-full bg-slate-100 text-slate-500 font-bold">初始化中</div>
     </div>
 
-    <div class="flex gap-4 mb-4">
-      <label><input type="checkbox" id="chkXlsx" checked> 下載 XLSX</label>
-      <label><input type="checkbox" id="chkPhoto" checked> 下載照片</label>
+    <div class="grid md:grid-cols-2 gap-4 mt-6">
+      <div>
+        <label class="block text-sm font-bold text-slate-700 mb-2">開始日期</label>
+        <input id="startDate" type="date" class="w-full border p-3 rounded-2xl">
+      </div>
+      <div>
+        <label class="block text-sm font-bold text-slate-700 mb-2">結束日期</label>
+        <input id="endDate" type="date" class="w-full border p-3 rounded-2xl">
+      </div>
     </div>
 
-    <div class="flex gap-4 mb-4">
-      <button id="searchBtn" class="bg-blue-600 text-white px-4 py-2 rounded-xl w-full">
+    <div class="flex gap-6 mt-4 flex-wrap">
+      <label class="inline-flex items-center gap-2 text-sm font-medium text-slate-700">
+        <input type="checkbox" id="chkXlsx" checked class="rounded">
+        下載 XLSX
+      </label>
+      <label class="inline-flex items-center gap-2 text-sm font-medium text-slate-700">
+        <input type="checkbox" id="chkPhoto" checked class="rounded">
+        下載照片
+      </label>
+    </div>
+
+    <div class="grid md:grid-cols-2 gap-4 mt-5">
+      <button id="searchBtn" class="bg-blue-600 text-white px-4 py-3 rounded-2xl font-black disabled:opacity-50" disabled>
         查詢資料
       </button>
-      <button id="downloadBtn" class="bg-emerald-600 text-white px-4 py-2 rounded-xl w-full" disabled>
+      <button id="downloadBtn" class="bg-emerald-600 text-white px-4 py-3 rounded-2xl font-black disabled:opacity-50" disabled>
         開始下載
       </button>
     </div>
 
-    <!-- 查詢結果 -->
-    <div class="border rounded-xl mb-4 max-h-60 overflow-y-auto">
-      <div id="resultList" class="text-sm"></div>
+    <div id="statusBox" class="mt-5 rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm text-slate-600">
+      等待登入完成。
     </div>
 
-    <!-- 進度條 -->
-    <div class="w-full bg-slate-200 rounded-full h-4 overflow-hidden">
-      <div id="progressBar" class="bg-emerald-500 h-full w-0 transition-all"></div>
+    <div class="mt-5">
+      <div class="w-full bg-slate-200 rounded-full h-4 overflow-hidden">
+        <div id="progressBar" class="bg-emerald-500 h-full w-0 transition-all duration-300"></div>
+      </div>
+      <div id="progressText" class="text-sm text-slate-600 mt-2">0%</div>
     </div>
-    <div id="progressText" class="text-sm text-slate-600 mt-2">0%</div>
 
+    <div class="mt-6 border rounded-2xl overflow-hidden">
+      <div class="px-4 py-3 bg-slate-50 border-b border-slate-200 flex items-center justify-between">
+        <div class="font-black text-slate-800">查詢結果</div>
+        <div id="resultCount" class="text-xs px-3 py-1 rounded-full bg-slate-100 text-slate-600 font-bold">0</div>
+      </div>
+      <div id="resultList" class="max-h-[420px] overflow-y-auto">
+        <div class="p-4 text-slate-400 text-sm">尚未查詢</div>
+      </div>
+    </div>
   </div>
 </div>
 
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+import { getAuth, signInAnonymously, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+import {
+  getFirestore,
+  collection,
+  query,
+  where,
+  orderBy,
+  getDocs,
+  Timestamp
+} from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 import { getStorage, ref, getDownloadURL } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-storage.js";
 
 const config = {
- apiKey: "AIzaSyAQtyOTpKY3ajw6u4spxwLyFZDw19xhQEE",
- authDomain: "fieldsurveyproject-cba4e.firebaseapp.com",
- projectId: "fieldsurveyproject-cba4e",
- storageBucket: "fieldsurveyproject-cba4e.firebasestorage.app"
+  apiKey: "AIzaSyAQtyOTpKY3ajw6u4spxwLyFZDw19xhQEE",
+  authDomain: "fieldsurveyproject-cba4e.firebaseapp.com",
+  projectId: "fieldsurveyproject-cba4e",
+  storageBucket: "fieldsurveyproject-cba4e.firebasestorage.app",
+  messagingSenderId: "118885164027",
+  appId: "1:118885164027:web:d8a0e0478eddfc48ba615e"
 };
 
 const app = initializeApp(config);
+const auth = getAuth(app);
 const db = getFirestore(app);
 const storage = getStorage(app);
 
 let results = [];
+let authReady = false;
+let appId = typeof __app_id !== "undefined" ? __app_id : "field-survey-app";
 
+const authStatus = document.getElementById("authStatus");
+const statusBox = document.getElementById("statusBox");
 const resultList = document.getElementById("resultList");
+const resultCount = document.getElementById("resultCount");
+const searchBtn = document.getElementById("searchBtn");
 const downloadBtn = document.getElementById("downloadBtn");
+const progressBar = document.getElementById("progressBar");
+const progressText = document.getElementById("progressText");
 
-function updateProgress(p){
- document.getElementById("progressBar").style.width = p + "%";
- document.getElementById("progressText").textContent = Math.floor(p) + "%";
+function setTodayDefault() {
+  const now = new Date();
+  const yyyy = now.getFullYear();
+  const mm = String(now.getMonth() + 1).padStart(2, "0");
+  const dd = String(now.getDate()).padStart(2, "0");
+  const today = `${yyyy}-${mm}-${dd}`;
+  document.getElementById("startDate").value = today;
+  document.getElementById("endDate").value = today;
 }
 
-async function fetchBlob(path){
- const url = await getDownloadURL(ref(storage, path));
- const res = await fetch(url);
- return await res.blob();
+function updateProgress(pct) {
+  progressBar.style.width = `${pct}%`;
+  progressText.textContent = `${Math.floor(pct)}%`;
 }
 
-function renderResults(){
- if(results.length===0){
-   resultList.innerHTML = '<div class="p-3 text-slate-400">無資料</div>';
-   return;
- }
-
- resultList.innerHTML = results.map(r=>`
-   <div class="p-3 border-b">
-     <div class="font-bold">${r.unific_id}</div>
-     <div class="text-xs text-slate-500">${r.category || ""}</div>
-   </div>
- `).join("");
+function startOfDay(dateStr) {
+  return new Date(`${dateStr}T00:00:00`);
 }
 
-document.getElementById("searchBtn").onclick = async ()=>{
- const snap = await getDocs(collection(db,"artifacts/field-survey-app/public/data/completed_points"));
- results = [];
- snap.forEach(d=>results.push(d.data()));
- renderResults();
- downloadBtn.disabled = results.length===0;
+function nextDay(dateStr) {
+  const d = new Date(`${dateStr}T00:00:00`);
+  d.setDate(d.getDate() + 1);
+  return d;
+}
+
+function sanitizeFileName(str) {
+  return (str || "").replace(/[\\/:*?"<>|]/g, "_").trim();
+}
+
+async function fetchBlob(path) {
+  const url = await getDownloadURL(ref(storage, path));
+  const res = await fetch(url);
+  if (!res.ok) throw new Error(`下載失敗：${path}`);
+  return await res.blob();
+}
+
+function renderResults() {
+  resultCount.textContent = String(results.length);
+  downloadBtn.disabled = !authReady || results.length === 0;
+
+  if (!results.length) {
+    resultList.innerHTML = '<div class="p-4 text-slate-400 text-sm">查無資料</div>';
+    return;
+  }
+
+  resultList.innerHTML = results.map((r, idx) => {
+    const dt = r.completedAt?.toDate ? r.completedAt.toDate() : null;
+    const timeText = dt ? dt.toLocaleString("zh-TW") : "無時間";
+    return `
+      <div class="p-4 border-b last:border-b-0">
+        <div class="flex items-start justify-between gap-3">
+          <div>
+            <div class="font-bold text-slate-800">${idx + 1}. ${r.unific_id || r.pointKey || "未命名"}</div>
+            <div class="text-xs text-slate-500 mt-1">${r.category || ""} ｜ 原始：${r.originalStatus || ""}</div>
+            <div class="text-xs text-slate-400 mt-1">${timeText}</div>
+          </div>
+          <div class="text-xs px-2 py-1 rounded-full bg-emerald-50 text-emerald-700 font-bold">已調查</div>
+        </div>
+      </div>
+    `;
+  }).join("");
+}
+
+onAuthStateChanged(auth, async (user) => {
+  if (!user) {
+    try {
+      await signInAnonymously(auth);
+    } catch (err) {
+      console.error(err);
+      authStatus.textContent = "登入失敗";
+      authStatus.className = "text-xs px-3 py-1.5 rounded-full bg-red-50 text-red-700 font-bold";
+      statusBox.textContent = `匿名登入失敗：${err.message || err}`;
+    }
+    return;
+  }
+
+  authReady = true;
+  authStatus.textContent = "已連線";
+  authStatus.className = "text-xs px-3 py-1.5 rounded-full bg-emerald-50 text-emerald-700 font-bold";
+  searchBtn.disabled = false;
+  setTodayDefault();
+  statusBox.textContent = "請選擇日期後按「查詢資料」。";
+});
+
+searchBtn.onclick = async () => {
+  const startDate = document.getElementById("startDate").value;
+  const endDate = document.getElementById("endDate").value;
+
+  if (!startDate || !endDate) {
+    statusBox.textContent = "請先選擇開始與結束日期。";
+    return;
+  }
+  if (startDate > endDate) {
+    statusBox.textContent = "開始日期不可晚於結束日期。";
+    return;
+  }
+
+  try {
+    statusBox.textContent = "查詢中...";
+    updateProgress(0);
+    const startTs = Timestamp.fromDate(startOfDay(startDate));
+    const endTs = Timestamp.fromDate(nextDay(endDate));
+
+    const q = query(
+      collection(db, `artifacts/${appId}/public/data/completed_points`),
+      where("completedAt", ">=", startTs),
+      where("completedAt", "<", endTs),
+      orderBy("completedAt", "asc")
+    );
+
+    const snap = await getDocs(q);
+    results = [];
+    snap.forEach(d => results.push(d.data()));
+    renderResults();
+    statusBox.textContent = `查詢完成，共 ${results.length} 筆。`;
+  } catch (err) {
+    console.error(err);
+    results = [];
+    renderResults();
+    statusBox.textContent = `查詢失敗：${err.message || err}`;
+  }
 };
 
-document.getElementById("downloadBtn").onclick = async ()=>{
- const includeXlsx = document.getElementById("chkXlsx").checked;
- const includePhoto = document.getElementById("chkPhoto").checked;
+downloadBtn.onclick = async () => {
+  const includeXlsx = document.getElementById("chkXlsx").checked;
+  const includePhoto = document.getElementById("chkPhoto").checked;
 
- const zip = new JSZip();
- let total = results.length;
- let count = 0;
+  if (!includeXlsx && !includePhoto) {
+    statusBox.textContent = "請至少選擇一種下載項目。";
+    return;
+  }
+  if (!results.length) {
+    statusBox.textContent = "目前沒有可下載資料。";
+    return;
+  }
 
- for(const item of results){
-   const id = item.unific_id;
-   const folder = zip.folder(id);
+  try {
+    const zip = new JSZip();
+    const photoSuffixes = ["現場", "支距1", "支距2", "支距3", "交維"];
 
-   if(includeXlsx){
-     try{
-       const blob = await fetchBlob(`artifacts/field-survey-app/completed_xlsx/${id}/${id}.xlsx`);
-       folder.file(id+".xlsx", blob);
-     }catch{}
-   }
+    let totalTasks = 0;
+    for (const item of results) {
+      if (includeXlsx) totalTasks += 1;
+      if (includePhoto) totalTasks += photoSuffixes.length;
+    }
+    let done = 0;
 
-   if(includePhoto){
-     const suffixes = ["現場","支距1","支距2","支距3","交維"];
-     for(const s of suffixes){
-       try{
-         const blob = await fetchBlob(`artifacts/field-survey-app/photos/${id}/${id}_${s}.jpg`);
-         folder.file(id+"_"+s+".jpg", blob);
-       }catch{}
-     }
-   }
+    for (const item of results) {
+      const id = sanitizeFileName(item.unific_id || item.pointKey);
+      const folder = zip.folder(id);
+      statusBox.textContent = `整理中：${id}`;
 
-   count++;
-   updateProgress((count/total)*100);
- }
+      if (includeXlsx) {
+        try {
+          const blob = await fetchBlob(`artifacts/${appId}/completed_xlsx/${id}/${id}.xlsx`);
+          folder.file(`${id}.xlsx`, blob);
+        } catch (err) {
+          folder.file("_缺漏_xlsx.txt", `找不到 xlsx：${id}`);
+        }
+        done += 1;
+        updateProgress((done / totalTasks) * 100);
+      }
 
- const zipBlob = await zip.generateAsync({type:"blob"});
- const a = document.createElement("a");
- a.href = URL.createObjectURL(zipBlob);
- a.download = "download.zip";
- a.click();
+      if (includePhoto) {
+        for (const suffix of photoSuffixes) {
+          try {
+            const blob = await fetchBlob(`artifacts/${appId}/photos/${id}/${id}_${suffix}.jpg`);
+            folder.file(`${id}_${suffix}.jpg`, blob);
+          } catch (err) {
+            // 照片缺漏就略過
+          }
+          done += 1;
+          updateProgress((done / totalTasks) * 100);
+        }
+      }
+    }
+
+    statusBox.textContent = "正在產生 ZIP 檔...";
+    const zipBlob = await zip.generateAsync({ type: "blob" });
+
+    const startDate = document.getElementById("startDate").value;
+    const endDate = document.getElementById("endDate").value;
+    const a = document.createElement("a");
+    const url = URL.createObjectURL(zipBlob);
+    a.href = url;
+    a.download = `download_${startDate}_${endDate}.zip`;
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    URL.revokeObjectURL(url);
+
+    statusBox.textContent = "下載完成。";
+    updateProgress(100);
+  } catch (err) {
+    console.error(err);
+    statusBox.textContent = `下載失敗：${err.message || err}`;
+  }
 };
 </script>
-
 </body>
 </html>
