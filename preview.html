@@ -8,7 +8,17 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
 </head>
 <body class="bg-slate-100 min-h-screen">
-<div class="max-w-5xl mx-auto p-6">
+
+<!-- 登入完成前的全畫面遮罩 -->
+<div id="loginOverlay" class="fixed inset-0 bg-slate-100 z-[9999] flex items-center justify-center">
+  <div class="bg-white px-8 py-7 rounded-3xl shadow-xl border border-slate-200 text-center max-w-sm w-[92%]">
+    <div class="animate-spin rounded-full h-12 w-12 border-t-4 border-blue-500 mx-auto mb-5"></div>
+    <h2 class="text-xl font-black text-slate-800 mb-2">系統初始化中</h2>
+    <p id="loginOverlayText" class="text-sm text-slate-500">正在登入與載入權限，請稍候...</p>
+  </div>
+</div>
+
+<div id="appShell" class="max-w-5xl mx-auto p-6 hidden">
   <div class="bg-white p-6 rounded-3xl shadow-xl border border-slate-200">
     <div class="flex items-center justify-between gap-3 flex-wrap">
       <div>
@@ -50,7 +60,7 @@
     </div>
 
     <div id="statusBox" class="mt-5 rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm text-slate-600">
-      等待登入完成。
+      系統初始化中...
     </div>
 
     <div class="mt-5">
@@ -112,6 +122,9 @@ const searchBtn = document.getElementById("searchBtn");
 const downloadBtn = document.getElementById("downloadBtn");
 const progressBar = document.getElementById("progressBar");
 const progressText = document.getElementById("progressText");
+const loginOverlay = document.getElementById("loginOverlay");
+const loginOverlayText = document.getElementById("loginOverlayText");
+const appShell = document.getElementById("appShell");
 
 function setTodayDefault() {
   const now = new Date();
@@ -142,10 +155,21 @@ function sanitizeFileName(str) {
   return (str || "").replace(/[\\/:*?"<>|]/g, "_").trim();
 }
 
+function showLoginOverlay(text = "正在登入與載入權限，請稍候...") {
+  loginOverlay.classList.remove("hidden");
+  loginOverlayText.textContent = text;
+  appShell.classList.add("hidden");
+}
+
+function hideLoginOverlay() {
+  loginOverlay.classList.add("hidden");
+  appShell.classList.remove("hidden");
+}
+
 async function fetchBlobByStoragePath(path) {
   const url = await getDownloadURL(ref(storage, path));
   const res = await fetch(url);
-  if (!res.ok) throw new Error(`下載失敗：${path}`);
+  if (!res.ok) throw new Error(`下載失敗`);
   return await res.blob();
 }
 
@@ -201,15 +225,23 @@ function renderResults() {
   }).join("");
 }
 
+window.addEventListener("DOMContentLoaded", () => {
+  setTodayDefault();
+  showLoginOverlay("正在登入與載入權限，請稍候...");
+});
+
 onAuthStateChanged(auth, async (user) => {
   if (!user) {
     try {
+      showLoginOverlay("正在登入系統...");
       await signInAnonymously(auth);
     } catch (err) {
       console.error(err);
+      authReady = false;
       authStatus.textContent = "登入失敗";
       authStatus.className = "text-xs px-3 py-1.5 rounded-full bg-red-50 text-red-700 font-bold";
       statusBox.textContent = `匿名登入失敗：${err.message || err}`;
+      showLoginOverlay(`登入失敗：${err.message || err}`);
     }
     return;
   }
@@ -218,8 +250,8 @@ onAuthStateChanged(auth, async (user) => {
   authStatus.textContent = "已連線";
   authStatus.className = "text-xs px-3 py-1.5 rounded-full bg-emerald-50 text-emerald-700 font-bold";
   searchBtn.disabled = false;
-  setTodayDefault();
   statusBox.textContent = "請選擇日期後按「查詢資料」。";
+  hideLoginOverlay();
 });
 
 searchBtn.onclick = async () => {
@@ -266,7 +298,7 @@ searchBtn.onclick = async () => {
         results.push(item);
       } else {
         filteredOut += 1;
-        console.warn("已自動排除 Storage 不存在的資料：", id, xlsxPath);
+        console.warn("已自動排除 Storage 不存在的資料：", id);
       }
 
       checked += 1;
@@ -274,7 +306,7 @@ searchBtn.onclick = async () => {
     }
 
     renderResults();
-    statusBox.textContent = `查詢完成，共 ${results.length} 筆；已自動排除 ${filteredOut} 筆 Storage 已不存在的資料。`;
+    statusBox.textContent = `查詢完成，共 ${results.length} 筆；已自動排除 ${filteredOut} 筆失效資料。`;
   } catch (err) {
     console.error(err);
     results = [];
