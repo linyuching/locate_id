@@ -10,321 +10,127 @@
 <body class="bg-slate-100 min-h-screen">
 <div class="max-w-5xl mx-auto p-6">
   <div class="bg-white p-6 rounded-3xl shadow-xl border border-slate-200">
-    <div class="flex items-center justify-between gap-3 flex-wrap">
-      <div>
-        <h1 class="text-2xl font-black text-slate-800">批次下載工具</h1>
-        <p class="text-sm text-slate-500 mt-1">先查詢指定日期，再下載 xlsx 與照片。</p>
-      </div>
-      <div id="authStatus" class="text-xs px-3 py-1.5 rounded-full bg-slate-100 text-slate-500 font-bold">初始化中</div>
+
+    <div class="flex items-center justify-between">
+      <h1 class="text-2xl font-black text-slate-800">批次下載工具</h1>
+      <div id="authStatus" class="text-xs px-3 py-1 rounded bg-slate-100">初始化中</div>
     </div>
 
+    <!-- 日期 -->
     <div class="grid md:grid-cols-2 gap-4 mt-6">
-      <div>
-        <label class="block text-sm font-bold text-slate-700 mb-2">開始日期</label>
-        <input id="startDate" type="date" class="w-full border p-3 rounded-2xl">
-      </div>
-      <div>
-        <label class="block text-sm font-bold text-slate-700 mb-2">結束日期</label>
-        <input id="endDate" type="date" class="w-full border p-3 rounded-2xl">
-      </div>
+      <input id="startDate" type="date" class="border p-3 rounded-2xl">
+      <input id="endDate" type="date" class="border p-3 rounded-2xl">
     </div>
 
-    <div class="flex gap-6 mt-4 flex-wrap">
-      <label class="inline-flex items-center gap-2 text-sm font-medium text-slate-700">
-        <input type="checkbox" id="chkXlsx" checked class="rounded">
-        下載 XLSX
-      </label>
-      <label class="inline-flex items-center gap-2 text-sm font-medium text-slate-700">
-        <input type="checkbox" id="chkPhoto" checked class="rounded">
-        下載照片
-      </label>
+    <!-- 選項 -->
+    <div class="flex gap-6 mt-4">
+      <label><input type="checkbox" id="chkXlsx" checked> XLSX</label>
+      <label><input type="checkbox" id="chkPhoto" checked> 照片</label>
     </div>
 
+    <!-- 按鈕 -->
     <div class="grid md:grid-cols-2 gap-4 mt-5">
-      <button id="searchBtn" class="bg-blue-600 text-white px-4 py-3 rounded-2xl font-black disabled:opacity-50" disabled>
-        查詢資料
-      </button>
-      <button id="downloadBtn" class="bg-emerald-600 text-white px-4 py-3 rounded-2xl font-black disabled:opacity-50" disabled>
-        開始下載
-      </button>
+      <button id="searchBtn" class="bg-blue-600 text-white p-3 rounded-2xl" disabled>查詢資料</button>
+      <button id="downloadBtn" class="bg-emerald-600 text-white p-3 rounded-2xl" disabled>下載</button>
     </div>
 
-    <div id="statusBox" class="mt-5 rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm text-slate-600">
-      等待登入完成。
+    <!-- 狀態 -->
+    <div id="statusBox" class="mt-4 text-sm text-slate-600">等待登入</div>
+
+    <!-- 進度 -->
+    <div class="mt-4">
+      <div class="bg-slate-200 h-4 rounded-full">
+        <div id="progressBar" class="bg-green-500 h-4 w-0 rounded-full"></div>
+      </div>
+      <div id="progressText" class="text-sm mt-1">0%</div>
     </div>
 
-    <div class="mt-5">
-      <div class="w-full bg-slate-200 rounded-full h-4 overflow-hidden">
-        <div id="progressBar" class="bg-emerald-500 h-full w-0 transition-all duration-300"></div>
-      </div>
-      <div id="progressText" class="text-sm text-slate-600 mt-2">0%</div>
+    <!-- 結果 -->
+    <div class="mt-6 border rounded-2xl">
+      <div id="resultList" class="max-h-96 overflow-y-auto"></div>
     </div>
 
-    <div class="mt-6 border rounded-2xl overflow-hidden">
-      <div class="px-4 py-3 bg-slate-50 border-b border-slate-200 flex items-center justify-between">
-        <div class="font-black text-slate-800">查詢結果</div>
-        <div id="resultCount" class="text-xs px-3 py-1 rounded-full bg-slate-100 text-slate-600 font-bold">0</div>
-      </div>
-      <div id="resultList" class="max-h-[420px] overflow-y-auto">
-        <div class="p-4 text-slate-400 text-sm">尚未查詢</div>
-      </div>
-    </div>
   </div>
 </div>
 
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
 import { getAuth, signInAnonymously, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-import {
-  getFirestore,
-  collection,
-  query,
-  where,
-  orderBy,
-  getDocs,
-  Timestamp
-} from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 import { getStorage, ref, getDownloadURL } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-storage.js";
 
-const config = {
+const app = initializeApp({
   apiKey: "AIzaSyAQtyOTpKY3ajw6u4spxwLyFZDw19xhQEE",
   authDomain: "fieldsurveyproject-cba4e.firebaseapp.com",
   projectId: "fieldsurveyproject-cba4e",
-  storageBucket: "fieldsurveyproject-cba4e.firebasestorage.app",
-  messagingSenderId: "118885164027",
-  appId: "1:118885164027:web:d8a0e0478eddfc48ba615e"
-};
+  storageBucket: "fieldsurveyproject-cba4e.firebasestorage.app"
+});
 
-const app = initializeApp(config);
 const auth = getAuth(app);
 const db = getFirestore(app);
 const storage = getStorage(app);
 
 let results = [];
-let authReady = false;
-let appId = typeof __app_id !== "undefined" ? __app_id : "field-survey-app";
 
-const authStatus = document.getElementById("authStatus");
-const statusBox = document.getElementById("statusBox");
-const resultList = document.getElementById("resultList");
-const resultCount = document.getElementById("resultCount");
-const searchBtn = document.getElementById("searchBtn");
-const downloadBtn = document.getElementById("downloadBtn");
-const progressBar = document.getElementById("progressBar");
-const progressText = document.getElementById("progressText");
-
-function setTodayDefault() {
-  const now = new Date();
-  const yyyy = now.getFullYear();
-  const mm = String(now.getMonth() + 1).padStart(2, "0");
-  const dd = String(now.getDate()).padStart(2, "0");
-  const today = `${yyyy}-${mm}-${dd}`;
-  document.getElementById("startDate").value = today;
-  document.getElementById("endDate").value = today;
+function updateProgress(p){
+  document.getElementById("progressBar").style.width = p+"%";
+  document.getElementById("progressText").innerText = Math.floor(p)+"%";
 }
 
-function updateProgress(pct) {
-  progressBar.style.width = `${pct}%`;
-  progressText.textContent = `${Math.floor(pct)}%`;
-}
-
-function startOfDay(dateStr) {
-  return new Date(`${dateStr}T00:00:00`);
-}
-
-function nextDay(dateStr) {
-  const d = new Date(`${dateStr}T00:00:00`);
-  d.setDate(d.getDate() + 1);
-  return d;
-}
-
-function sanitizeFileName(str) {
-  return (str || "").replace(/[\\/:*?"<>|]/g, "_").trim();
-}
-
-async function fetchBlobByStoragePath(path) {
-  const url = await getDownloadURL(ref(storage, path));
+async function fetchBlob(path){
+  const url = await getDownloadURL(ref(storage,path));
   const res = await fetch(url);
-  if (!res.ok) throw new Error(`下載失敗：${path}`);
   return await res.blob();
 }
 
-function getXlsxStoragePath(item, id) {
-  return item.storagePath || `artifacts/${appId}/completed_xlsx/${id}/${id}.xlsx`;
-}
-
-function getPhotoStoragePaths(item, id) {
-  const photoFolder = item.photoFolderPath || `artifacts/${appId}/photos/${id}/`;
-  return [
-    { name: `${id}_現場.jpg`, path: `${photoFolder}${id}_現場.jpg` },
-    { name: `${id}_支距1.jpg`, path: `${photoFolder}${id}_支距1.jpg` },
-    { name: `${id}_支距2.jpg`, path: `${photoFolder}${id}_支距2.jpg` },
-    { name: `${id}_支距3.jpg`, path: `${photoFolder}${id}_支距3.jpg` },
-    { name: `${id}_交維.jpg`, path: `${photoFolder}${id}_交維.jpg` },
-  ];
-}
-
-function renderResults() {
-  resultCount.textContent = String(results.length);
-  downloadBtn.disabled = !authReady || results.length === 0;
-
-  if (!results.length) {
-    resultList.innerHTML = '<div class="p-4 text-slate-400 text-sm">查無資料</div>';
+onAuthStateChanged(auth, async (user)=>{
+  if(!user){
+    await signInAnonymously(auth);
     return;
   }
-
-  resultList.innerHTML = results.map((r, idx) => {
-    const dt = r.completedAt?.toDate ? r.completedAt.toDate() : null;
-    const timeText = dt ? dt.toLocaleString("zh-TW") : "無時間";
-    const id = sanitizeFileName(r.unific_id || r.pointKey || "未命名");
-    return `
-      <div class="p-4 border-b last:border-b-0">
-        <div class="flex items-start justify-between gap-3">
-          <div class="min-w-0">
-            <div class="font-bold text-slate-800 break-all">${idx + 1}. ${id}</div>
-            <div class="text-xs text-slate-500 mt-1">${r.category || ""} ｜ 原始：${r.originalStatus || ""}</div>
-            <div class="text-xs text-slate-400 mt-1">${timeText}</div>
-            <div class="text-[11px] text-slate-400 mt-1 break-all">xlsx: ${getXlsxStoragePath(r, id)}</div>
-          </div>
-          <div class="text-xs px-2 py-1 rounded-full bg-emerald-50 text-emerald-700 font-bold shrink-0">已調查</div>
-        </div>
-      </div>
-    `;
-  }).join("");
-}
-
-onAuthStateChanged(auth, async (user) => {
-  if (!user) {
-    try {
-      await signInAnonymously(auth);
-    } catch (err) {
-      console.error(err);
-      authStatus.textContent = "登入失敗";
-      authStatus.className = "text-xs px-3 py-1.5 rounded-full bg-red-50 text-red-700 font-bold";
-      statusBox.textContent = `匿名登入失敗：${err.message || err}`;
-    }
-    return;
-  }
-
-  authReady = true;
-  authStatus.textContent = "已連線";
-  authStatus.className = "text-xs px-3 py-1.5 rounded-full bg-emerald-50 text-emerald-700 font-bold";
-  searchBtn.disabled = false;
-  setTodayDefault();
-  statusBox.textContent = "請選擇日期後按「查詢資料」。";
+  document.getElementById("authStatus").innerText="已連線";
+  document.getElementById("searchBtn").disabled=false;
 });
 
-searchBtn.onclick = async () => {
-  const startDate = document.getElementById("startDate").value;
-  const endDate = document.getElementById("endDate").value;
+document.getElementById("searchBtn").onclick = async ()=>{
+  const snap = await getDocs(collection(db,"artifacts/field-survey-app/public/data/completed_points"));
+  results=[];
+  snap.forEach(d=>results.push(d.data()));
 
-  if (!startDate || !endDate) {
-    statusBox.textContent = "請先選擇開始與結束日期。";
-    return;
-  }
-  if (startDate > endDate) {
-    statusBox.textContent = "開始日期不可晚於結束日期。";
-    return;
-  }
+  const html = results.map(r=>`
+    <div class="p-3 border-b">
+      <div class="font-bold">${r.unific_id}</div>
+      <div class="text-xs text-gray-500">已調查</div>
+    </div>
+  `).join("");
 
-  try {
-    statusBox.textContent = "查詢中...";
-    updateProgress(0);
-    const startTs = Timestamp.fromDate(startOfDay(startDate));
-    const endTs = Timestamp.fromDate(nextDay(endDate));
-
-    const q = query(
-      collection(db, `artifacts/${appId}/public/data/completed_points`),
-      where("completedAt", ">=", startTs),
-      where("completedAt", "<", endTs),
-      orderBy("completedAt", "asc")
-    );
-
-    const snap = await getDocs(q);
-    results = [];
-    snap.forEach(d => results.push(d.data()));
-    renderResults();
-    statusBox.textContent = `查詢完成，共 ${results.length} 筆。`;
-  } catch (err) {
-    console.error(err);
-    results = [];
-    renderResults();
-    statusBox.textContent = `查詢失敗：${err.message || err}`;
-  }
+  document.getElementById("resultList").innerHTML = html;
+  document.getElementById("downloadBtn").disabled=false;
 };
 
-downloadBtn.onclick = async () => {
-  const includeXlsx = document.getElementById("chkXlsx").checked;
-  const includePhoto = document.getElementById("chkPhoto").checked;
+document.getElementById("downloadBtn").onclick = async ()=>{
+  const zip = new JSZip();
+  let total = results.length;
+  let count = 0;
 
-  if (!includeXlsx && !includePhoto) {
-    statusBox.textContent = "請至少選擇一種下載項目。";
-    return;
+  for(const r of results){
+    const id = r.unific_id;
+    const folder = zip.folder(id);
+
+    try{
+      const blob = await fetchBlob(`artifacts/field-survey-app/completed_xlsx/${id}/${id}.xlsx`);
+      folder.file(id+".xlsx",blob);
+    }catch{}
+
+    count++;
+    updateProgress((count/total)*100);
   }
-  if (!results.length) {
-    statusBox.textContent = "目前沒有可下載資料。";
-    return;
-  }
 
-  try {
-    const zip = new JSZip();
-    let totalTasks = 0;
-    for (const item of results) {
-      if (includeXlsx) totalTasks += 1;
-      if (includePhoto) totalTasks += 5;
-    }
-    let done = 0;
-
-    for (const item of results) {
-      const id = sanitizeFileName(item.unific_id || item.pointKey);
-      const folder = zip.folder(id);
-      statusBox.textContent = `整理中：${id}`;
-
-      if (includeXlsx) {
-        const xlsxPath = getXlsxStoragePath(item, id);
-        try {
-          const blob = await fetchBlobByStoragePath(xlsxPath);
-          folder.file(`${id}.xlsx`, blob);
-        } catch (err) {
-          folder.file(`_缺漏_xlsx.txt`, `找不到 xlsx：${xlsxPath}\n錯誤：${err.message || err}`);
-        }
-        done += 1;
-        updateProgress((done / totalTasks) * 100);
-      }
-
-      if (includePhoto) {
-        for (const photo of getPhotoStoragePaths(item, id)) {
-          try {
-            const blob = await fetchBlobByStoragePath(photo.path);
-            folder.file(photo.name, blob);
-          } catch (err) {
-          }
-          done += 1;
-          updateProgress((done / totalTasks) * 100);
-        }
-      }
-    }
-
-    statusBox.textContent = "正在產生 ZIP 檔...";
-    const zipBlob = await zip.generateAsync({ type: "blob" });
-
-    const startDate = document.getElementById("startDate").value;
-    const endDate = document.getElementById("endDate").value;
-    const a = document.createElement("a");
-    const url = URL.createObjectURL(zipBlob);
-    a.href = url;
-    a.download = `download_${startDate}_${endDate}.zip`;
-    document.body.appendChild(a);
-    a.click();
-    a.remove();
-    URL.revokeObjectURL(url);
-
-    statusBox.textContent = "下載完成。";
-    updateProgress(100);
-  } catch (err) {
-    console.error(err);
-    statusBox.textContent = `下載失敗：${err.message || err}`;
-  }
+  const zipBlob = await zip.generateAsync({type:"blob"});
+  const a=document.createElement("a");
+  a.href=URL.createObjectURL(zipBlob);
+  a.download="download.zip";
+  a.click();
 };
 </script>
 </body>
