@@ -345,7 +345,7 @@
             </div>
         </div>
 
-        <input type="file" id="cameraInput" accept="image/*" capture="camera" class="hidden" />
+        <input type="file" id="cameraInput" accept="image/*" class="hidden" />
         <input type="file" id="offsetCameraInput0" accept="image/*" class="hidden" />
         <input type="file" id="offsetCameraInput1" accept="image/*" class="hidden" />
         <input type="file" id="offsetCameraInput2" accept="image/*" class="hidden" />
@@ -606,7 +606,7 @@ async function uploadPhoto(base64, path) {
 async function uploadAllSurveyPhotos(point) {
     const id = sanitizeFileName(getPointKey(point));
     const uploads = [
-        { label: "現場照片", data: processedPhotoBase64, path: `artifacts/${appId}/photos/${id}/${id}_現場.jpg` },
+        { label: "現場照片", data: processedPhotoBase64, path: `artifacts/${appId}/photos/${id}/${id}_三支距.jpg` },
         { label: "支距1照片", data: offsetPhotoBase64[0], path: `artifacts/${appId}/photos/${id}/${id}_支距1.jpg` },
         { label: "支距2照片", data: offsetPhotoBase64[1], path: `artifacts/${appId}/photos/${id}/${id}_支距2.jpg` },
         { label: "支距3照片", data: offsetPhotoBase64[2], path: `artifacts/${appId}/photos/${id}/${id}_支距3.jpg` },
