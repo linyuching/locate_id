@@ -816,22 +816,24 @@ async function uploadAllSurveyPhotos(point) {
 
         function applyCompletedState(nextCompletedIds) {
             completedPointIds = nextCompletedIds;
-
+        
             pointDataMap.forEach((point, pointKey) => {
                 const marker = pointMarkerMap.get(pointKey);
                 const sourceLayer = pointSourceLayerMap.get(pointKey);
                 const realKey = point?.unific_id ? point.unific_id.trim() : null;
                 const isCompleted = realKey ? completedPointIds.has(realKey) : false;
-
+        
+                console.log("比對點位:", point.id, "unific_id =", realKey, "isCompleted =", isCompleted);
+        
                 if (!marker) return;
-
+        
                 marker.setIcon(createFeatureIcon(point.iconType, point.color, isCompleted));
-
+        
                 const el = marker.getElement();
                 if (el) el.classList.toggle("finished-marker", isCompleted);
-
+        
                 updateMarkerPopup(marker, point, isCompleted);
-
+        
                 if (realKey && isCompleted) {
                     if (sourceLayer && sourceLayer.hasLayer(marker)) sourceLayer.removeLayer(marker);
                     if (!completedLayerGroup.hasLayer(marker)) completedLayerGroup.addLayer(marker);
@@ -840,6 +842,8 @@ async function uploadAllSurveyPhotos(point) {
                     if (sourceLayer && !sourceLayer.hasLayer(marker)) sourceLayer.addLayer(marker);
                 }
             });
+        
+            console.log("已調查圖層數量:", completedLayerGroup.getLayers().length);
         }
 
 
