@@ -932,23 +932,33 @@ async function uploadAllSurveyPhotos(point) {
         }
 
         function getCompletedCollectionRef() {
-            return collection(db, `artifacts/${appId}/public/data/completed_points`);
+            return collection(db, `artifacts/${appId}/public/data/completed_files`);
         }
 
         function subscribeCompletedPoints() {
             const { query, onSnapshot } = window.firebaseCore;
             const q = query(getCompletedCollectionRef());
-
+        
             if (completedUnsubscribe) completedUnsubscribe();
             completedUnsubscribe = onSnapshot(q, (snapshot) => {
                 const nextCompletedIds = new Set();
+        
                 snapshot.forEach((docSnap) => {
                     const data = docSnap.data();
-                    if (data?.pointKey) nextCompletedIds.add(data.pointKey);
+        
+                    if (data?.pointKey) {
+                        nextCompletedIds.add(String(data.pointKey).trim());
+                    } else if (data?.unific_id) {
+                        nextCompletedIds.add(String(data.unific_id).trim());
+                    }
                 });
+        
+                console.log("completed_files 筆數:", snapshot.size);
+                console.log("已調查 pointKey:", Array.from(nextCompletedIds));
+        
                 applyCompletedState(nextCompletedIds);
             }, (err) => {
-                console.error("completed_points 同步失敗", err);
+                console.error("completed_files 同步失敗", err);
             });
         }
 
