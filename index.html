@@ -90,8 +90,28 @@
             border-radius: 4px;
             box-shadow: 0 1px 5px rgba(0,0,0,0.4);
         }
-        .nav-popup .leaflet-popup-content-wrapper { border-radius: 12px; padding: 5px; }
-        .nav-popup .leaflet-popup-content { margin: 10px; text-align: center; }
+
+        .nav-popup .leaflet-popup-content-wrapper {
+            border-radius: 16px;
+            padding: 0;
+        }
+        
+        .nav-popup .leaflet-popup-content {
+            margin: 0;
+            min-width: 220px;
+            text-align: center;
+        }
+        
+        .nav-popup .popup-card {
+            padding: 20px 18px 18px 18px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            text-align: center;
+        }
+        
 
         .selected-marker {
             transform: scale(1.18);
@@ -170,7 +190,7 @@
         <div class="bg-white/95 backdrop-blur-md p-3 rounded-2xl shadow-2xl flex justify-between items-center pointer-events-auto border border-white/20">
             <div class="flex items-center gap-2">
                 <div id="statusIndicator" class="w-2.5 h-2.5 rounded-full bg-yellow-500 animate-pulse"></div>
-                <h1 class="text-lg font-black text-slate-800 tracking-tighter">外業調查拍照 <span class="text-blue-500 text-xs">V1</span></h1>
+                <h1 class="text-lg font-black text-slate-800 tracking-tighter">外業拍照調查圖卡系統 <span class="text-blue-500 text-xs">V1.0</span></h1>
             </div>
             <div id="statusTag" class="bg-slate-100 text-slate-500 text-[10px] px-2.5 py-1 rounded-full font-black uppercase">連線中</div>
         </div>
@@ -764,13 +784,13 @@ async function uploadAllSurveyPhotos(point) {
                 : `<div class="text-[11px] text-amber-600 font-bold mb-2">尚未調查</div>`;
 
             const popupContent = `
-                <div class="text-center min-w-[180px]">
-                    <div class="font-bold text-slate-800 mb-1">${point.id}</div>
-                    <div class="text-[11px] text-slate-500 mb-1">${point.category}｜原始：${point.status}</div>
-                    <div class="text-[11px] text-slate-400 mb-1">${point.unific_id || "缺少 unific_id"}</div>
+                <div class="popup-card">
+                    <div class="text-2xl font-black text-slate-800 leading-none">${point.id}</div>
+                    <div class="text-sm text-slate-500 font-semibold">${point.category}｜原始：${point.status}</div>
+                    <div class="text-sm text-slate-400 font-medium">${point.unific_id || "缺少 unific_id"}</div>
                     ${statusText}
                     <button onclick="window.open('https://www.google.com/maps/dir/?api=1&destination=${point.lat},${point.lng}', '_blank')"
-                            class="bg-blue-600 text-white px-4 py-2 rounded-lg text-xs font-bold shadow-md active:scale-95 transition-transform">
+                            class="mt-1 bg-blue-600 text-white px-6 py-3 rounded-2xl text-base font-black shadow-md active:scale-95 transition-transform">
                         Google 導航
                     </button>
                 </div>
