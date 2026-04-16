@@ -940,28 +940,38 @@ async function uploadAllSurveyPhotos(point) {
             const q = query(getCompletedCollectionRef());
         
             if (completedUnsubscribe) completedUnsubscribe();
+        
             completedUnsubscribe = onSnapshot(q, (snapshot) => {
                 const nextCompletedIds = new Set();
         
                 snapshot.forEach((docSnap) => {
-                    const data = docSnap.data();
+                    const data = docSnap.data() || {};
         
-                    if (data?.pointKey) {
-                        nextCompletedIds.add(String(data.pointKey).trim());
-                    } else if (data?.unific_id) {
-                        nextCompletedIds.add(String(data.unific_id).trim());
+                    let completedKey = "";
+        
+                    if (data.pointKey && String(data.pointKey).trim()) {
+                        completedKey = String(data.pointKey).trim();
+                    } else if (data.unific_id && String(data.unific_id).trim()) {
+                        completedKey = String(data.unific_id).trim();
+                    } else if (docSnap.id) {
+                        completedKey = String(docSnap.id).replace(/__latest$/, "").trim();
                     }
+        
+                    if (completedKey) {
+                        nextCompletedIds.add(completedKey);
+                    }
+        
+                    console.log("completed_files 文件:", docSnap.id, data, "=> completedKey =", completedKey);
                 });
         
                 console.log("completed_files 筆數:", snapshot.size);
-                console.log("已調查 pointKey:", Array.from(nextCompletedIds));
+                console.log("已調查 completedKey 清單:", Array.from(nextCompletedIds));
         
                 applyCompletedState(nextCompletedIds);
             }, (err) => {
                 console.error("completed_files 同步失敗", err);
             });
         }
-
 
 async function savePhotoRecords(point, uploadedPhotos) {
     const { doc, setDoc, serverTimestamp } = window.firebaseCore;
