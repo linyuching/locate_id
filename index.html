@@ -936,7 +936,10 @@ async function uploadAllSurveyPhotos(point) {
         }
 
         function getCompletedCollectionRef() {
-            return collection(db, `artifacts/${appId}/public/data/completed_files`);
+            return window.firebaseCore.collection(
+                db,
+                `artifacts/${appId}/public/data/completed_files`
+            );
         }
 
         function subscribeCompletedPoints() {
