@@ -823,8 +823,7 @@ async function uploadAllSurveyPhotos(point) {
                 const realKey = point?.unific_id ? point.unific_id.trim() : null;
                 const isCompleted = realKey ? completedPointIds.has(realKey) : false;
         
-                console.log("比對點位:", point.id, "unific_id =", realKey, "isCompleted =", isCompleted);
-        
+                    
                 if (!marker) return;
         
                 marker.setIcon(createFeatureIcon(point.iconType, point.color, isCompleted));
