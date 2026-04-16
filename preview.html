@@ -1,10 +1,9 @@
-
 <!DOCTYPE html>
 <html lang="zh-TW">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>批次下載工具</title>
+<title>批次下載調查成果</title>
 <script src="https://cdn.tailwindcss.com"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
 </head>
@@ -143,11 +142,26 @@ function sanitizeFileName(str) {
   return (str || "").replace(/[\\/:*?"<>|]/g, "_").trim();
 }
 
-async function fetchBlob(path) {
+async function fetchBlobByStoragePath(path) {
   const url = await getDownloadURL(ref(storage, path));
   const res = await fetch(url);
   if (!res.ok) throw new Error(`下載失敗：${path}`);
   return await res.blob();
+}
+
+function getXlsxStoragePath(item, id) {
+  return item.storagePath || `artifacts/${appId}/completed_xlsx/${id}/${id}.xlsx`;
+}
+
+function getPhotoStoragePaths(item, id) {
+  const photoFolder = item.photoFolderPath || `artifacts/${appId}/photos/${id}/`;
+  return [
+    { name: `${id}_現場.jpg`, path: `${photoFolder}${id}_現場.jpg` },
+    { name: `${id}_支距1.jpg`, path: `${photoFolder}${id}_支距1.jpg` },
+    { name: `${id}_支距2.jpg`, path: `${photoFolder}${id}_支距2.jpg` },
+    { name: `${id}_支距3.jpg`, path: `${photoFolder}${id}_支距3.jpg` },
+    { name: `${id}_交維.jpg`, path: `${photoFolder}${id}_交維.jpg` },
+  ];
 }
 
 function renderResults() {
@@ -162,15 +176,17 @@ function renderResults() {
   resultList.innerHTML = results.map((r, idx) => {
     const dt = r.completedAt?.toDate ? r.completedAt.toDate() : null;
     const timeText = dt ? dt.toLocaleString("zh-TW") : "無時間";
+    const id = sanitizeFileName(r.unific_id || r.pointKey || "未命名");
     return `
       <div class="p-4 border-b last:border-b-0">
         <div class="flex items-start justify-between gap-3">
-          <div>
-            <div class="font-bold text-slate-800">${idx + 1}. ${r.unific_id || r.pointKey || "未命名"}</div>
+          <div class="min-w-0">
+            <div class="font-bold text-slate-800 break-all">${idx + 1}. ${id}</div>
             <div class="text-xs text-slate-500 mt-1">${r.category || ""} ｜ 原始：${r.originalStatus || ""}</div>
             <div class="text-xs text-slate-400 mt-1">${timeText}</div>
+            <div class="text-[11px] text-slate-400 mt-1 break-all">xlsx: ${getXlsxStoragePath(r, id)}</div>
           </div>
-          <div class="text-xs px-2 py-1 rounded-full bg-emerald-50 text-emerald-700 font-bold">已調查</div>
+          <div class="text-xs px-2 py-1 rounded-full bg-emerald-50 text-emerald-700 font-bold shrink-0">已調查</div>
         </div>
       </div>
     `;
@@ -252,12 +268,10 @@ downloadBtn.onclick = async () => {
 
   try {
     const zip = new JSZip();
-    const photoSuffixes = ["現場", "支距1", "支距2", "支距3", "交維"];
-
     let totalTasks = 0;
     for (const item of results) {
       if (includeXlsx) totalTasks += 1;
-      if (includePhoto) totalTasks += photoSuffixes.length;
+      if (includePhoto) totalTasks += 5;
     }
     let done = 0;
 
@@ -267,23 +281,23 @@ downloadBtn.onclick = async () => {
       statusBox.textContent = `整理中：${id}`;
 
       if (includeXlsx) {
+        const xlsxPath = getXlsxStoragePath(item, id);
         try {
-          const blob = await fetchBlob(`artifacts/${appId}/completed_xlsx/${id}/${id}.xlsx`);
+          const blob = await fetchBlobByStoragePath(xlsxPath);
           folder.file(`${id}.xlsx`, blob);
         } catch (err) {
-          folder.file("_缺漏_xlsx.txt", `找不到 xlsx：${id}`);
+          folder.file(`_缺漏_xlsx.txt`, `找不到 xlsx：${xlsxPath}\n錯誤：${err.message || err}`);
         }
         done += 1;
         updateProgress((done / totalTasks) * 100);
       }
 
       if (includePhoto) {
-        for (const suffix of photoSuffixes) {
+        for (const photo of getPhotoStoragePaths(item, id)) {
           try {
-            const blob = await fetchBlob(`artifacts/${appId}/photos/${id}/${id}_${suffix}.jpg`);
-            folder.file(`${id}_${suffix}.jpg`, blob);
+            const blob = await fetchBlobByStoragePath(photo.path);
+            folder.file(photo.name, blob);
           } catch (err) {
-            // 照片缺漏就略過
           }
           done += 1;
           updateProgress((done / totalTasks) * 100);
